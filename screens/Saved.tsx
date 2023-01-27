@@ -1,11 +1,30 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { TranslationResult } from '../components/TranslationResult/TranslationResult';
+import { colors } from '../utils/colors';
+import { useDispatch, useSelector } from 'react-redux';
+import { State } from '../store/store';
+
 
 export function Saved() {
-  return (
-      <View style={styles.container}>
-        <Text>saved screen</Text>
+  const dispatch = useDispatch();
+  const saved = useSelector((state: State) => state.saved.items);
+
+  if (saved.length === 0) {
+    return (
+      <View style={styles.noItemsContainer}>
+        <Text style={styles.emptyText}>Empty</Text>
       </View>
+    )
+  }
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={saved}
+        renderItem={({ item }) => <TranslationResult item={item} />}
+      />
+    </View>
   );
 }
 
@@ -13,8 +32,16 @@ export function Saved() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: colors.secondary,
+    padding: 8,
   },
+  noItemsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  emptyText: {
+    fontFamily: 'medium',
+    color: colors.text
+  }
 });
