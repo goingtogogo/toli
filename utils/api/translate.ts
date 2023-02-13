@@ -6,9 +6,10 @@ type Data = {
     };
 }
 
+export type Language = 'russian' | 'buryat';
 
 
-export const translate = async (text: string, languageFrom: 'russian' | 'buryat') => {
+export const translate = async (text: string, languageFrom: Language) => {
     const url = `https://burlang.ru/api/v1/${languageFrom}-word/translate?q=${text}`
 
     try {

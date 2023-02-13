@@ -1,7 +1,9 @@
-- оптимизации, useMemo, useCallback в react-native?
-- повторяющиеся куски кода вынести
-- как лучше работать со стилями в react-native?
+- оптимизации, useMemo, useCallback в react-native?+
+- повторяющиеся куски кода вынести+
+- как лучше работать со стилями в react-native?+
 - обработка ошибок
-- eslint, prettier, tsconfig
+- eslint, prettier, tsconfig+
 - докрутить переводы
 - начальный экран
+- remove all consoles
+- доделать логику

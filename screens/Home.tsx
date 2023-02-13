@@ -1,18 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList } from 'react-native'
-import { colors } from '../utils/colors'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Feather } from '@expo/vector-icons'
-import { translate } from '../utils/api/translate'
-import { capitalizeFirstLetter } from '../utils/capitalize'
 import * as Clipboard from 'expo-clipboard'
 import { useDispatch, useSelector } from 'react-redux'
 import { AnyAction, Dispatch } from '@reduxjs/toolkit'
-import { addItem, setItems } from '../store/slice/history'
-import { State } from '../store/store'
-import { TranslationResult } from '../components/TranslationResult/TranslationResult'
 import uuid from 'react-native-uuid'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { State } from '../store/store'
+import { addItem, setItems } from '../store/slice/history'
 import { setSaved } from '../store/slice/saved'
+import { TranslationResult } from '../components/TranslationResult/TranslationResult'
+import { theme } from '../utils/theme'
+import { Language, translate } from '../utils/api/translate'
+import { capitalizeFirstLetter } from '../utils/capitalize'
 
 
 
@@ -42,7 +42,7 @@ export function Home() {
     const [value, setValue] = useState('')
     const [result, setResult] = useState('')
     const [loading, setIsLoading] = useState(false)
-    const [languageFrom, setLanguageFrom] = useState<'russian' | 'buryat'>('russian')
+    const [languageFrom, setLanguageFrom] = useState<Language>('russian')
 
     const dispatch = useDispatch()
     const history = useSelector((state: State) => state.history.items)
@@ -62,8 +62,7 @@ export function Home() {
     }, [languageFrom])
 
     useEffect(() => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-ignore eslint-disable-next-line 
         dispatch(loadData())
     }, [dispatch])
 
@@ -81,16 +80,21 @@ export function Home() {
 
     }, [history])
 
-    const onSubmit = React.useCallback(async (value: string) => {
-
+    const onSubmit = useCallback(async (value: string) => {
         setIsLoading(true)
         try {
             const translation = await translate(value, languageFrom)
             setResult(capitalizeFirstLetter(translation))
 
-            const id = uuid.v4()
 
-            dispatch(addItem({ item: { text: value, translatedText: translation, id, dateTime: new Date().toISOString() } }))
+            const item = {
+                text: value,
+                translatedText: translation,
+                id: uuid.v4(),
+                dateTime: new Date().toISOString()
+            }
+
+            dispatch(addItem({ item }))
         }
 
         catch (e) {
@@ -105,20 +109,25 @@ export function Home() {
         await Clipboard.setStringAsync(result)
     }, [result])
 
+    const handleLanguageChange = useCallback(() => setLanguageFrom(languageFrom === 'russian' ? 'buryat' : 'russian'), [languageFrom])
+
+    const [languageFromLabel, languageToLabel] = useMemo(() => (
+        languageFrom === 'russian' ? ['Русский', 'Буряад'] : ['Буряад', 'Русский']
+    ), [languageFrom])
 
     return (
         <View style={styles.container}>
             <View style={styles.languageContainer}>
                 <TouchableOpacity style={styles.option}>
-                    <Text style={styles.optionText}>{languageFrom === 'russian' ? 'Русский' : 'Буряад'}</Text>
+                    <Text style={styles.optionText}>{languageFromLabel}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.arrow} onPress={() => setLanguageFrom(languageFrom === 'russian' ? 'buryat' : 'russian')}>
-                    <Feather name="arrow-right" size={24} color={colors.secondary} />
+                <TouchableOpacity style={styles.arrow} onPress={handleLanguageChange}>
+                    <Feather name="arrow-right" size={24} color={theme.colors.secondary} />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.option}>
-                    <Text style={styles.optionText}>{languageFrom === 'russian' ? 'Буряад' : 'Русский'}</Text>
+                    <Text style={styles.optionText}>{languageToLabel}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -131,8 +140,8 @@ export function Home() {
                     onPress={() => onSubmit(value)}
                 >
                     {loading ?
-                        <ActivityIndicator size="small" color={colors.primary} /> :
-                        <Feather name="arrow-right-circle" size={24} color={value !== '' ? colors.primary : colors.secondary} />
+                        <ActivityIndicator size="small" color={theme.colors.primary} /> :
+                        <Feather name="arrow-right-circle" size={24} color={value !== '' ? theme.colors.primary : theme.colors.secondary} />
                     }
                 </TouchableOpacity>
             </View>
@@ -141,7 +150,7 @@ export function Home() {
                 <Text style={styles.resultText}>{result}</Text>
 
                 <TouchableOpacity style={styles.iconContainer} disabled={result === ''} onPress={copyToClipboard}>
-                    <Feather name="copy" size={24} color={result !== '' ? colors.text : colors.secondary} />
+                    <Feather name="copy" size={24} color={result !== '' ? theme.colors.text : theme.colors.secondary} />
                 </TouchableOpacity>
             </View>
 
@@ -159,24 +168,24 @@ export function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.white
+        backgroundColor: theme.colors.background
     },
     languageContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        borderBottomColor: colors.secondary,
+        borderBottomColor: theme.colors.secondary,
         borderBottomWidth: 1,
     },
     option: {
         flex: 1,
         alignItems: 'center',
-        paddingVertical: 16,
-        marginHorizontal: 8,
+        paddingVertical: theme.spacing.m,
+        marginHorizontal: theme.spacing.xs,
     },
     optionText: {
         fontFamily: 'bold',
-        color: colors.primary
+        color: theme.colors.primary
     },
     arrow: {
         borderRadius: 50,
@@ -188,38 +197,38 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         flexDirection: 'row',
-        borderBottomColor: colors.secondary,
+        borderBottomColor: theme.colors.secondary,
         borderBottomWidth: 1,
     },
     input: {
         flex: 1,
-        marginTop: 12,
-        paddingVertical: 16,
-        paddingHorizontal: 16,
+        marginTop: theme.spacing.s,
+        paddingVertical: theme.spacing.m,
+        paddingHorizontal: theme.spacing.m,
         fontFamily: 'medium',
         height: 90,
-        color: colors.text
+        color: theme.colors.text
     },
     iconContainer: {
-        paddingHorizontal: 12,
+        paddingHorizontal: theme.spacing.s,
         justifyContent: 'center',
         alignItems: 'center'
     },
     resultContainer: {
         flexDirection: 'row',
-        borderBottomColor: colors.secondary,
+        borderBottomColor: theme.colors.secondary,
         borderBottomWidth: 1,
         height: 90,
-        paddingVertical: 16
+        paddingVertical: theme.spacing.m,
     },
     resultText: {
         fontFamily: 'medium',
-        color: colors.primary,
+        color: theme.colors.primary,
         flex: 1,
-        marginHorizontal: 20
+        marginHorizontal: theme.spacing.l,
     },
     historyContainer: {
-        backgroundColor: colors.secondary,
+        backgroundColor: theme.colors.secondary,
         flex: 1,
         padding: 10
     }

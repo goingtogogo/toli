@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { colors } from '../../utils/colors'
+import { theme } from '../../utils/theme'
 import { Octicons } from '@expo/vector-icons'
 import { HistoryItem } from '../../store/slice/history'
 import { useCallback } from 'react'
@@ -21,13 +21,8 @@ export const TranslationResult: React.FC<Props> = ({ item }) => {
     const icon = isSaved ? 'star-fill' : 'star'
 
     const starItem = useCallback(async () => {
-        let newSavedItems
-        if (isSaved) {
-            newSavedItems = savedItems.filter(savedItem => savedItem.id !== item.id)
-        }
-        else {
-            newSavedItems = [item, ...savedItems]
-        }
+        const newSavedItems = isSaved ? savedItems.filter(savedItem => savedItem.id !== item.id) :
+            [item, ...savedItems]
         await AsyncStorage.setItem('saved', JSON.stringify(newSavedItems))
 
         dispatch(setSaved({ items: newSavedItems }))
@@ -41,7 +36,7 @@ export const TranslationResult: React.FC<Props> = ({ item }) => {
             </View>
 
             <TouchableOpacity style={styles.iconContainer} onPress={starItem}>
-                <Octicons name={icon} size={24} color={colors.secondary} />
+                <Octicons name={icon} size={24} color={theme.colors.secondary} />
             </TouchableOpacity>
         </View>
     )
@@ -49,24 +44,24 @@ export const TranslationResult: React.FC<Props> = ({ item }) => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 12,
-        paddingVertical: 20,
         flexDirection: 'row',
-        borderColor: colors.secondary,
+        paddingHorizontal: theme.spacing.s,
+        paddingVertical: theme.spacing.l,
+        borderColor: theme.colors.secondary,
         borderWidth: 1,
         borderTopWidth: 0,
-        backgroundColor: colors.white
+        backgroundColor: theme.colors.background
     },
     textContainer: {
         flex: 1,
         marginRight: 8,
     },
     title: {
-        color: colors.text,
+        color: theme.colors.text,
         fontFamily: 'bold',
     },
     subtitle: {
-        color: colors.text,
+        color: theme.colors.text,
         fontFamily: 'medium',
     },
     iconContainer: {

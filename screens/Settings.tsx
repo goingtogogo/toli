@@ -3,14 +3,16 @@ import { StyleSheet, View, Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SettingsItem } from '../components/SettingsItem/SettingsItem'
 import { useDispatch } from 'react-redux'
-import { colors } from '../utils/colors'
+import { theme } from '../utils/theme'
 import { clearHistory } from '../store/slice/history'
 import { clearSaved } from '../store/slice/saved'
+
+export type SettingsKey = 'history' | 'saved'
 
 export function Settings() {
     const dispatch = useDispatch()
 
-    const deleteItems = useCallback(async (key: 'history' | 'saved') => {
+    const deleteItems = useCallback(async (key: SettingsKey) => {
         try {
             await AsyncStorage.setItem(key, JSON.stringify([]))
             dispatch(key === 'history' ? clearHistory() : clearSaved())
@@ -47,6 +49,6 @@ export function Settings() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.secondary,
+        backgroundColor: theme.colors.secondary,
     },
 })

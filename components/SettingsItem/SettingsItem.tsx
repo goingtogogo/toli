@@ -3,20 +3,21 @@ import { Feather } from '@expo/vector-icons'
 import FeatherIcons from '@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/Feather.json'
 import { useCallback } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { colors } from '../../utils/colors'
+import { theme } from '../../utils/theme'
+import { SettingsKey } from '../../screens/Settings'
 
 type Props = {
-    name: 'history' | 'saved';
+    name: SettingsKey;
     title: string;
     subtitle: string;
     icon: keyof typeof FeatherIcons;
-    onPress: (key: 'history' | 'saved') => void;
+    onPress: (key: SettingsKey) => void;
 }
 
 export const SettingsItem: React.FC<Props> = props => {
 
     const handlePress = useCallback(() => {
-        const {name, onPress} = props
+        const { name, onPress } = props
 
         onPress(name)
     }, [])
@@ -33,7 +34,7 @@ export const SettingsItem: React.FC<Props> = props => {
             </View>
 
             <View style={styles.iconContainer}>
-                <Feather name={props.icon} color={colors.primary} size={24} />
+                <Feather name={props.icon} color={theme.colors.primary} size={24} />
             </View>
         </TouchableOpacity>
     )
@@ -43,25 +44,25 @@ export const SettingsItem: React.FC<Props> = props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        backgroundColor: colors.white,
-        borderColor: colors.secondary,
+        backgroundColor: theme.colors.background,
+        borderColor: theme.colors.secondary,
         borderWidth: 1,
-        borderTopWidth: 0, 
-        paddingVertical: 16,
-        paddingHorizontal: 12
+        borderTopWidth: 0,
+        paddingVertical: theme.spacing.s,
+        paddingHorizontal: theme.spacing.s,
     },
     textContainer: {
         flex: 1,
-        marginRight: 8,
+        marginRight: theme.spacing.xs,
     },
     title: {
-        color: colors.text,
+        color: theme.colors.text,
         fontFamily: 'bold',
     },
     subtitle: {
-        color: colors.text,
+        color: theme.colors.text,
         fontFamily: 'medium',
-        fontSize: 12, 
+        fontSize: 12,
     },
     iconContainer: {
         width: 30,

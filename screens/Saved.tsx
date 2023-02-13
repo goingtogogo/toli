@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { TranslationResult } from '../components/TranslationResult/TranslationResult'
-import { colors } from '../utils/colors'
+import { theme } from '../utils/theme'
 import { useSelector } from 'react-redux'
 import { State } from '../store/store'
 
@@ -31,8 +31,8 @@ export function Saved() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.secondary,
-        padding: 8,
+        backgroundColor: theme.colors.secondary,
+        padding: theme.spacing.s,
     },
     noItemsContainer: {
         flex: 1,
@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
     },
     emptyText: {
         fontFamily: 'medium',
-        color: colors.text
+        color: theme.colors.text
     }
 })

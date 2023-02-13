@@ -1,20 +1,19 @@
-import React from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
-import 'react-native-gesture-handler'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { TabNavigator } from './components/TabNavigator/TabNavigator'
+import 'react-native-gesture-handler'
+import { Provider } from 'react-redux'
 import * as SplashScreen from 'expo-splash-screen'
-import { useCallback, useEffect, useState } from 'react'
-import * as Font from 'expo-font'
-import {Provider} from 'react-redux'
+import { TabNavigator } from './components/TabNavigator/TabNavigator'
 import store from './store/store'
+import { loadFonts } from './utils/loadFonts'
 
 SplashScreen.preventAutoHideAsync()
 
 
 export type StackParamList = {
-  main: undefined;
+    main: undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>()
@@ -26,13 +25,10 @@ export default function App() {
     useEffect(() => {
         const prepare = async () => {
             try {
-                await Font.loadAsync({
-                    light: require('./assets/fonts/Inter-Light.ttf'),
-                    medium: require('./assets/fonts/Inter-Medium.ttf'),
-                    bold: require('./assets/fonts/Inter-Bold.ttf'),
-                })
+                await loadFonts();
             }
             catch (e) {
+                // todo
                 console.log(e)
             }
             finally {
@@ -49,8 +45,10 @@ export default function App() {
         }
     }, [appIsLoaded])
 
+    const screenOptions = useMemo(() => ({ headerTitle: 'Translate', headerShown: false }), []);
+
     if (!appIsLoaded) {
-        return null 
+        return null
     }
 
     return (
@@ -59,7 +57,7 @@ export default function App() {
                 <View onLayout={onLayout} style={styles.container}>
                     <Stack.Navigator>
                         <Stack.Group>
-                            <Stack.Screen name="main" component={TabNavigator} options={{ headerTitle: 'Translate', headerShown: false }} />
+                            <Stack.Screen name="main" component={TabNavigator} options={screenOptions} />
                         </Stack.Group>
                     </Stack.Navigator>
                 </View>
