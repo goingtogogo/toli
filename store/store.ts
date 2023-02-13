@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
-import history, { HistoryState } from './slice/history';
-import saved, { SavedState } from './slice/saved';
+import { configureStore } from '@reduxjs/toolkit'
+import history, { HistoryState } from './slice/history'
+import saved, { SavedState } from './slice/saved'
 
 export type State = {
     history: HistoryState,

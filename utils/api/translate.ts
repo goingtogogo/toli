@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios'
 
 type Data = {
     data: {
@@ -9,20 +9,20 @@ type Data = {
 
 
 export const translate = async (text: string, languageFrom: 'russian' | 'buryat') => {
-    const url = `https://burlang.ru/api/v1/${languageFrom}-word/translate?q=${text}`;
+    const url = `https://burlang.ru/api/v1/${languageFrom}-word/translate?q=${text}`
 
     try {
-        const { data } = await axios.get(url) as Data;
+        const { data } = await axios.get(url) as Data
 
-        return data.translations?.[0].value;
+        return data.translations?.[0].value
     }
 
     catch (e) {
-        console.log({e})
+        // todo
         if ((e as AxiosError).response?.status === 404) {
             return text
-        };
+        }
 
-        return (e as AxiosError).message;
+        return (e as AxiosError).message
     }
 }

@@ -1,13 +1,13 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home } from '../../screens/Home';
-import { Settings } from '../../screens/Settings';
-import { Saved } from '../../screens/Saved';
+import React from 'react'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { Home } from '../../screens/Home'
+import { Settings } from '../../screens/Settings'
+import { Saved } from '../../screens/Saved'
 
-import { Feather } from '@expo/vector-icons';
-import { colors } from '../../utils/colors';
+import { Feather } from '@expo/vector-icons'
+import { colors } from '../../utils/colors'
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 
 export function TabNavigator() {
     return (

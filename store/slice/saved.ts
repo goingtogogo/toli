@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { HistoryItem } from './history';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { HistoryItem } from './history'
 
 
 
@@ -15,14 +15,14 @@ const saved = createSlice({
     name: 'saved',
     initialState,
     reducers: {
-        setSaved: (state, action: PayloadAction<{items: HistoryItem[]}>) => {
-            const { items } = action.payload;
+              setSaved: (state, action: PayloadAction<{items: HistoryItem[]}>) => {
+            const { items } = action.payload
 
-                state.items = items  
+            state.items = items  
         },
         clearSaved: (state) => {state.items = []}
     }
-});
+})
 
-export const { setSaved, clearSaved } = saved.actions;
-export default saved.reducer;
+export const { setSaved, clearSaved } = saved.actions
+export default saved.reducer

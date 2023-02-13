@@ -1,8 +1,9 @@
-import { Feather } from "@expo/vector-icons";
-import FeatherIcons from "@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/Feather.json";
-import { useCallback } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { colors } from "../../utils/colors";
+import React from 'react'
+import { Feather } from '@expo/vector-icons'
+import FeatherIcons from '@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/Feather.json'
+import { useCallback } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { colors } from '../../utils/colors'
 
 type Props = {
     name: 'history' | 'saved';
@@ -15,10 +16,10 @@ type Props = {
 export const SettingsItem: React.FC<Props> = props => {
 
     const handlePress = useCallback(() => {
-        const {name, onPress} = props;
+        const {name, onPress} = props
 
-        onPress(name);
-    }, []);
+        onPress(name)
+    }, [])
 
     return (
         <TouchableOpacity style={styles.container} onPress={handlePress}>
