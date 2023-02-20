@@ -1,16 +1,16 @@
-import React from 'react'
-import { Feather } from '@expo/vector-icons'
-import FeatherIcons from '@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/Feather.json'
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import OcticonsIcons from '@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/Octicons.json'
+
 import { theme } from '../../utils/theme'
 import { SettingsKey } from '../../screens/Settings'
+import { ActionButton } from '../ActionButton/ActionButton'
 
 type Props = {
     name: SettingsKey;
     title: string;
     subtitle: string;
-    icon: keyof typeof FeatherIcons;
+    icon: keyof typeof OcticonsIcons;
     onPress: (key: SettingsKey) => void;
 }
 
@@ -33,9 +33,7 @@ export const SettingsItem: React.FC<Props> = props => {
                 </Text>
             </View>
 
-            <View style={styles.iconContainer}>
-                <Feather name={props.icon} color={theme.colors.primary} size={24} />
-            </View>
+            <ActionButton name={props.icon} />
         </TouchableOpacity>
     )
 }
@@ -58,15 +56,11 @@ const styles = StyleSheet.create({
     title: {
         color: theme.colors.text,
         fontFamily: 'bold',
+        fontSize: 18
     },
     subtitle: {
-        color: theme.colors.text,
+        color: theme.colors.secondaryText,
         fontFamily: 'medium',
-        fontSize: 12,
-    },
-    iconContainer: {
-        width: 30,
-        justifyContent: 'center',
-        alignItems: 'center'
+        fontSize: 14,
     }
 })

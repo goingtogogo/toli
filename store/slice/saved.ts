@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Screens } from '../../components/TabNavigator/TabNavigator'
 import { HistoryItem } from './history'
 
 export type SavedState = {
@@ -11,7 +10,7 @@ const initialState: SavedState = {
 }
 
 const saved = createSlice({
-    name: Screens.Saved,
+    name: 'saved',
     initialState,
     reducers: {
         setSaved: (state, action: PayloadAction<{ items: HistoryItem[] }>) => {

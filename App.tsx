@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import * as SplashScreen from 'expo-splash-screen'
+
 import { TabNavigator } from './components/TabNavigator/TabNavigator'
 import store from './store/store'
 import { loadFonts } from './utils/loadFonts'
@@ -45,7 +46,10 @@ export default function App() {
         }
     }, [appIsLoaded])
 
-    const screenOptions = useMemo(() => ({ headerTitle: 'Translate', headerShown: false }), []);
+    const screenOptions = useMemo(() => ({
+        headerTitle: 'Translate',
+        headerShown: false
+    }), []);
 
     if (!appIsLoaded) {
         return null

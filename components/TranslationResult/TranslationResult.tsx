@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { theme } from '../../utils/theme'
@@ -8,6 +8,7 @@ import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSaved } from '../../store/slice/saved'
 import { State } from '../../store/store'
+import { ActionButton } from '../ActionButton/ActionButton'
 
 type Props = {
     item: HistoryItem
@@ -18,7 +19,7 @@ export const TranslationResult: React.FC<Props> = ({ item }) => {
 
     const savedItems = useSelector((state: State) => state.saved.items)
     const isSaved = savedItems.some(savedItem => savedItem.id === item.id)
-    const icon = isSaved ? 'star-fill' : 'star'
+    const icon = useMemo(() => isSaved ? 'star-fill' : 'star', [isSaved])
 
     const starItem = useCallback(async () => {
         const newSavedItems = isSaved ? savedItems.filter(savedItem => savedItem.id !== item.id) :
@@ -35,9 +36,7 @@ export const TranslationResult: React.FC<Props> = ({ item }) => {
                 <Text style={styles.subtitle} numberOfLines={4}>{item.translatedText}</Text>
             </View>
 
-            <TouchableOpacity style={styles.iconContainer} onPress={starItem}>
-                <Octicons name={icon} size={24} color={theme.colors.secondary} />
-            </TouchableOpacity>
+            <ActionButton onPress={starItem} name={icon} />
         </View>
     )
 }
@@ -45,28 +44,34 @@ export const TranslationResult: React.FC<Props> = ({ item }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        paddingHorizontal: theme.spacing.s,
-        paddingVertical: theme.spacing.l,
-        borderColor: theme.colors.secondary,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        backgroundColor: theme.colors.background
+        marginHorizontal: 36,
+        marginVertical: theme.spacing.xs,
+        paddingHorizontal: theme.spacing.xl,
+        paddingVertical: theme.spacing.s,
+        minHeight: 80,
+        backgroundColor: theme.colors.secondary,
+        shadowOffset: {
+            height: 8,
+            width: 0
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 10,
+        shadowColor: '#040844',
+        borderRadius: 20
     },
     textContainer: {
         flex: 1,
         marginRight: 8,
     },
     title: {
-        color: theme.colors.text,
-        fontFamily: 'bold',
+        color: theme.colors.secondaryText,
+        fontFamily: 'medium',
+        fontSize: 16
     },
     subtitle: {
-        color: theme.colors.text,
+        marginTop: 4,
+        color: theme.colors.accentText,
         fontFamily: 'medium',
-    },
-    iconContainer: {
-        width: 30,
-        justifyContent: 'center',
-        alignItems: 'center'
+        fontSize: 16
     }
 })

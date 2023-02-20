@@ -1,0 +1,93 @@
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, ImageBackground } from 'react-native'
+import { AnyAction, Dispatch } from '@reduxjs/toolkit'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+import { theme } from '../../../utils/theme'
+import { setItems } from '../../../store/slice/history'
+import { setSaved } from '../../../store/slice/saved'
+import { TranslationResult } from '../../../components/TranslationResult/TranslationResult'
+import { useDispatch, useSelector } from 'react-redux'
+import { State } from '../../../store/store'
+
+const loadData = () => async (dispatch: Dispatch<AnyAction>) => {
+    try {
+        const history = await AsyncStorage.getItem('history')
+
+        if (history) {
+            const formattedHistory = JSON.parse(history)
+            dispatch(setItems({ items: formattedHistory }))
+        }
+
+        const saved = await AsyncStorage.getItem('saved')
+
+        if (saved) {
+            const formattedSaved = JSON.parse(saved)
+            dispatch(setSaved({ items: formattedSaved }))
+        }
+    }
+
+    catch (e) {
+        console.log(e)
+    }
+}
+
+export const History: React.FC = () => {
+    const dispatch = useDispatch()
+    const history = useSelector((state: State) => state.history.items)
+
+    const [isHistoryVisible, setIsHistoryVisible] = useState(true);
+
+    useEffect(() => {
+        // @ts-ignore eslint-disable-next-line 
+        dispatch(loadData())
+    }, [dispatch])
+
+
+    return (
+        <View style={styles.historyContainer}>
+            {history.length > 0 &&
+                <TouchableOpacity style={styles.showHistoryButton} onPress={() => setIsHistoryVisible(!isHistoryVisible)}>
+                    <Text style={styles.showHistoryLabel}>{isHistoryVisible ? 'Скрыть историю' : 'Показать историю'}</Text>
+                </TouchableOpacity>
+            }
+            {isHistoryVisible && <FlatList
+                data={history}
+                renderItem={({ item }) => <TranslationResult item={item} />}
+            />}
+            <ImageBackground
+                style={styles.background}
+                source={require('../../../assets/background.png')}
+                blurRadius={10}
+            >
+            </ImageBackground>
+        </View >
+    )
+}
+
+
+const styles = StyleSheet.create({
+    historyContainer: {
+        flex: 1,
+        marginTop: theme.spacing.xl,
+        backgroundColor: theme.colors.background,
+    },
+    showHistoryButton: {
+        alignItems: 'center',
+        marginBottom: theme.spacing.xs
+    },
+    showHistoryLabel: {
+        fontFamily: 'bold',
+        fontSize: 16,
+        color: theme.colors.accentText,
+    },
+    background: {
+        flex: 1,
+        position: 'absolute',
+        alignSelf: 'center',
+        width: 190,
+        height: 323,
+        bottom: -30,
+        zIndex: -1,
+    }
+})
