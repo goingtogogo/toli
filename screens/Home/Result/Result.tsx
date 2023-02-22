@@ -18,7 +18,7 @@ export const Result: React.FC<Props> = props => {
     return (
         <View style={styles.resultContainer}>
             <Text style={styles.resultText}>{props.result}</Text>
-            <ActionButton onPress={copyToClipboard} name="copy" />
+            <ActionButton onPress={copyToClipboard} name="copy" size={18} />
         </View>
     )
 }

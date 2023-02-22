@@ -21,7 +21,7 @@ export function Settings() {
         }
 
         catch (e) {
-            console.log(e)
+            Alert.alert('Что-то пошло не так', 'Попробуйте повторить позже')
 
         }
     }, [dispatch])

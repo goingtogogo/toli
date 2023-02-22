@@ -21,6 +21,7 @@ const tabStyles = {
         color: theme.colors.text,
         fontSize: 24,
         fontFamily: 'extraBold',
+        letterSpacing: 0.5
     },
     headerStyle: {
         backgroundColor: theme.colors.background,

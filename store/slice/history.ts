@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit' 
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
 export type HistoryItem = {
@@ -20,21 +20,21 @@ const history = createSlice({
     name: 'history',
     initialState,
     reducers: {
-        addItem: (state, action: PayloadAction<{item: HistoryItem}>) => {
-            const {item} = action.payload
+        addItem: (state, action: PayloadAction<{ item: HistoryItem }>) => {
+            const { item } = action.payload
 
             if (item) {
-                state.items.push(item)
+                state.items = [item, ...state.items]
             }
         },
-        setItems: (state, action: PayloadAction<{items: HistoryItem[]}>) => {
-            const {items} = action.payload
-             
+        setItems: (state, action: PayloadAction<{ items: HistoryItem[] }>) => {
+            const { items } = action.payload
+
             state.items = items
         },
-        clearHistory: (state) => {state.items = []}
+        clearHistory: (state) => { state.items = [] }
     }
 })
 
-export const {addItem, setItems, clearHistory} = history.actions
+export const { addItem, setItems, clearHistory } = history.actions
 export default history.reducer

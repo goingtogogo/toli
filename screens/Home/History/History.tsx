@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, ImageBackground } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, ImageBackground, Alert } from 'react-native'
 import { AnyAction, Dispatch } from '@reduxjs/toolkit'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -28,7 +28,7 @@ const loadData = () => async (dispatch: Dispatch<AnyAction>) => {
     }
 
     catch (e) {
-        console.log(e)
+        Alert.alert('Не удалось загрузить историю', 'Попробуйте повторить позже')
     }
 }
 
@@ -57,7 +57,7 @@ export const History: React.FC = () => {
             />}
             <ImageBackground
                 style={styles.background}
-                source={require('../../../assets/background.png')}
+                source={require('../../../assets/book.png')}
                 blurRadius={10}
             >
             </ImageBackground>
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
         flex: 1,
         position: 'absolute',
         alignSelf: 'center',
-        width: 190,
-        height: 323,
+        width: 330,
+        height: 300,
         bottom: -30,
         zIndex: -1,
     }

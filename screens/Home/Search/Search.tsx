@@ -31,6 +31,7 @@ export const Search: React.FC<Props> = props => {
             {value &&
                 <TouchableOpacity
                     onPress={() => onSubmit(value)}
+                    style={styles.icons}
                 >
                     {loading ?
                         <ActivityIndicator size="small" color={theme.colors.accent} /> :
@@ -70,4 +71,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: theme.colors.accentText,
     },
+    icons: {
+        marginRight: 8
+    }
 })

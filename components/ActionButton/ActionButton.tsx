@@ -8,12 +8,13 @@ import { theme } from '../../utils/theme'
 type Props = {
     name: keyof typeof OcticonsIcons;
     onPress?: () => void;
+    size?: number
 }
 
-export const ActionButton: React.FC<Props> = props => {
+export const ActionButton: React.FC<Props> = ({ onPress, name, size = 20 }) => {
     return (
-        <TouchableOpacity style={styles.iconContainer} onPress={props.onPress}>
-            <Octicons name={props.name} size={20} color={theme.colors.secondary} />
+        <TouchableOpacity style={styles.iconContainer} onPress={onPress}>
+            <Octicons name={name} size={size} color={theme.colors.secondary} />
         </TouchableOpacity>
     )
 }

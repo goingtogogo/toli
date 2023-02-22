@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { StyleSheet, View, ImageBackground } from 'react-native'
+import { StyleSheet, View, Alert } from 'react-native'
 import { useDispatch } from 'react-redux'
 import uuid from 'react-native-uuid'
 import { addItem } from '../../store/slice/history'
@@ -50,7 +50,7 @@ export function Home() {
         }
 
         catch (e) {
-            console.error(e)
+            Alert.alert('Что-то пошло не так', 'Попробуйте повторить позже')
         }
         finally {
             setIsLoading(false)

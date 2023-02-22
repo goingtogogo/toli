@@ -24,6 +24,6 @@ export const translate = async (text: string, languageFrom: Language) => {
             return text
         }
 
-        return (e as AxiosError).message
+        throw (e as AxiosError)?.message || e
     }
 }

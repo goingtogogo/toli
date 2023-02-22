@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Alert } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import 'react-native-gesture-handler'
@@ -29,8 +29,7 @@ export default function App() {
                 await loadFonts();
             }
             catch (e) {
-                // todo
-                console.log(e)
+                Alert.alert('Что-то пошло не так', 'Попробуйте повторить позже')
             }
             finally {
                 setAppIsLoaded(true)
@@ -47,7 +46,7 @@ export default function App() {
     }, [appIsLoaded])
 
     const screenOptions = useMemo(() => ({
-        headerTitle: 'Translate',
+        headerTitle: 'Переводчик',
         headerShown: false
     }), []);
 
