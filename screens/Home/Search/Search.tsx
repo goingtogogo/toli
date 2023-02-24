@@ -18,10 +18,9 @@ export const Search: React.FC<Props> = props => {
     return (
         <View style={styles.inputContainer}>
             {!value && <Octicons name="search" size={24} color="#F9BCC8" style={styles.searchIcon} />}
+            {!value && <Text style={styles.placeholder}>Введите слово</Text>}
             <TextInput
                 multiline
-                placeholder='Введите слово'
-                placeholderTextColor="#F9BCC8"
                 style={styles.input} value={value}
                 onChangeText={(text) => setValue(text)}
                 maxLength={150}
@@ -31,7 +30,6 @@ export const Search: React.FC<Props> = props => {
             {value &&
                 <TouchableOpacity
                     onPress={() => onSubmit(value)}
-                    style={styles.icons}
                 >
                     {loading ?
                         <ActivityIndicator size="small" color={theme.colors.accent} /> :
@@ -62,7 +60,17 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.secondary,
     },
     searchIcon: {
-        marginRight: theme.spacing.s
+        position: 'absolute',
+        left: 24,
+        top: 18
+    },
+    placeholder: {
+        position: 'absolute',
+        left: 54,
+        top: 16,
+        fontFamily: 'regular',
+        fontSize: 24,
+        color: '#F9BCC8'
     },
     input: {
         flex: 1,
@@ -71,7 +79,4 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: theme.colors.accentText,
     },
-    icons: {
-        marginRight: 8
-    }
 })

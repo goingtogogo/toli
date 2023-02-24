@@ -15,7 +15,7 @@ export const translate = async (text: string, languageFrom: Language) => {
     try {
         const { data } = await axios.get(url) as Data
 
-        return data.translations?.[0].value
+        return format(data.translations?.[0].value)
     }
 
     catch (e) {
@@ -27,3 +27,6 @@ export const translate = async (text: string, languageFrom: Language) => {
         throw (e as AxiosError)?.message || e
     }
 }
+
+
+const format = (text: string) => text.split('; ').join('\n')

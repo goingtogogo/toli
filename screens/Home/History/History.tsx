@@ -58,7 +58,7 @@ export const History: React.FC = () => {
             <ImageBackground
                 style={styles.background}
                 source={require('../../../assets/book.png')}
-                blurRadius={10}
+                blurRadius={3}
             >
             </ImageBackground>
         </View >

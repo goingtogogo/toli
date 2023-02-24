@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { StyleSheet, View, Alert } from 'react-native'
+import { StyleSheet, View, Alert, Keyboard } from 'react-native'
 import { useDispatch } from 'react-redux'
 import uuid from 'react-native-uuid'
 import { addItem } from '../../store/slice/history'
@@ -27,17 +27,17 @@ export function Home() {
 
     useEffect(() => {
         if (value) {
-            setValue(result)
-            onSubmit(result)
+            setValue('')
+            setResult('')
         }
     }, [languageFrom])
 
     const onSubmit = useCallback(async (value: string) => {
+        Keyboard.dismiss()
         setIsLoading(true)
         try {
             const translation = await translate(value, languageFrom)
             setResult(capitalizeFirstLetter(translation))
-
 
             const item = {
                 text: value,

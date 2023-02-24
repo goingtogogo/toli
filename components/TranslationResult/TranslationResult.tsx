@@ -32,8 +32,8 @@ export const TranslationResult: React.FC<Props> = ({ item }) => {
     return (
         <View style={styles.container}>
             <View style={styles.textContainer}>
-                <Text style={styles.title} numberOfLines={4}>{item.text}</Text>
-                <Text style={styles.subtitle} numberOfLines={4}>{item.translatedText}</Text>
+                <Text style={styles.title}>{item.text}</Text>
+                <Text style={styles.subtitle}>{item.translatedText}</Text>
             </View>
 
             <ActionButton onPress={starItem} name={icon} />

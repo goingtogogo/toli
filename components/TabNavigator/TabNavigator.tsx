@@ -36,10 +36,12 @@ const tabStyles = {
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         height: 90,
-
     },
     tabBarActiveTintColor: theme.colors.text,
     tabBarInactiveTintColor: theme.colors.secondaryText,
+    tabBarLabelStyle: {
+        fontFamily: 'extraBold'
+    }
 }
 
 const Tab = createBottomTabNavigator()

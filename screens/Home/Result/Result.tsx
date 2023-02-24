@@ -27,14 +27,14 @@ export const Result: React.FC<Props> = props => {
 const styles = StyleSheet.create({
     resultContainer: {
         flexDirection: 'row',
-        height: 120,
+        minHeight: 110,
         borderRadius: 20,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
         backgroundColor: theme.colors.primary,
         marginTop: -120,
         marginHorizontal: 36,
-        paddingTop: theme.spacing.s,
+        paddingVertical: theme.spacing.s,
         paddingHorizontal: theme.spacing.xl,
 
     },
