@@ -3,9 +3,10 @@
 This mobile application is designed to help users learn the Buryat language using the React Native framework. Buryat is a language spoken by the Buryat people of Siberia, Mongolia, and China. The app aims to provide an interactive and engaging way for users to learn the language, with features such as vocabulary, flashcards and quizzes.
 
 ## Features
-Flashcards: Users can review Buryat vocabulary words with flashcards that display the word in Buryat and provide the English translation.
-Quizzes: Users can test their knowledge of Buryat vocabulary words with multiple choice quizzes.
-Vocabulary Builder: Users can create their own personalized vocabulary list by saving words they want to learn.
+- (in progress) Flashcards: Users can review Buryat vocabulary words with flashcards that display the word in Buryat and provide the English translation.
+- (in progress) Quizzes: Users can test their knowledge of Buryat vocabulary words with multiple choice quizzes.
+- Vocabulary Builder: Users can create their own personalized vocabulary list by saving words they want to learn.
+- Translator: Users can translate between Buryat and Russian using the app's built-in translator.
 
 ## Getting Started
 To get started with the app, follow these steps:
@@ -19,11 +20,11 @@ To get started with the app, follow these steps:
 ## Contributing
 If you would like to contribute to this project, please follow these steps:
 
-Fork the repository
-Create a new branch for your feature or bug fix
-Make your changes and commit them
-Push your changes to your fork
-Submit a pull request
+1. Fork the repository
+2. Create a new branch for your feature or bug fix
+3. Make your changes and commit them
+4. Push your changes to your fork
+5. Submit a pull request
 
 
 ## License
