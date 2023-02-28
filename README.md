@@ -1,6 +1,6 @@
 # Толи - React Native Buryat Language Learning App
 
-This mobile application is designed to help users learn the Buryat language using the React Native framework. Buryat is a language spoken by the Buryat people of Siberia, Mongolia, and China. The app aims to provide an interactive and engaging way for users to learn the language, with features such as vocabulary, flashcards and quizzes.
+This mobile application is designed to help users learn the Buryat language using the React Native framework. Buryat is a language spoken by the Buryat people of Siberia, Mongolia, and China. The app aims to provide an interactive and engaging way for users to learn the language, with features such as vocabulary, flashcards and quizzes. 
 
 
 ## Features
