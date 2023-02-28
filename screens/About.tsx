@@ -8,19 +8,19 @@ import { theme } from '../utils/theme'
 export function About() {
     return (
         <ScrollView style={styles.container}>
-            <Text style={styles.title}>Привет! Сайн!</Text>
+            <Text style={styles.accent}>Привет! Сайн!</Text>
             <Text style={styles.text}>
                 Спасибо, что выбрали наше мобильное приложение для изучения бурятского языка.
             </Text>
             <Text style={styles.text}>
                 Также хотим выразить благодарность сайту{' '}
-                <Text style={styles.blue}>https://burlang.ru/ </Text>за&nbsp;возможность использования их&nbsp;API,
+                <Text style={styles.accent}>https://burlang.ru/ </Text>за&nbsp;возможность использования их&nbsp;API,
                 который стал основой нашего приложения.
             </Text>
             <Text style={styles.text}>
                 Мы&nbsp;всегда рады обратной связи от&nbsp;пользователей, так как это поможет сделать приложение лучше.
                 Если у&nbsp;вас есть какие-либо замечания или предложения по&nbsp;улучшению, пишите нам на&nbsp;почту:{' '}
-                <Text style={styles.blue}>toli.app.ios@gmail.com</Text>
+                <Text style={styles.accent}>toli.app.ios@gmail.com</Text>
             </Text>
             <Text style={styles.text}>
                 Также хотим отметить, что мы&nbsp;планируем по&nbsp;возможности продолжать развивать наше приложение.
@@ -42,22 +42,16 @@ const styles = StyleSheet.create({
         paddingBottom: 30,
         paddingHorizontal: theme.spacing.m,
     },
-    title: {
-        fontSize: 22,
-        fontFamily: 'bold',
-        color: theme.colors.secondaryText,
-        paddingVertical: theme.spacing.xs,
-    },
-    blue: {
-        fontSize: 18,
+    accent: {
+        fontSize: 16,
         fontFamily: 'bold',
         color: theme.colors.accent
     },
     text: {
         paddingVertical: theme.spacing.xs,
-        fontSize: 18,
+        fontSize: 16,
         lineHeight: 22,
-        fontFamily: 'medium',
+        fontFamily: 'regular',
         color: theme.colors.secondaryText
     }
 })
