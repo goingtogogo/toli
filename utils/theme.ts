@@ -1,3 +1,12 @@
+import { Dimensions } from 'react-native'
+
+export const dimensions = {
+    fullHeight: Dimensions.get('window').height,
+    fullWidth: Dimensions.get('window').width
+}
+
+export const isSmallDevice = dimensions.fullHeight < 800;
+
 export const palette = {
     blue: '#161a57',
     darkBlue: '#0e113a',

@@ -6,7 +6,7 @@ import { Home } from '../../screens/Home/Home'
 import { Settings } from '../../screens/Settings'
 import { Saved } from '../../screens/Saved'
 
-import { theme } from '../../utils/theme'
+import { isSmallDevice, theme } from '../../utils/theme'
 
 
 export enum Screens {
@@ -35,13 +35,13 @@ const tabStyles = {
         shadowRadius: 80,
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
-        height: 90,
+        height: isSmallDevice ? 60 : 90,
     },
     tabBarActiveTintColor: theme.colors.text,
     tabBarInactiveTintColor: theme.colors.secondaryText,
     tabBarLabelStyle: {
-        fontFamily: 'extraBold'
-    }
+        fontFamily: 'extraBold',
+    },
 }
 
 const Tab = createBottomTabNavigator()

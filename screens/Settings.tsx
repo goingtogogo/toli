@@ -7,10 +7,15 @@ import { SettingsItem } from '../components/SettingsItem/SettingsItem'
 import { theme } from '../utils/theme'
 import { clearHistory } from '../store/slice/history'
 import { clearSaved } from '../store/slice/saved'
+import { StackParamList } from '../App'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
-export type SettingsKey = 'history' | 'saved'
+export type SettingsKey = 'history' | 'saved' | 'about'
 
-export function Settings() {
+type Props = NativeStackScreenProps<StackParamList, 'about'>;
+
+
+export function Settings({ navigation }: Props) {
     const dispatch = useDispatch()
 
     const deleteItems = useCallback(async (key: SettingsKey) => {
@@ -25,6 +30,9 @@ export function Settings() {
 
         }
     }, [dispatch])
+
+
+    const goAbout = useCallback(() => navigation.push('about'), []);
 
     return (
         <View style={styles.container}>
@@ -41,6 +49,13 @@ export function Settings() {
                 subtitle="удалит все записи из избранного"
                 icon="trash"
                 onPress={deleteItems}
+            />
+            <SettingsItem
+                name="about"
+                subtitle=""
+                title="О приложении"
+                icon="info"
+                onPress={goAbout}
             />
         </View>
     )

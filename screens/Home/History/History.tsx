@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View, FlatList, ImageBackground, Al
 import { AnyAction, Dispatch } from '@reduxjs/toolkit'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { theme } from '../../../utils/theme'
+import { isSmallDevice, theme } from '../../../utils/theme'
 import { setItems } from '../../../store/slice/history'
 import { setSaved } from '../../../store/slice/saved'
 import { TranslationResult } from '../../../components/TranslationResult/TranslationResult'
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
         flex: 1,
         position: 'absolute',
         alignSelf: 'center',
-        width: 330,
-        height: 300,
+        width: isSmallDevice ? 250 : 330,
+        height: isSmallDevice ? 230 : 300,
         bottom: -30,
         zIndex: -1,
     }

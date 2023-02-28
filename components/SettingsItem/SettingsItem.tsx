@@ -14,26 +14,24 @@ type Props = {
     onPress: (key: SettingsKey) => void;
 }
 
-export const SettingsItem: React.FC<Props> = props => {
+export const SettingsItem: React.FC<Props> = ({ name, onPress, title, icon, subtitle }) => {
 
     const handlePress = useCallback(() => {
-        const { name, onPress } = props
-
         onPress(name)
-    }, [])
+    }, [name])
 
     return (
         <TouchableOpacity style={styles.container} onPress={handlePress}>
             <View style={styles.textContainer}>
                 <Text style={styles.title} numberOfLines={1}>
-                    {props.title}
+                    {title}
                 </Text>
                 <Text style={styles.subtitle} numberOfLines={1}>
-                    {props.subtitle}
+                    {subtitle}
                 </Text>
             </View>
 
-            <ActionButton name={props.icon} />
+            <ActionButton name={icon} onPress={handlePress} />
         </TouchableOpacity>
     )
 }

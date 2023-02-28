@@ -27,7 +27,7 @@ export const Result: React.FC<Props> = props => {
 const styles = StyleSheet.create({
     resultContainer: {
         flexDirection: 'row',
-        minHeight: 110,
+        minHeight: 120,
         borderRadius: 20,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,

@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#161a57"
-      }
+      },
+      "package": "com.goingtogogo.toli"
     },
     "web": {
       "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4b6040d6-281e-4694-bcc3-82b17bf2d14a"
+      }
     }
   }
 }
