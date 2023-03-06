@@ -19,7 +19,6 @@ export const translate = async (text: string, languageFrom: Language) => {
     }
 
     catch (e) {
-        // todo
         if ((e as AxiosError).response?.status === 404) {
             return text
         }

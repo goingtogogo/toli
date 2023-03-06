@@ -41,15 +41,13 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: theme.colors.background,
-        borderColor: theme.colors.secondary,
-        borderWidth: 1,
-        borderTopWidth: 0,
         paddingVertical: theme.spacing.s,
         paddingHorizontal: theme.spacing.s,
     },
     textContainer: {
         flex: 1,
         marginRight: theme.spacing.xs,
+        alignSelf: 'center'
     },
     title: {
         color: theme.colors.text,

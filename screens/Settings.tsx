@@ -21,8 +21,14 @@ export function Settings({ navigation }: Props) {
     const deleteItems = useCallback(async (key: SettingsKey) => {
         try {
             await AsyncStorage.setItem(key, JSON.stringify([]))
-            dispatch(key === 'history' ? clearHistory() : clearSaved())
-            Alert.alert('История очищена')
+            if (key === 'history') {
+                dispatch(clearHistory())
+                Alert.alert('История очищена')
+            }
+            else {
+                dispatch(clearSaved())
+                Alert.alert('«Избранное» очищено')
+            }
         }
 
         catch (e) {

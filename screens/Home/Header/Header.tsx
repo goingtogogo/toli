@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     option: {
-        width: 65,
+        minWidth: 65,
         alignItems: 'center',
         paddingVertical: theme.spacing.xl,
         marginHorizontal: theme.spacing.xl,

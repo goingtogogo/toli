@@ -26,6 +26,8 @@ export const Result: React.FC<Props> = props => {
 
 const styles = StyleSheet.create({
     resultContainer: {
+        position: 'relative',
+        zIndex: 10,
         flexDirection: 'row',
         minHeight: 120,
         borderRadius: 20,
@@ -35,7 +37,8 @@ const styles = StyleSheet.create({
         marginTop: -120,
         marginHorizontal: 36,
         paddingVertical: theme.spacing.s,
-        paddingHorizontal: theme.spacing.xl,
+        paddingLeft: theme.spacing.l,
+        paddingRight: theme.spacing.m
 
     },
     resultText: {

@@ -3,39 +3,53 @@ import { Octicons } from '@expo/vector-icons'
 import { ActivityIndicator, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native'
 
 import { theme } from '../../../utils/theme'
+import { Language } from '../../../utils/api/translate'
 
 type Props = {
     value: string;
-    setValue: (value: string) => void;
     loading: boolean;
     onSubmit: (value: string) => void;
+    setValue: (value: string) => void;
+    languageFrom: Language
 }
 
 export const Search: React.FC<Props> = props => {
-    const { value, setValue, onSubmit, loading } = props;
+    const { value, setValue, onSubmit, loading, languageFrom } = props;
 
+    const handleLetterClick = (letter: string) => setValue(value + letter)
 
     return (
-        <View style={styles.inputContainer}>
-            {!value && <Octicons name="search" size={24} color="#F9BCC8" style={styles.searchIcon} />}
-            {!value && <Text style={styles.placeholder}>Введите слово</Text>}
-            <TextInput
-                multiline
-                style={styles.input} value={value}
-                onChangeText={(text) => setValue(text)}
-                maxLength={150}
-                onSubmitEditing={() => onSubmit(value)}
-            />
+        <View style={styles.container}>
+            <View style={styles.inputContainer}>
+                {!value && <Octicons name="search" size={24} color="#F9BCC8" style={styles.searchIcon} />}
+                {!value && <Text style={styles.placeholder}>Введите слово</Text>}
+                <TextInput
+                    multiline
+                    style={styles.input} value={value}
+                    onChangeText={(text) => setValue(text)}
+                    maxLength={80}
+                    onSubmitEditing={() => onSubmit(value)}
+                />
 
-            {value &&
-                <TouchableOpacity
-                    onPress={() => onSubmit(value)}
-                >
-                    {loading ?
-                        <ActivityIndicator size="small" color={theme.colors.accent} /> :
-                        <Octicons name="arrow-right" size={24} color={theme.colors.accent} />
-                    }
-                </TouchableOpacity>
+                {value &&
+                    <TouchableOpacity
+                        onPress={() => setValue('')}
+                        style={styles.closeIconContainer}
+                    >
+                        {loading ?
+                            <ActivityIndicator size="small" color={theme.colors.accent} /> :
+                            <Octicons name="x" size={28} color={theme.colors.accent} />
+                        }
+                    </TouchableOpacity>
+                }
+            </View>
+
+            {languageFrom === 'buryat' &&
+                <View style={styles.lettersContainer}>
+                    <TouchableOpacity onPress={() => handleLetterClick('ү')}><Text style={styles.letter}>ү</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleLetterClick('һ')}><Text style={styles.letter}>һ</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleLetterClick('ө')}><Text style={styles.letter}>ө</Text></TouchableOpacity>
+                </View>
             }
         </View>
     )
@@ -43,12 +57,17 @@ export const Search: React.FC<Props> = props => {
 
 
 const styles = StyleSheet.create({
+    container: {
+        position: 'relative'
+    },
     inputContainer: {
+        position: 'relative',
         height: 240,
         flexDirection: 'row',
         alignItems: 'baseline',
         marginHorizontal: 36,
-        paddingHorizontal: theme.spacing.xl,
+        paddingLeft: theme.spacing.l,
+        paddingRight: theme.spacing.xl,
         borderRadius: 20,
         shadowOffset: {
             height: 8,
@@ -62,7 +81,7 @@ const styles = StyleSheet.create({
     searchIcon: {
         position: 'absolute',
         left: 24,
-        top: 18
+        top: 18,
     },
     placeholder: {
         position: 'absolute',
@@ -70,7 +89,7 @@ const styles = StyleSheet.create({
         top: 16,
         fontFamily: 'regular',
         fontSize: 24,
-        color: '#F9BCC8'
+        color: '#F9BCC8',
     },
     input: {
         flex: 1,
@@ -78,5 +97,28 @@ const styles = StyleSheet.create({
         fontFamily: 'regular',
         fontSize: 24,
         color: theme.colors.accentText,
+    },
+    closeIconContainer: {
+        position: 'absolute',
+        top: theme.spacing.m,
+        right: theme.spacing.m,
+    },
+    lettersContainer: {
+        position: 'absolute',
+        bottom: theme.spacing.s,
+        flex: 1,
+        flexDirection: 'row',
+        alignSelf: 'center'
+    },
+    letter: {
+        paddingHorizontal: theme.spacing.m,
+        paddingVertical: 2,
+        marginHorizontal: 4,
+        fontSize: 24,
+        fontFamily: 'regular',
+        color: theme.colors.accentText,
+        borderWidth: 1,
+        borderRadius: 12,
+        borderColor: '#F9BCC8'
     },
 })

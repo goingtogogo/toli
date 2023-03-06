@@ -33,34 +33,38 @@ export function Home() {
     }, [languageFrom])
 
     const onSubmit = useCallback(async (value: string) => {
-        Keyboard.dismiss()
-        setIsLoading(true)
-        try {
-            const translation = await translate(value, languageFrom)
-            setResult(capitalizeFirstLetter(translation))
+        const formattedValue = value.trim();
 
-            const item = {
-                text: value,
-                translatedText: translation,
-                id: uuid.v4(),
-                dateTime: new Date().toISOString()
+        if (formattedValue) {
+            Keyboard.dismiss()
+            setIsLoading(true)
+            try {
+                const translation = await translate(formattedValue, languageFrom)
+                setResult(capitalizeFirstLetter(translation))
+
+                const item = {
+                    text: formattedValue,
+                    translatedText: translation,
+                    id: uuid.v4(),
+                    dateTime: new Date().toISOString()
+                }
+
+                dispatch(addItem({ item }))
             }
 
-            dispatch(addItem({ item }))
-        }
-
-        catch (e) {
-            Alert.alert('Что-то пошло не так', 'Попробуйте повторить позже')
-        }
-        finally {
-            setIsLoading(false)
+            catch (e) {
+                Alert.alert('Что-то пошло не так', 'Попробуйте повторить позже')
+            }
+            finally {
+                setIsLoading(false)
+            }
         }
     }, [value, languageFrom, dispatch])
 
     return (
         <View style={styles.container}>
             <Header languageFrom={languageFrom} setLanguageFrom={setLanguageFrom} />
-            <Search loading={loading} value={value} setValue={setValue} onSubmit={onSubmit} />
+            <Search loading={loading} value={value} setValue={setValue} onSubmit={onSubmit} languageFrom={languageFrom} />
             {result && <Result result={result} />}
             <History />
         </View>

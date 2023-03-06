@@ -25,7 +25,7 @@ export function About() {
             <Text style={styles.text}>
                 Также хотим отметить, что мы&nbsp;планируем по&nbsp;возможности продолжать развивать наше приложение.
                 Если вы&nbsp;думаете, что могли&nbsp;бы помочь нам с&nbsp;наполнением приложения&nbsp;&mdash; уроками, контентом и&nbsp;т.д.,
-                то&nbsp;мы&nbsp;также готовы к&nbsp;сотрудничеству (писать сюда&nbsp;&mdash;<Text style={styles.blue}>toli.app.ios@gmail.com</Text>)
+                то&nbsp;мы&nbsp;также готовы к&nbsp;сотрудничеству (писать сюда&nbsp;&mdash;<Text style={styles.accent}>toli.app.ios@gmail.com</Text>)
             </Text>
             <Text style={styles.text}>
                 Мы&nbsp;надеемся, что наше приложение будет полезным для вас в&nbsp;процессе изучения бурятского языка!😊
@@ -40,11 +40,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.colors.background,
         paddingBottom: 30,
+        paddingTop: theme.spacing.s,
         paddingHorizontal: theme.spacing.m,
     },
     accent: {
         fontSize: 16,
-        fontFamily: 'bold',
+        fontFamily: 'regular',
         color: theme.colors.accent
     },
     text: {
