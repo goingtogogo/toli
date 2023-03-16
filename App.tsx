@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { StyleSheet, View, Alert, Text } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import React, { useCallback, useEffect, useState } from 'react'
+import { StyleSheet, View, Alert } from 'react-native'
+import { NavigationContainer, RouteProp } from '@react-navigation/native'
+import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack'
 import 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import * as SplashScreen from 'expo-splash-screen'
@@ -11,6 +11,9 @@ import store from './store/store'
 import { loadFonts } from './utils/loadFonts'
 import { About } from './screens/About'
 import { theme } from './utils/theme'
+import { Collection } from './screens/Collections/Collection/Collection'
+import { flashcards } from './screens/Collections/Collections'
+import { Flashcards } from './screens/Collections/Flashcards/Flashcards'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -18,6 +21,9 @@ SplashScreen.preventAutoHideAsync()
 export type StackParamList = {
     main: undefined;
     about: undefined;
+    settings: undefined;
+    collection: { name: string, key: keyof typeof flashcards };
+    flashcards: { name: string, key: keyof typeof flashcards };
 }
 const Stack = createNativeStackNavigator<StackParamList>()
 
@@ -59,6 +65,8 @@ export default function App() {
                         <Stack.Group>
                             <Stack.Screen name="main" component={TabNavigator} options={screenOptions} />
                             <Stack.Screen name="about" component={About} options={aboutOptions} />
+                            <Stack.Screen name="collection" component={Collection} options={collectionOptions} />
+                            <Stack.Screen name="flashcards" component={Flashcards} options={flashcardsOptions} />
                         </Stack.Group>
                     </Stack.Navigator>
                 </View>
@@ -72,8 +80,7 @@ const screenOptions = {
     headerShown: false
 }
 
-const aboutOptions = {
-    headerTitle: 'О приложении',
+const commonStyles = {
     headerTitleStyle: {
         color: theme.colors.text,
         fontSize: 24,
@@ -84,9 +91,25 @@ const aboutOptions = {
         backgroundColor: theme.colors.background,
     },
     headerShadowVisible: false,
-    headerBackTitle: 'Назад'
-
 }
+
+const aboutOptions = {
+    headerTitle: 'О приложении',
+    ...commonStyles,
+    headerBackTitle: 'Назад'
+}
+
+const collectionOptions = ({ route }: { route: RouteProp<StackParamList, "collection"> }) => ({
+    headerTitle: route.params.name,
+    ...commonStyles,
+    headerBackTitle: ''
+})
+
+const flashcardsOptions = ({ route }: { route: RouteProp<StackParamList, "flashcards"> }) => ({
+    headerTitle: route.params.name,
+    ...commonStyles,
+    headerBackTitle: ''
+})
 
 const styles = StyleSheet.create({
     container: {

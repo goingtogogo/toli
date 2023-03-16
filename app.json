@@ -2,7 +2,7 @@
   "expo": {
     "name": "Толи",
     "slug": "toli",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -12,14 +12,16 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/4b6040d6-281e-4694-bcc3-82b17bf2d14a"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.goingtogogo.toli"
+      "bundleIdentifier": "com.goingtogogo.toli",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
@@ -35,6 +37,9 @@
       "eas": {
         "projectId": "4b6040d6-281e-4694-bcc3-82b17bf2d14a"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

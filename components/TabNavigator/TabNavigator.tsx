@@ -7,12 +7,14 @@ import { Settings } from '../../screens/Settings'
 import { Saved } from '../../screens/Saved'
 
 import { isSmallDevice, theme } from '../../utils/theme'
+import { Collections } from '../../screens/Collections/Collections';
 
 
 export enum Screens {
     Home = 'Толи',
     Saved = 'Избранное',
-    Settings = 'Настройки'
+    Settings = 'Настройки',
+    Collections = 'Подборки'
 }
 
 
@@ -64,11 +66,19 @@ const settingsOptions = {
     tabBarIcon: () => <Octicons name="gear" size={24} color={theme.colors.text} />
 }
 
+const collectionOptions = {
+    tabBarLabel: Screens.Collections,
+    ...tabStyles,
+    tabBarIcon: () => <Octicons name="repo" size={24} color={theme.colors.text} />
+}
+
+
 export function TabNavigator() {
     return (
         <Tab.Navigator>
             <Tab.Screen name={Screens.Home} component={Home} options={homeOptions} />
             <Tab.Screen name={Screens.Saved} component={Saved} options={savedOptions} />
+            <Tab.Screen name={Screens.Collections} component={Collections} options={collectionOptions} />
             <Tab.Screen name={Screens.Settings} component={Settings} options={settingsOptions} />
         </Tab.Navigator>
     )

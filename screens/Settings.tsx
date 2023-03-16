@@ -12,8 +12,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 export type SettingsKey = 'history' | 'saved' | 'about'
 
-type Props = NativeStackScreenProps<StackParamList, 'about'>;
-
+type Props = NativeStackScreenProps<StackParamList, 'settings'>;
 
 export function Settings({ navigation }: Props) {
     const dispatch = useDispatch()
