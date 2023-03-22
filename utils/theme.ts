@@ -33,6 +33,17 @@ export const theme = {
         m: 16,
         l: 20,
         xl: 24,
+    },
+    shadows: {
+        basicShadow: {
+            shadowOffset: {
+                height: 8,
+                width: 0
+            },
+            shadowOpacity: 0.15,
+            shadowRadius: 10,
+            shadowColor: '#040844',
+        }
     }
 } as const
 

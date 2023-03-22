@@ -12,17 +12,17 @@ export function About() {
             <Text style={styles.text}>
                 Спасибо, что выбрали наше мобильное приложение для изучения бурятского языка.
             </Text>
-            <Text style={styles.text}>
+            <Text style={styles.text} selectable>
                 Также хотим выразить благодарность сайту{' '}
                 <Text style={styles.accent}>https://burlang.ru/ </Text>за&nbsp;возможность использования их&nbsp;API,
                 который стал основой нашего приложения.
             </Text>
-            <Text style={styles.text}>
+            <Text style={styles.text} selectable>
                 Мы&nbsp;всегда рады обратной связи от&nbsp;пользователей, так как это поможет сделать приложение лучше.
                 Если у&nbsp;вас есть какие-либо замечания или предложения по&nbsp;улучшению, пишите нам на&nbsp;почту:{' '}
                 <Text style={styles.accent}>toli.app.ios@gmail.com</Text>
             </Text>
-            <Text style={styles.text}>
+            <Text style={styles.text} selectable>
                 Также хотим отметить, что мы&nbsp;планируем по&nbsp;возможности продолжать развивать наше приложение.
                 Если вы&nbsp;думаете, что могли&nbsp;бы помочь нам с&nbsp;наполнением приложения&nbsp;&mdash; уроками, контентом и&nbsp;т.д.,
                 то&nbsp;мы&nbsp;также готовы к&nbsp;сотрудничеству (писать сюда&nbsp;&mdash;<Text style={styles.accent}>toli.app.ios@gmail.com</Text>)
@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
     },
     accent: {
         fontSize: 16,
-        fontFamily: 'regular',
+        lineHeight: 22,
+        fontFamily: 'medium',
         color: theme.colors.accent
     },
     text: {
@@ -53,6 +54,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 22,
         fontFamily: 'regular',
-        color: theme.colors.secondaryText
+        color: theme.colors.primary
     }
 })

@@ -1,10 +1,15 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useCallback, useMemo } from 'react'
-import { StyleSheet, View, Text, Button, SafeAreaView } from 'react-native'
+import { StyleSheet, SafeAreaView, FlatList } from 'react-native'
+import { useSelector } from 'react-redux';
+
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
 import { StackParamList } from '../../../App';
 
+import { TranslationResult } from '../../../components/TranslationResult/TranslationResult';
 import { theme } from '../../../utils/theme'
-import { flashcards } from '../Collections';
+import { Button } from '../../../components/Button/Button';
+import { State } from '../../../store/store';
 
 
 type Props = NativeStackScreenProps<StackParamList, 'collection'>;
@@ -12,25 +17,18 @@ type Props = NativeStackScreenProps<StackParamList, 'collection'>;
 
 export function Collection(props: Props) {
   const { route: { params: { key, name } }, navigation } = props;
+  const flashcards = useSelector((state: State) => state.flashcards.items)
   const { cards } = useMemo(() => flashcards[key], [key]);
 
-  const handlePress = useCallback(() => navigation.navigate('flashcards', { name, key }), []);
+  const handlePress = useCallback(() => navigation.navigate('flashcards', { name, key }), [name, key]);
 
   return (
     <SafeAreaView style={styles.container}>
-      {cards.map(card => (
-        <View key={card.buryat} style={styles.card}>
-          <Text style={styles.row}>{card.buryat}</Text>
-          <Text>{card.english}</Text>
-        </View>
-      ))}
-      <View style={styles.button}>
-        <Button
-          onPress={handlePress}
-          title="Выучить"
-          accessibilityLabel="Выучить"
-        />
-      </View>
+      <FlatList
+        data={cards}
+        renderItem={({ item }) => <TranslationResult item={item} />}
+      />
+      <Button className={styles.button} onPress={handlePress} label="Выучить" view="action" />
     </SafeAreaView>
   )
 }
@@ -49,14 +47,11 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',
-    display: 'flex',
-    height: 40,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    flex: 1,
-    borderWidth: 1,
-    borderColor: theme.colors.text,
-    backgroundColor: theme.colors.accent
-  }
+    alignSelf: 'center',
+    bottom: 32,
+    backgroundColor: theme.colors.accent,
+    borderRadius: 12,
+    paddingHorizontal: 80,
+    ...theme.shadows.basicShadow
+  },
 })

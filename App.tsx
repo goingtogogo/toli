@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, View, Alert } from 'react-native'
 import { NavigationContainer, RouteProp } from '@react-navigation/native'
-import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack'
+import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack'
 import 'react-native-gesture-handler'
 import { Provider } from 'react-redux'
 import * as SplashScreen from 'expo-splash-screen'
@@ -12,8 +12,9 @@ import { loadFonts } from './utils/loadFonts'
 import { About } from './screens/About'
 import { theme } from './utils/theme'
 import { Collection } from './screens/Collections/Collection/Collection'
-import { flashcards } from './screens/Collections/Collections'
 import { Flashcards } from './screens/Collections/Flashcards/Flashcards'
+import { Navigation } from './screens/Collections/Navigation/Navigation'
+import { Octicons } from '@expo/vector-icons'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -22,8 +23,9 @@ export type StackParamList = {
     main: undefined;
     about: undefined;
     settings: undefined;
-    collection: { name: string, key: keyof typeof flashcards };
-    flashcards: { name: string, key: keyof typeof flashcards };
+    collection: { name: string, key: string };
+    flashcards: { name: string, key: string };
+    navigation: { name: string, key: string, swipedLeft: number, swipedRight: number };
 }
 const Stack = createNativeStackNavigator<StackParamList>()
 
@@ -67,6 +69,7 @@ export default function App() {
                             <Stack.Screen name="about" component={About} options={aboutOptions} />
                             <Stack.Screen name="collection" component={Collection} options={collectionOptions} />
                             <Stack.Screen name="flashcards" component={Flashcards} options={flashcardsOptions} />
+                            <Stack.Screen name="navigation" component={Navigation} options={navigationOptions} />
                         </Stack.Group>
                     </Stack.Navigator>
                 </View>
@@ -96,7 +99,7 @@ const commonStyles = {
 const aboutOptions = {
     headerTitle: 'О приложении',
     ...commonStyles,
-    headerBackTitle: 'Назад'
+    headerBackTitle: ''
 }
 
 const collectionOptions = ({ route }: { route: RouteProp<StackParamList, "collection"> }) => ({
@@ -109,6 +112,13 @@ const flashcardsOptions = ({ route }: { route: RouteProp<StackParamList, "flashc
     headerTitle: route.params.name,
     ...commonStyles,
     headerBackTitle: ''
+})
+
+const navigationOptions = ({ navigation }: { navigation: NativeStackNavigationProp<StackParamList, "navigation"> }) => ({
+    headerTitle: '',
+    ...commonStyles,
+    headerBackVisible: false,
+    headerRight: () => <Octicons name="x" size={24} color="#3478f6" onPress={() => navigation.popToTop()} />
 })
 
 const styles = StyleSheet.create({

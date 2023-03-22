@@ -4,8 +4,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 export type HistoryItem = {
     text: string;
     translatedText: string;
-    id: string | number[];
-    dateTime: string;
+    id?: string | number[];
+    dateTime?: string;
 }
 
 export type HistoryState = {

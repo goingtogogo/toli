@@ -25,7 +25,8 @@ export const Search: React.FC<Props> = props => {
                 {!value && <Text style={styles.placeholder}>Введите слово</Text>}
                 <TextInput
                     multiline
-                    style={styles.input} value={value}
+                    style={styles.input}
+                    value={value}
                     onChangeText={(text) => setValue(text)}
                     maxLength={80}
                     onSubmitEditing={() => onSubmit(value)}

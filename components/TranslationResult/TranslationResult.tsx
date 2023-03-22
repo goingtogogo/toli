@@ -49,15 +49,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: theme.spacing.xl,
         paddingVertical: theme.spacing.s,
         minHeight: 80,
+        borderRadius: 20,
         backgroundColor: theme.colors.secondary,
-        shadowOffset: {
-            height: 8,
-            width: 0
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 10,
-        shadowColor: '#040844',
-        borderRadius: 20
+        ...theme.shadows.basicShadow,
     },
     textContainer: {
         flex: 1,
