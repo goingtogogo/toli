@@ -4,7 +4,7 @@ This mobile application is designed to help users learn the Buryat language usin
 
 
 ## Features
-- (in progress) Flashcards: Users can review Buryat vocabulary words with flashcards that display the word in Buryat and provide the English translation.
+- Flashcards: Users can review Buryat vocabulary words with flashcards that display the word in Buryat and provide the English translation.
 - (in progress) Quizzes: Users can test their knowledge of Buryat vocabulary words with multiple choice quizzes.
 - Vocabulary Builder: Users can create their own personalized vocabulary list by saving words they want to learn.
 - Translator: Users can translate between Buryat and Russian using the app's built-in translator.

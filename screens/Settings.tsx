@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { StyleSheet, View, Alert } from 'react-native'
+import { StyleSheet, View, Alert, Linking } from 'react-native'
 import { useDispatch } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -10,7 +10,7 @@ import { clearSaved } from '../store/slice/saved'
 import { StackParamList } from '../App'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
-export type SettingsKey = 'history' | 'saved' | 'about'
+export type SettingsKey = 'history' | 'saved' | 'about' | 'community'
 
 type Props = NativeStackScreenProps<StackParamList, 'settings'>;
 
@@ -39,6 +39,11 @@ export function Settings({ navigation }: Props) {
 
     const goAbout = useCallback(() => navigation.push('about'), []);
 
+    const goToTelegram = useCallback(async () => {
+        const url = 'https://t.me/apptoli';
+        await Linking.openURL(url);
+    }, [])
+
     return (
         <View style={styles.container}>
             <SettingsItem
@@ -61,6 +66,13 @@ export function Settings({ navigation }: Props) {
                 title="О приложении"
                 icon="info"
                 onPress={goAbout}
+            />
+            <SettingsItem
+                name="community"
+                title="Сообщество"
+                subtitle="поддержка в Telegram"
+                icon="paper-airplane"
+                onPress={goToTelegram}
             />
         </View>
     )
