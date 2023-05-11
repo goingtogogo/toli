@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { StyleSheet, View, Alert } from 'react-native'
+import { StyleSheet, View, Alert, Appearance } from 'react-native'
 import { NavigationContainer, RouteProp } from '@react-navigation/native'
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack'
 import 'react-native-gesture-handler'
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import * as SplashScreen from 'expo-splash-screen'
 
 import { TabNavigator } from './components/TabNavigator/TabNavigator'
-import store from './store/store'
+import store, { State } from './store/store'
 import { loadFonts } from './utils/loadFonts'
 import { About } from './screens/About'
-import { theme } from './utils/theme'
+import { isAndroid, theming } from './utils/theme'
 import { Collection } from './screens/Collections/Collection/Collection'
 import { Flashcards } from './screens/Collections/Flashcards/Flashcards'
 import { Navigation } from './screens/Collections/Navigation/Navigation'
@@ -29,9 +29,12 @@ export type StackParamList = {
 }
 const Stack = createNativeStackNavigator<StackParamList>()
 
-export default function App() {
 
+
+function App() {
     const [appIsLoaded, setAppIsLoaded] = useState(false)
+    const mode = useSelector((state: State) => state.theme.mode);
+    const theme = theming(mode);
 
     useEffect(() => {
         const prepare = async () => {
@@ -55,12 +58,57 @@ export default function App() {
         }
     }, [appIsLoaded])
 
+
+    const screenOptions = {
+        headerTitle: 'Переводчик',
+        headerShown: false
+    }
+
+    const commonStyles = React.useMemo(() => ({
+        headerTitleStyle: {
+            color: theme.colors.text,
+            fontSize: 24,
+            fontFamily: 'extraBold',
+            letterSpacing: 0.5
+        },
+        headerStyle: {
+            backgroundColor: theme.colors.background,
+        },
+        headerTitleAlign: 'center',
+        headerShadowVisible: false,
+    }), [theme]);
+
+
+    const aboutOptions = {
+        headerTitle: 'О приложении',
+        ...commonStyles,
+        headerBackTitle: ''
+    }
+
+    const collectionOptions = ({ route }: { route: RouteProp<StackParamList, "collection"> }) => ({
+        headerTitle: route.params.name,
+        ...commonStyles,
+        headerBackTitle: ''
+    })
+
+    const flashcardsOptions = ({ route }: { route: RouteProp<StackParamList, "flashcards"> }) => ({
+        headerTitle: route.params.name,
+        ...commonStyles,
+        headerBackTitle: ''
+    })
+
+    const navigationOptions = ({ navigation }: { navigation: NativeStackNavigationProp<StackParamList, "navigation"> }) => ({
+        headerTitle: '',
+        ...commonStyles,
+        headerBackVisible: false,
+        headerRight: () => <Octicons name="x" size={24} color="#3478f6" onPress={() => navigation.popToTop()} />
+    })
+
     if (!appIsLoaded) {
         return null
     }
 
     return (
-        <Provider store={store}>
             <NavigationContainer>
                 <View onLayout={onLayout} style={styles.container}>
                     <Stack.Navigator>
@@ -68,61 +116,26 @@ export default function App() {
                             <Stack.Screen name="main" component={TabNavigator} options={screenOptions} />
                             <Stack.Screen name="about" component={About} options={aboutOptions} />
                             <Stack.Screen name="collection" component={Collection} options={collectionOptions} />
-                            <Stack.Screen name="flashcards" component={Flashcards} options={flashcardsOptions} />
+                            <Stack.Screen name="flashcards" component={Flashcards} options={flashcardsOptions} /> 
                             <Stack.Screen name="navigation" component={Navigation} options={navigationOptions} />
                         </Stack.Group>
                     </Stack.Navigator>
                 </View>
             </NavigationContainer>
-        </Provider>
     )
 }
 
-const screenOptions = {
-    headerTitle: 'Переводчик',
-    headerShown: false
+export default function Root() {
+    return (
+        <Provider store={store}>
+            <App />
+        </Provider>
+    )
 }
-
-const commonStyles = {
-    headerTitleStyle: {
-        color: theme.colors.text,
-        fontSize: 24,
-        fontFamily: 'extraBold',
-        letterSpacing: 0.5
-    },
-    headerStyle: {
-        backgroundColor: theme.colors.background,
-    },
-    headerShadowVisible: false,
-}
-
-const aboutOptions = {
-    headerTitle: 'О приложении',
-    ...commonStyles,
-    headerBackTitle: ''
-}
-
-const collectionOptions = ({ route }: { route: RouteProp<StackParamList, "collection"> }) => ({
-    headerTitle: route.params.name,
-    ...commonStyles,
-    headerBackTitle: ''
-})
-
-const flashcardsOptions = ({ route }: { route: RouteProp<StackParamList, "flashcards"> }) => ({
-    headerTitle: route.params.name,
-    ...commonStyles,
-    headerBackTitle: ''
-})
-
-const navigationOptions = ({ navigation }: { navigation: NativeStackNavigationProp<StackParamList, "navigation"> }) => ({
-    headerTitle: '',
-    ...commonStyles,
-    headerBackVisible: false,
-    headerRight: () => <Octicons name="x" size={24} color="#3478f6" onPress={() => navigation.popToTop()} />
-})
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
 })
+

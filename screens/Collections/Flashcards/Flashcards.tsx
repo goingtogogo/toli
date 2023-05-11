@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, Appearance } from 'react-native'
 import { useSelector } from 'react-redux';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -7,11 +7,12 @@ import Swiper from 'react-native-deck-swiper';
 import FlipCard from 'react-native-flip-card';
 
 import { StackParamList } from '../../../App';
-import { theme } from '../../../utils/theme'
+import { Theming, theming } from '../../../utils/theme'
 import { ActionButton } from '../../../components/ActionButton/ActionButton'
 import { ProgressView } from '../../../components/ProgressView/ProgressView';
 import { State } from '../../../store/store';
 import { HistoryItem } from '../../../store/slice/history';
+import { Theme } from '../../../store/slice/theme';
 
 
 type Props = NativeStackScreenProps<StackParamList, 'flashcards'>;
@@ -20,6 +21,10 @@ let swiper: Swiper<HistoryItem> | null;
 
 export function Flashcards(props: Props) {
   const flashcards = useSelector((state: State) => state.flashcards.items)
+  const mode = useSelector((state: State) => state.theme.mode);
+  const theme = theming(mode);
+  const styles = styling(theme, mode);
+
   const [leftCount, setLeft] = useState(0);
   const [rightCount, setRight] = useState(0);
   const [swiped, setSwiped] = useState(0);
@@ -50,6 +55,43 @@ export function Flashcards(props: Props) {
     setSwiped(swiped + 1);
   }, [swiped])
 
+  const overlayLabels = {
+    left: {
+      title: 'Еще изучаю',
+      style: {
+        label: {
+          fontSize: 20,
+          fontFamily: 'medium',
+          color: theme.colors.secondaryText,
+        },
+        wrapper: {
+          flexDirection: 'column',
+          alignItems: 'flex-end',
+          justifyContent: 'flex-start',
+          marginTop: 30,
+          marginLeft: -30
+        }
+      }
+    },
+    right: {
+      title: 'Знаю',
+      style: {
+        label: {
+          fontSize: 20,
+          fontFamily: 'medium',
+          color: theme.colors.secondaryText,
+        },
+        wrapper: {
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+          marginTop: 30,
+          marginLeft: 30
+        }
+      }
+    },
+  }
+
   return (
     <View style={styles.container}>
       <ProgressView
@@ -58,7 +100,7 @@ export function Flashcards(props: Props) {
       <Swiper
         ref={(swiperRef) => swiper = swiperRef}
         cards={cards}
-        renderCard={Card}
+        renderCard={({text, translatedText}) => Card({text, translatedText, styles})}
         onSwipedLeft={onSwipedLeft}
         onSwipedRight={onSwipedRight}
         onSwiped={onSwiped}
@@ -96,7 +138,7 @@ export function Flashcards(props: Props) {
 }
 
 
-const Card = ({ text, translatedText }: { text: string; translatedText: string }) => {
+const Card = ({ text, translatedText, styles }: { text: string; translatedText: string, styles: any }) => {
   return (
     <FlipCard
       style={styles.flipCard}
@@ -115,8 +157,7 @@ const Card = ({ text, translatedText }: { text: string; translatedText: string }
   )
 }
 
-
-const styles = StyleSheet.create({
+const styling = (theme: Theming, mode: Theme) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
@@ -133,6 +174,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: theme.spacing.s,
     ...theme.shadows.basicShadow,
+    ...mode === 'dark' && {shadowColor: theme.colors.secondaryText},
     backgroundColor: theme.colors.background,
   },
   reversedSide: {
@@ -143,13 +185,13 @@ const styles = StyleSheet.create({
     marginRight: -12,
     borderRadius: 20,
     textAlign: 'center',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: theme.colors.secondary,
   },
   text: {
     textAlign: 'center',
     fontSize: 28,
     fontFamily: 'medium',
-    color: theme.colors.primary,
+    color: theme.colors.text,
   },
   count: {
     position: 'absolute',
@@ -157,7 +199,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 40,
     padding: theme.spacing.xs,
-    opacity: 0.8
+    opacity: 0.8,
   },
   leftCount: {
     left: 0,
@@ -193,41 +235,3 @@ const styles = StyleSheet.create({
     color: theme.colors.secondaryText
   }
 })
-
-
-const overlayLabels = {
-  left: {
-    title: 'Еще изучаю',
-    style: {
-      label: {
-        fontSize: 20,
-        fontFamily: 'medium',
-        color: theme.colors.secondaryText,
-      },
-      wrapper: {
-        flexDirection: 'column',
-        alignItems: 'flex-end',
-        justifyContent: 'flex-start',
-        marginTop: 30,
-        marginLeft: -30
-      }
-    }
-  },
-  right: {
-    title: 'Знаю',
-    style: {
-      label: {
-        fontSize: 20,
-        fontFamily: 'medium',
-        color: theme.colors.secondaryText,
-      },
-      wrapper: {
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        marginTop: 30,
-        marginLeft: 30
-      }
-    }
-  },
-}

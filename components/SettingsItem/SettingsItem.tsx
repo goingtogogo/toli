@@ -2,9 +2,11 @@ import React, { useCallback } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import OcticonsIcons from '@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/Octicons.json'
 
-import { theme } from '../../utils/theme'
+import { Theming, theming } from '../../utils/theme'
 import { SettingsKey } from '../../screens/Settings'
 import { ActionButton } from '../ActionButton/ActionButton'
+import { useSelector } from 'react-redux'
+import { State } from '../../store/store'
 
 type Props = {
     name: SettingsKey;
@@ -15,7 +17,9 @@ type Props = {
 }
 
 export const SettingsItem: React.FC<Props> = ({ name, onPress, title, icon, subtitle }) => {
-
+    const theme = useSelector((state: State) => state.theme.mode);
+    const styles = styling(theming(theme));
+    
     const handlePress = useCallback(() => {
         onPress(name)
     }, [name])
@@ -37,7 +41,7 @@ export const SettingsItem: React.FC<Props> = ({ name, onPress, title, icon, subt
 }
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: theme.colors.background,

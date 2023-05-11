@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { theme } from '../../utils/theme'
-import { Octicons } from '@expo/vector-icons'
+import { Theming, theming } from '../../utils/theme'
 import { HistoryItem } from '../../store/slice/history'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +15,9 @@ type Props = {
 
 export const TranslationResult: React.FC<Props> = ({ item }) => {
     const dispatch = useDispatch()
+
+    const mode = useSelector((state: State) => state.theme.mode);
+    const styles = styling(theming(mode));
 
     const savedItems = useSelector((state: State) => state.saved.items)
     const isSaved = savedItems.some(savedItem => savedItem.id === item.id)
@@ -41,7 +43,7 @@ export const TranslationResult: React.FC<Props> = ({ item }) => {
     )
 }
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
     container: {
         flexDirection: 'row',
         marginHorizontal: 36,

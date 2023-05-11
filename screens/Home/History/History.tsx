@@ -3,12 +3,13 @@ import { StyleSheet, Text, TouchableOpacity, View, FlatList, ImageBackground, Al
 import { AnyAction, Dispatch } from '@reduxjs/toolkit'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { isSmallDevice, theme } from '../../../utils/theme'
+import { isAndroid, isSmallDevice, Theming, theming } from '../../../utils/theme'
 import { setItems } from '../../../store/slice/history'
 import { setSaved } from '../../../store/slice/saved'
 import { TranslationResult } from '../../../components/TranslationResult/TranslationResult'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../../../store/store'
+import { Theme } from '../../../store/slice/theme'
 
 const loadData = () => async (dispatch: Dispatch<AnyAction>) => {
     try {
@@ -36,6 +37,9 @@ export const History: React.FC = () => {
     const dispatch = useDispatch()
     const history = useSelector((state: State) => state.history.items)
 
+    const mode = useSelector((state: State) => state.theme.mode);
+    const styles = styling(theming(mode));
+
     const [isHistoryVisible, setIsHistoryVisible] = useState(true);
 
     useEffect(() => {
@@ -55,18 +59,25 @@ export const History: React.FC = () => {
                 data={history}
                 renderItem={({ item }) => <TranslationResult item={item} />}
             />}
-            <ImageBackground
-                style={styles.background}
-                source={require('../../../assets/book.png')}
-                blurRadius={3}
-            >
-            </ImageBackground>
+            {!isAndroid && <Image mode={mode} styles={styles} />}
         </View >
     )
 }
 
+const Image = ({mode, styles} : {mode: Theme, styles: any}) => {
+    return mode === 'light' ? <ImageBackground
+        style={styles.background}
+        source={require('../../../assets/book.png')}
+    >
+    </ImageBackground> : <ImageBackground
+        style={styles.background}
+        source={require('../../../assets/book-dark.png')}
+    >
+    </ImageBackground>
+}
 
-const styles = StyleSheet.create({
+
+const styling = (theme: Theming) => StyleSheet.create({
     historyContainer: {
         flex: 1,
         marginTop: theme.spacing.xl,
@@ -87,7 +98,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: isSmallDevice ? 250 : 330,
         height: isSmallDevice ? 230 : 300,
-        bottom: -30,
+        bottom: 60,
         zIndex: -1,
+        elevation: -1,
     }
 })

@@ -1,8 +1,10 @@
 import React, { useCallback, useMemo } from 'react'
 import { Octicons } from '@expo/vector-icons'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { theme } from '../../../utils/theme'
+import { Theming, theming } from '../../../utils/theme'
 import { Language } from '../../../utils/api/translate'
+import { useSelector } from 'react-redux'
+import { State } from '../../../store/store'
 
 type Props = {
     languageFrom: Language;
@@ -11,6 +13,9 @@ type Props = {
 
 export const Header: React.FC<Props> = props => {
     const { languageFrom, setLanguageFrom } = props;
+
+    const theme = useSelector((state: State) => theming(state.theme.mode));
+    const styles = styling(theme);
 
     const [languageFromLabel, languageToLabel] = useMemo(() => (
         languageFrom === 'russian' ? ['Русский', 'Буряад'] : ['Буряад', 'Русский']
@@ -36,7 +41,7 @@ export const Header: React.FC<Props> = props => {
 }
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
     languageContainer: {
         flexDirection: 'row',
         alignItems: 'center',

@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Octicons } from '@expo/vector-icons'
-import { ActivityIndicator, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, TextInput, View, TouchableOpacity, useColorScheme, Keyboard } from 'react-native'
 
-import { theme } from '../../../utils/theme'
+import { Theming, theming } from '../../../utils/theme'
 import { Language } from '../../../utils/api/translate'
+import { useSelector } from 'react-redux'
+import { State } from '../../../store/store'
 
 type Props = {
     value: string;
@@ -16,12 +18,17 @@ type Props = {
 export const Search: React.FC<Props> = props => {
     const { value, setValue, onSubmit, loading, languageFrom } = props;
 
+    const mode = useSelector((state: State) => state.theme.mode);
+    const theme = theming(mode);
+    const styles = styling(theme);
+
     const handleLetterClick = (letter: string) => setValue(value + letter)
+
 
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
-                {!value && <Octicons name="search" size={24} color="#F9BCC8" style={styles.searchIcon} />}
+                {!value && <Octicons name="search" size={18} color="#9F9F9F" style={styles.searchIcon} />}
                 {!value && <Text style={styles.placeholder}>Введите слово</Text>}
                 <TextInput
                     multiline
@@ -29,7 +36,9 @@ export const Search: React.FC<Props> = props => {
                     value={value}
                     onChangeText={(text) => setValue(text)}
                     maxLength={80}
+                    textAlignVertical="top"
                     onSubmitEditing={() => onSubmit(value)}
+                    keyboardAppearance={mode || 'default'}
                 />
 
                 {value &&
@@ -57,9 +66,10 @@ export const Search: React.FC<Props> = props => {
 }
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
     container: {
-        position: 'relative'
+        position: 'relative',
+        zIndex: 5,
     },
     inputContainer: {
         position: 'relative',
@@ -77,6 +87,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 8,
         shadowColor: '#040844',
+        elevation: 3,
         backgroundColor: theme.colors.secondary,
     },
     searchIcon: {
@@ -86,23 +97,25 @@ const styles = StyleSheet.create({
     },
     placeholder: {
         position: 'absolute',
-        left: 54,
+        left: 50,
         top: 16,
         fontFamily: 'regular',
-        fontSize: 24,
-        color: '#F9BCC8',
+        fontSize: 20,
+        color: '#9F9F9F',
     },
     input: {
         flex: 1,
+        justifyContent: 'flex-start',
         marginTop: theme.spacing.s,
         fontFamily: 'regular',
-        fontSize: 24,
+        fontSize: 20,
         color: theme.colors.accentText,
+        height: 120
     },
     closeIconContainer: {
         position: 'absolute',
-        top: theme.spacing.m,
-        right: theme.spacing.m,
+        top: theme.spacing.m, 
+        right: theme.spacing.xl,
     },
     lettersContainer: {
         position: 'absolute',
@@ -117,9 +130,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 4,
         fontSize: 24,
         fontFamily: 'regular',
-        color: theme.colors.accentText,
-        borderWidth: 1,
+        color: theme.colors.secondaryText,
+        borderWidth: 2,
         borderRadius: 12,
-        borderColor: '#F9BCC8'
+        borderColor: '#d6d6d6'
     },
 })

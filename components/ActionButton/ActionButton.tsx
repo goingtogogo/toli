@@ -3,7 +3,9 @@ import { Octicons } from '@expo/vector-icons'
 import OcticonsIcons from '@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/Octicons.json'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { theme } from '../../utils/theme'
+import { Theming, theming } from '../../utils/theme'
+import { useSelector } from 'react-redux'
+import { State } from '../../store/store'
 
 type Props = {
     name: keyof typeof OcticonsIcons;
@@ -12,6 +14,9 @@ type Props = {
 }
 
 export const ActionButton: React.FC<Props> = ({ onPress, name, size = 20 }) => {
+    const theme = useSelector((state: State) => theming(state.theme.mode));
+    const styles = styling(theme);
+
     return (
         <TouchableOpacity style={styles.iconContainer} onPress={onPress}>
             <Octicons name={name} size={size} color={theme.colors.secondary} />
@@ -20,7 +25,7 @@ export const ActionButton: React.FC<Props> = ({ onPress, name, size = 20 }) => {
 }
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
     iconContainer: {
         width: 35,
         height: 35,
@@ -35,5 +40,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 10,
         shadowColor: '#eb6b84',
+        elevation: 3,
     }
 })

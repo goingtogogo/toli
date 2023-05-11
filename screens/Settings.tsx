@@ -1,21 +1,25 @@
 import React, { useCallback } from 'react'
 import { StyleSheet, View, Alert, Linking } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { SettingsItem } from '../components/SettingsItem/SettingsItem'
-import { theme } from '../utils/theme'
 import { clearHistory } from '../store/slice/history'
 import { clearSaved } from '../store/slice/saved'
+import { setTheme } from '../store/slice/theme'
 import { StackParamList } from '../App'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { Theming, theming } from '../utils/theme'
+import { State } from '../store/store'
 
-export type SettingsKey = 'history' | 'saved' | 'about' | 'community'
+export type SettingsKey = 'history' | 'saved' | 'about' | 'community' | 'theme'
 
 type Props = NativeStackScreenProps<StackParamList, 'settings'>;
 
 export function Settings({ navigation }: Props) {
     const dispatch = useDispatch()
+    const theme = useSelector((state: State) => state.theme.mode);
+    const styles = styling(theming(theme));
 
     const deleteItems = useCallback(async (key: SettingsKey) => {
         try {
@@ -36,7 +40,6 @@ export function Settings({ navigation }: Props) {
         }
     }, [dispatch])
 
-
     const goAbout = useCallback(() => navigation.push('about'), []);
 
     const goToTelegram = useCallback(async () => {
@@ -44,8 +47,20 @@ export function Settings({ navigation }: Props) {
         await Linking.openURL(url);
     }, [])
 
+    const changeTheme = useCallback(() => {
+        dispatch(setTheme())
+    }, [dispatch, theme]);
+
+
     return (
         <View style={styles.container}>
+            <SettingsItem
+                name="about"
+                subtitle=""
+                title="О приложении"
+                icon="info"
+                onPress={goAbout}
+            />
             <SettingsItem
                 name="history"
                 title="Очистить Историю"
@@ -61,25 +76,25 @@ export function Settings({ navigation }: Props) {
                 onPress={deleteItems}
             />
             <SettingsItem
-                name="about"
-                subtitle=""
-                title="О приложении"
-                icon="info"
-                onPress={goAbout}
-            />
-            <SettingsItem
                 name="community"
                 title="Сообщество"
                 subtitle="поддержка в Telegram"
                 icon="paper-airplane"
                 onPress={goToTelegram}
             />
+            <SettingsItem
+                name="theme"
+                title={theme === 'light' ? 'Тёмная тема' : 'Светлая тема'}
+                subtitle="сменить оформление"
+                icon={theme === 'light' ? 'moon' : 'sun'}
+                onPress={changeTheme}
+            />
         </View>
     )
 }
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.colors.background,

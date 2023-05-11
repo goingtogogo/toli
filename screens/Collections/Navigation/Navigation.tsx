@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { StackParamList } from '../../../App';
 
-import { theme } from '../../../utils/theme'
+import { Theming, theming } from '../../../utils/theme'
 import { ProgressView } from '../../../components/ProgressView/ProgressView';
 import { Button } from '../../../components/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +20,10 @@ type Props = NativeStackScreenProps<StackParamList, 'navigation'>;
 export function Navigation(props: Props) {
   const dispatch = useDispatch()
   const { items: flashcards, completed } = useSelector((state: State) => state.flashcards)
+
+  const theme = useSelector((state: State) => theming(state.theme.mode));
+  const styles = styling(theme);
+  
   const { route: { params: { key, name, swipedLeft, swipedRight } }, navigation } = props;
   const { cards } = useMemo(() => flashcards[key], [key]);
 
@@ -74,7 +78,7 @@ export function Navigation(props: Props) {
 }
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'bold',
     fontSize: 24,
-    color: theme.colors.primary
+    color: theme.colors.text
   },
   subtitle: {
     marginTop: theme.spacing.xs,
@@ -98,7 +102,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'bold',
     fontSize: 16,
-    color: theme.colors.primary
+    color: theme.colors.text
   },
   button: {
     marginTop: theme.spacing.s

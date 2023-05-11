@@ -2,8 +2,10 @@ import React, { useCallback } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import * as Clipboard from 'expo-clipboard'
 
-import { theme } from '../../../utils/theme'
+import { Theming, theming } from '../../../utils/theme'
 import { ActionButton } from '../../../components/ActionButton/ActionButton'
+import { useSelector } from 'react-redux'
+import { State } from '../../../store/store'
 
 type Props = {
     result: string;
@@ -11,6 +13,10 @@ type Props = {
 
 export const Result: React.FC<Props> = props => {
     const { result } = props;
+
+    const mode = useSelector((state: State) => state.theme.mode);
+    const styles = styling(theming(mode));
+
     const copyToClipboard = useCallback(async () => {
         await Clipboard.setStringAsync(result)
     }, [result])
@@ -24,7 +30,7 @@ export const Result: React.FC<Props> = props => {
 }
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
     resultContainer: {
         position: 'relative',
         zIndex: 10,
@@ -43,8 +49,8 @@ const styles = StyleSheet.create({
     },
     resultText: {
         fontFamily: 'regular',
-        fontSize: 24,
-        color: theme.colors.secondary,
+        fontSize: 20,
+        color: '#fff',
         flex: 1,
     },
 })

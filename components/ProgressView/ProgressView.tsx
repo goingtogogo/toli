@@ -1,7 +1,9 @@
 import React, { useRef } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
+import { useSelector } from 'react-redux';
+import { State } from '../../store/store';
 
-import { theme } from '../../utils/theme'
+import { Theming, theming } from '../../utils/theme'
 
 
 type Props = {
@@ -9,6 +11,9 @@ type Props = {
 }
 
 export const ProgressView: React.FC<Props> = React.memo(({ progress }) => {
+  const mode = useSelector((state: State) => state.theme.mode);
+  const styles = styling(theming(mode));
+
   const progressAnim = useRef(new Animated.Value(0)).current;
 
   Animated.timing(progressAnim, {
@@ -32,7 +37,7 @@ export const ProgressView: React.FC<Props> = React.memo(({ progress }) => {
 })
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
   progressBar: {
     height: 8,
     backgroundColor: theme.colors.secondaryText

@@ -3,12 +3,16 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import { TranslationResult } from '../components/TranslationResult/TranslationResult'
-import { theme } from '../utils/theme'
+import { isSmallDevice, Theming, theming } from '../utils/theme'
 import { State } from '../store/store'
 
 
 export function Saved() {
-    const saved = useSelector((state: State) => state.saved.items)
+    const saved = useSelector((state: State) => state.saved.items);
+
+    const mode = useSelector((state: State) => state.theme.mode);
+    const styles = styling(theming(mode));
+
 
     if (saved.length === 0) {
         return (
@@ -29,9 +33,11 @@ export function Saved() {
 }
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: theme.spacing.s,
+        paddingBottom: isSmallDevice ? 60 : 90,
         backgroundColor: theme.colors.background,
     },
     noItemsContainer: {

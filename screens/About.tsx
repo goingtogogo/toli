@@ -1,11 +1,16 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
+import { useSelector } from 'react-redux';
+import { State } from '../store/store';
 
-import { theme } from '../utils/theme'
+import { Theming, theming } from '../utils/theme'
 
 
 export function About() {
+    const mode = useSelector((state: State) => state.theme.mode);
+    const styles = styling(theming(mode));
+
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.accent}>Привет! Сайн!</Text>
@@ -25,7 +30,7 @@ export function About() {
             <Text style={styles.text} selectable>
                 Также хотим отметить, что мы&nbsp;планируем по&nbsp;возможности продолжать развивать наше приложение.
                 Если вы&nbsp;думаете, что могли&nbsp;бы помочь нам с&nbsp;наполнением приложения&nbsp;&mdash; уроками, контентом и&nbsp;т.д.,
-                то&nbsp;мы&nbsp;также готовы к&nbsp;сотрудничеству (писать сюда&nbsp;&mdash;<Text style={styles.accent}>toli.app.ios@gmail.com</Text>)
+                то&nbsp;мы&nbsp;также готовы к&nbsp;сотрудничеству (писать сюда&nbsp;&mdash; <Text style={styles.accent}>toli.app.ios@gmail.com</Text>)
             </Text>
             <Text style={styles.text}>
                 Мы&nbsp;надеемся, что наше приложение будет полезным для вас в&nbsp;процессе изучения бурятского языка!😊
@@ -35,7 +40,7 @@ export function About() {
 }
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.colors.background,
@@ -54,6 +59,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 22,
         fontFamily: 'regular',
-        color: theme.colors.primary
+        color: theme.colors.text
     }
 })

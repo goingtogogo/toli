@@ -12,7 +12,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 
 import { StackParamList } from '../../App'
 
-import { theme } from '../../utils/theme'
+import { Theming, theming } from '../../utils/theme'
 import { State } from '../../store/store'
 import { AnyAction, Dispatch } from '@reduxjs/toolkit'
 import { setCompleted } from '../../store/slice/flashcards'
@@ -25,7 +25,11 @@ type ButtonProps = {
 
 export function Collections() {
   const dispatch = useDispatch();
+
   const flashcards = useSelector((state: State) => state.flashcards.items)
+
+  const mode = useSelector((state: State) => state.theme.mode);
+  const styles = styling(theming(mode));
 
   useEffect(() => {
     // @ts-ignore eslint-disable-next-line 
@@ -50,6 +54,10 @@ type ProfileScreenNavigationProp = CompositeNavigationProp<
 const CollectionButton = ({ collectionKey }: ButtonProps) => {
   const navigation = useNavigation<ProfileScreenNavigationProp>()
   const { items: flashcards, completed } = useSelector((state: State) => state.flashcards)
+  const mode = useSelector((state: State) => state.theme.mode);
+    const styles = styling(theming(mode));
+
+
   const { name, translation, icon } = useMemo(() => flashcards[collectionKey], [])
 
   const handlePress = useCallback(() => navigation.navigate('collection', { name, key: collectionKey }), [name, collectionKey])
@@ -72,7 +80,7 @@ const CollectionButton = ({ collectionKey }: ButtonProps) => {
 }
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -80,7 +88,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     backgroundColor: theme.colors.background,
-    paddingHorizontal: theme.spacing.l
+    paddingHorizontal: theme.spacing.l,
+    paddingTop: theme.spacing.s
   },
   collection: {
     position: 'relative',

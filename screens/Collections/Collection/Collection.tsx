@@ -7,7 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../App';
 
 import { TranslationResult } from '../../../components/TranslationResult/TranslationResult';
-import { theme } from '../../../utils/theme'
+import { Theming, theming } from '../../../utils/theme'
 import { Button } from '../../../components/Button/Button';
 import { State } from '../../../store/store';
 
@@ -17,7 +17,12 @@ type Props = NativeStackScreenProps<StackParamList, 'collection'>;
 
 export function Collection(props: Props) {
   const { route: { params: { key, name } }, navigation } = props;
+
   const flashcards = useSelector((state: State) => state.flashcards.items)
+  const theme = useSelector((state: State) => theming(state.theme.mode));
+  
+  const styles = styling(theme);
+
   const { cards } = useMemo(() => flashcards[key], [key]);
 
   const handlePress = useCallback(() => navigation.navigate('flashcards', { name, key }), [name, key]);
@@ -34,7 +39,7 @@ export function Collection(props: Props) {
 }
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
