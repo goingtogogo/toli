@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Octicons } from '@expo/vector-icons'
-import { ActivityIndicator, StyleSheet, Text, TextInput, View, TouchableOpacity, useColorScheme, Keyboard } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native'
 
 import { Theming, theming } from '../../../utils/theme'
 import { Language } from '../../../utils/api/translate'
@@ -22,7 +22,7 @@ export const Search: React.FC<Props> = props => {
     const theme = theming(mode);
     const styles = styling(theme);
 
-    const handleLetterClick = (letter: string) => setValue(value + letter)
+    const handleLetterClick = (letter: string) => setValue(value + letter);
 
 
     return (
@@ -31,7 +31,9 @@ export const Search: React.FC<Props> = props => {
                 {!value && <Octicons name="search" size={18} color="#9F9F9F" style={styles.searchIcon} />}
                 {!value && <Text style={styles.placeholder}>Введите слово</Text>}
                 <TextInput
-                    multiline
+                    multiline={true}
+                    blurOnSubmit={true}
+                    autoCorrect={false}
                     style={styles.input}
                     value={value}
                     onChangeText={(text) => setValue(text)}
@@ -43,12 +45,12 @@ export const Search: React.FC<Props> = props => {
 
                 {value &&
                     <TouchableOpacity
-                        onPress={() => setValue('')}
-                        style={styles.closeIconContainer}
+                        onPress={() => onSubmit(value)}
+                        style={styles.arrowIconContainer}
                     >
                         {loading ?
                             <ActivityIndicator size="small" color={theme.colors.accent} /> :
-                            <Octicons name="x" size={28} color={theme.colors.accent} />
+                            <Octicons name="arrow-right" size={24} color={theme.colors.accent} />
                         }
                     </TouchableOpacity>
                 }
@@ -112,9 +114,9 @@ const styling = (theme: Theming) => StyleSheet.create({
         color: theme.colors.accentText,
         height: 120
     },
-    closeIconContainer: {
+    arrowIconContainer: {
         position: 'absolute',
-        top: theme.spacing.m, 
+        top: theme.spacing.m,
         right: theme.spacing.xl,
     },
     lettersContainer: {

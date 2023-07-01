@@ -39,6 +39,9 @@
         "appleId": "goingtogogo@icloud.com",
         "ascAppId": "6445924225",
         "appleTeamId": "85X8942T6Y"
+      },
+      "android": {
+        "serviceAccountKeyPath": "../keys/pc-api-7883469768822383355-196-be666aaf5d48.json"
       }
     }
   }

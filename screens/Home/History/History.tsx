@@ -98,7 +98,7 @@ const styling = (theme: Theming) => StyleSheet.create({
         alignSelf: 'center',
         width: isSmallDevice ? 250 : 330,
         height: isSmallDevice ? 230 : 300,
-        bottom: 60,
+        bottom: 0,
         zIndex: -1,
         elevation: -1,
     }
