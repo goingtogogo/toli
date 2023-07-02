@@ -16,7 +16,7 @@ export enum Screens {
     Home = 'Толи',
     Saved = 'Избранное',
     Settings = 'Настройки',
-    Collections = 'Подборки'
+    Collections = 'Подборки',
 }
 
 export function TabNavigator() {

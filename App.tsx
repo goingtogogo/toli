@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { StyleSheet, View, Alert, Appearance } from 'react-native'
+import { StyleSheet, View, Alert } from 'react-native'
 import { NavigationContainer, RouteProp } from '@react-navigation/native'
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack'
 import 'react-native-gesture-handler'
@@ -10,11 +10,12 @@ import { TabNavigator } from './components/TabNavigator/TabNavigator'
 import store, { State } from './store/store'
 import { loadFonts } from './utils/loadFonts'
 import { About } from './screens/About'
-import { isAndroid, theming } from './utils/theme'
+import { theming } from './utils/theme'
 import { Collection } from './screens/Collections/Collection/Collection'
 import { Flashcards } from './screens/Collections/Flashcards/Flashcards'
 import { Navigation } from './screens/Collections/Navigation/Navigation'
-import { Octicons } from '@expo/vector-icons'
+import { Octicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Quiz } from './screens/Collections/Quiz/Quiz'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -25,8 +26,10 @@ export type StackParamList = {
     settings: undefined;
     collection: { name: string, key: string };
     flashcards: { name: string, key: string };
+    quiz: {name: string; key: string};
     navigation: { name: string, key: string, swipedLeft: number, swipedRight: number };
 }
+
 const Stack = createNativeStackNavigator<StackParamList>()
 
 
@@ -85,13 +88,20 @@ function App() {
         headerBackTitle: ''
     }
 
-    const collectionOptions = ({ route }: { route: RouteProp<StackParamList, "collection"> }) => ({
+    const collectionOptions = ({ route: {params: {name, key}}, navigation }: { route: RouteProp<StackParamList, "collection">, navigation: NativeStackNavigationProp<StackParamList, "navigation"> }) => ({
+        headerTitle: name,
+        ...commonStyles,
+        headerBackTitle: '',
+        headerRight: () => <MaterialCommunityIcons name="cards-outline" size={28} color="#3478f6" onPress={() => navigation.navigate('flashcards', { name, key })}/>
+    })
+
+    const flashcardsOptions = ({ route }: { route: RouteProp<StackParamList, "flashcards"> }) => ({
         headerTitle: route.params.name,
         ...commonStyles,
         headerBackTitle: ''
     })
 
-    const flashcardsOptions = ({ route }: { route: RouteProp<StackParamList, "flashcards"> }) => ({
+    const quizOptions = ({ route }: { route: RouteProp<StackParamList, "quiz"> }) => ({
         headerTitle: route.params.name,
         ...commonStyles,
         headerBackTitle: ''
@@ -117,6 +127,7 @@ function App() {
                             <Stack.Screen name="about" component={About} options={aboutOptions} />
                             <Stack.Screen name="collection" component={Collection} options={collectionOptions} />
                             <Stack.Screen name="flashcards" component={Flashcards} options={flashcardsOptions} /> 
+                            <Stack.Screen name="quiz" component={Quiz} options={quizOptions} /> 
                             <Stack.Screen name="navigation" component={Navigation} options={navigationOptions} />
                         </Stack.Group>
                     </Stack.Navigator>

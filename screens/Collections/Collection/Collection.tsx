@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import { StyleSheet, SafeAreaView, FlatList } from 'react-native'
+import { StyleSheet, SafeAreaView, FlatList, Alert } from 'react-native'
 import { useSelector } from 'react-redux';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -14,7 +14,6 @@ import { State } from '../../../store/store';
 
 type Props = NativeStackScreenProps<StackParamList, 'collection'>;
 
-
 export function Collection(props: Props) {
   const { route: { params: { key, name } }, navigation } = props;
 
@@ -25,7 +24,15 @@ export function Collection(props: Props) {
 
   const { cards } = useMemo(() => flashcards[key], [key]);
 
-  const handlePress = useCallback(() => navigation.navigate('flashcards', { name, key }), [name, key]);
+  const handlePress = useCallback(() => {
+    Alert.alert('Учить', 'Выбрать карточки для заучивания или пройти тест', [
+      {
+        text: 'Карточки',
+        onPress: () => navigation.navigate('flashcards', { name, key }),
+      },
+      {text: 'Пройти тест', onPress: () => navigation.navigate('quiz', { name, key })},
+    ], {cancelable: true});
+  }, [name, key]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,7 +40,7 @@ export function Collection(props: Props) {
         data={cards}
         renderItem={({ item }) => <TranslationResult item={item} />}
       />
-      <Button className={styles.button} onPress={handlePress} label="Выучить" view="action" />
+        <Button className={styles.button} onPress={handlePress} label="Выучить" view="action" />
     </SafeAreaView>
   )
 }
