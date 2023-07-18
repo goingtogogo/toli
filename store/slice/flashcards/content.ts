@@ -19,7 +19,7 @@ export const cards =
       { text: 'Какие новости?	', translatedText: 'Юу һонин бэ?' },
       { text: 'Знакомство', translatedText: 'Танилсалга', id: uuid.v4() },
       { text: 'Друг', translatedText: 'Нүхэр', id: uuid.v4() },
-    ]
+    ],
   },
   animals: {
     name: 'Животные',
@@ -36,7 +36,7 @@ export const cards =
       { text: 'Лисица', translatedText: 'Үнэгэн', id: uuid.v4() },
       { text: 'Заяц', translatedText: 'Шандаган', id: uuid.v4() },
       { text: 'Ёж', translatedText: 'Заряа', id: uuid.v4() }
-    ]
+    ],
   },
   family: {
     name: 'Семья',
@@ -55,7 +55,7 @@ export const cards =
       { text: 'Мой папа работает', translatedText: 'Минии аба … хүдэлдэг', id: uuid.v4() },
       { text: 'В каком классе учится младший брат?', translatedText: 'Танай дүү хбүн хэдыдэхи ангида һуранаб?', id: uuid.v4() },
       { text: 'Мой младший брат учится в первом классе', translatedText: 'Дүү хүбүүмни нэгэдэхи ангида һурана', id: uuid.v4() }
-    ]
+    ],
   },
   goodbye: {
     name: 'Разговор',
@@ -72,7 +72,7 @@ export const cards =
       { text: 'Я не согласен', translatedText: 'Би зүбшөөнэгүйб', id: uuid.v4() },
       { text: 'Я возражаю', translatedText: 'Би арсанаб!', id: uuid.v4() },
       { text: 'Перестаньте!', translatedText: 'Болигты!', id: uuid.v4() }
-    ]
+    ],
   },
   weekdays: {
     name: 'Время',
@@ -91,6 +91,6 @@ export const cards =
       { text: 'Сегодня', translatedText: 'Мүнөөдэр', id: uuid.v4() },
       { text: 'Какой сегодня день недели?', translatedText: 'Мүнөөдэр гараг хэдыб?', id: uuid.v4() },
       { text: 'Сегодня понедельник', translatedText: 'Мүнөөдэр гарагай хоёр', id: uuid.v4() }
-    ]
+    ],
   },
 }

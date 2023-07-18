@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { StackParamList } from '../../../App';
 
@@ -11,38 +10,63 @@ import { ProgressView } from '../../../components/ProgressView/ProgressView';
 import { Button } from '../../../components/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../../store/store';
-import { setCompleted } from '../../../store/slice/flashcards';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setCompletedFlashcards, setCompletedQuiz } from '../../../store/slice/flashcards';
+import { questions } from '../Quiz/questions';
 
 
 type Props = NativeStackScreenProps<StackParamList, 'navigation'>;
 
+const subtitle = {
+  quiz: 'Вы прошли тест 🤩',
+  flashcards: 'Вы повторили все карточки 🤩 Продолжайте в том же духе!'
+}
+
 
 export function Navigation(props: Props) {
   const dispatch = useDispatch()
-  const { items: flashcards, completed } = useSelector((state: State) => state.flashcards)
+  const { items: flashcards, completedFlashcards, completedQuiz } = useSelector((state: State) => state.flashcards)
 
   const theme = useSelector((state: State) => theming(state.theme.mode));
   const styles = styling(theme);
-  
-  const { route: { params: { key, name, swipedLeft, swipedRight } }, navigation } = props;
+
+  const { route: { params: { key, name, swipedLeft, swipedRight, screen } }, navigation } = props;
   const { cards } = useMemo(() => flashcards[key], [key]);
 
+  const headerTitle = useMemo(() => {
+    const {length} = screen === 'flashcards' ? cards : questions[key];
+
+    return `${length} / ${length}`
+  }, [key, screen, cards])
+
   useEffect(() => {
-    navigation.setOptions({ headerTitle: `${cards.length} / ${cards.length}` })
+    navigation.setOptions({ headerTitle })
   }, []);
 
 
   const goBack = useCallback(() => navigation.popToTop(), []);
 
-  const repeat = useCallback(() => navigation.navigate('flashcards', { name, key }), [name, key])
+  const repeat = useCallback(() => navigation.navigate(screen, { name, key }), [name, key]);
 
   const onComplete = useCallback(async () => {
-    const newCompleted = { ...completed, [key]: true }
-    dispatch(setCompleted({ items: newCompleted }))
+    if (screen === 'flashcards') {
+      const newCompleted = { ...completedFlashcards, [key]: true };
 
-    await AsyncStorage.setItem('completedFlashcards', JSON.stringify(newCompleted))
+      dispatch(setCompletedFlashcards({ items: newCompleted }));
+  
+      await AsyncStorage.setItem('completedFlashcards', JSON.stringify(newCompleted))
+    }
+
+    if (screen === 'quiz') {
+      const newCompleted = { ...completedQuiz, [key]: true };
+
+      dispatch(setCompletedQuiz({ items: newCompleted }));
+  
+      await AsyncStorage.setItem('completedQuiz', JSON.stringify(newCompleted))
+    }
+
     navigation.popToTop()
-  }, [key, completed, dispatch])
+  }, [key, completedFlashcards, completedQuiz, screen, dispatch])
 
 
   return (
@@ -52,9 +76,9 @@ export function Navigation(props: Props) {
       />
       <View style={styles.result}>
         <Text style={styles.title}>Бэрхэ!</Text>
-        <Text style={styles.subtitle}>Вы повторили все карточки 🤩 Продолжайте в том же духе!</Text>
+        <Text style={styles.subtitle}>{subtitle[screen]}</Text>
         <View>
-          <View style={styles.numbers}>
+          {screen === 'flashcards' && <View style={styles.numbers}>
             <View style={styles.number}>
               <Text style={styles.secondaryText}>Знаю:</Text>
               <View style={[styles.learnt, styles.count]}>
@@ -67,7 +91,7 @@ export function Navigation(props: Props) {
                 <Text style={styles.countText}>{swipedLeft}</Text>
               </View>
             </View>
-          </View>
+          </View>}
           <Button onPress={onComplete} label="Отметить как выученное" icon="issue-closed" view="action" className={styles.button} />
           <Button onPress={repeat} label="Повторить" icon="sync" view="default" className={styles.button} />
           <Button onPress={goBack} label="Вернуться назад" view="ghost" className={styles.button} />

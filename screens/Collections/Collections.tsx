@@ -15,13 +15,11 @@ import { StackParamList } from '../../App'
 import { Theming, theming } from '../../utils/theme'
 import { State } from '../../store/store'
 import { AnyAction, Dispatch } from '@reduxjs/toolkit'
-import { setCompleted } from '../../store/slice/flashcards'
+import { setCompletedFlashcards, setCompletedQuiz } from '../../store/slice/flashcards'
 
 type ButtonProps = {
   collectionKey: string;
 }
-
-
 
 export function Collections() {
   const dispatch = useDispatch();
@@ -53,7 +51,7 @@ type ProfileScreenNavigationProp = CompositeNavigationProp<
 
 const CollectionButton = ({ collectionKey }: ButtonProps) => {
   const navigation = useNavigation<ProfileScreenNavigationProp>()
-  const { items: flashcards, completed } = useSelector((state: State) => state.flashcards)
+  const { items: flashcards, completedFlashcards, completedQuiz } = useSelector((state: State) => state.flashcards)
   const mode = useSelector((state: State) => state.theme.mode);
     const styles = styling(theming(mode));
 
@@ -72,8 +70,11 @@ const CollectionButton = ({ collectionKey }: ButtonProps) => {
           source={icon}
         />
       }
-      {completed[collectionKey] &&
-        <Octicons name="check-circle" size={28} color="#119179" style={styles.completedIcon} />
+      {completedFlashcards[collectionKey] &&
+        <Octicons name="check-circle" size={24} color="#119179" style={[styles.completedIcon, styles.flashcards]} />
+      }
+      {completedQuiz[collectionKey] &&
+        <Octicons name="checklist" size={24} color="#119179" style={[styles.completedIcon, styles.quiz]} />
       }
     </TouchableOpacity>
   )
@@ -124,18 +125,29 @@ const styling = (theme: Theming) => StyleSheet.create({
   completedIcon: {
     position: 'absolute',
     bottom: theme.spacing.s,
-    left: theme.spacing.s,
+  },
+  flashcards: {
+    left: 16,
+  },
+  quiz: {
+    left: 48
   }
 })
 
 
 const loadData = () => async (dispatch: Dispatch<AnyAction>) => {
   try {
-    const completed = await AsyncStorage.getItem('completedFlashcards')
+    const completedFlashcards = await AsyncStorage.getItem('completedFlashcards');
+    const completedQuiz = await AsyncStorage.getItem('completedQuiz');
 
-    if (completed) {
-      const formattedCompleted = JSON.parse(completed)
-      dispatch(setCompleted({ items: formattedCompleted }))
+    if (completedFlashcards) {
+      const formattedCompleted = JSON.parse(completedFlashcards)
+      dispatch(setCompletedFlashcards({ items: formattedCompleted }))
+    }
+
+    if (completedQuiz) {
+      const formattedCompleted = JSON.parse(completedQuiz)
+      dispatch(setCompletedQuiz({ items: formattedCompleted }))
     }
   }
 

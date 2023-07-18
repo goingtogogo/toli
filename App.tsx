@@ -16,6 +16,7 @@ import { Flashcards } from './screens/Collections/Flashcards/Flashcards'
 import { Navigation } from './screens/Collections/Navigation/Navigation'
 import { Octicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Quiz } from './screens/Collections/Quiz/Quiz'
+import { cards } from './store/slice/flashcards/content'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -24,10 +25,16 @@ export type StackParamList = {
     main: undefined;
     about: undefined;
     settings: undefined;
-    collection: { name: string, key: string };
-    flashcards: { name: string, key: string };
-    quiz: {name: string; key: string};
-    navigation: { name: string, key: string, swipedLeft: number, swipedRight: number };
+    collection: { name: string, key: keyof typeof cards };
+    flashcards: { name: string, key: keyof typeof cards };
+    quiz: { name: string; key: keyof typeof cards };
+    navigation: {
+        name: string,
+        key: keyof typeof cards,
+        screen: 'quiz' | 'flashcards',
+        swipedLeft?: number,
+        swipedRight?: number
+    };
 }
 
 const Stack = createNativeStackNavigator<StackParamList>()
@@ -88,11 +95,11 @@ function App() {
         headerBackTitle: ''
     }
 
-    const collectionOptions = ({ route: {params: {name, key}}, navigation }: { route: RouteProp<StackParamList, "collection">, navigation: NativeStackNavigationProp<StackParamList, "navigation"> }) => ({
+    const collectionOptions = ({ route: { params: { name, key } }, navigation }: { route: RouteProp<StackParamList, "collection">, navigation: NativeStackNavigationProp<StackParamList, "navigation"> }) => ({
         headerTitle: name,
         ...commonStyles,
         headerBackTitle: '',
-        headerRight: () => <MaterialCommunityIcons name="cards-outline" size={28} color="#3478f6" onPress={() => navigation.navigate('flashcards', { name, key })}/>
+        headerRight: () => <MaterialCommunityIcons name="cards-outline" size={28} color="#3478f6" onPress={() => navigation.navigate('flashcards', { name, key: key as keyof typeof cards })} />
     })
 
     const flashcardsOptions = ({ route }: { route: RouteProp<StackParamList, "flashcards"> }) => ({
@@ -119,20 +126,20 @@ function App() {
     }
 
     return (
-            <NavigationContainer>
-                <View onLayout={onLayout} style={styles.container}>
-                    <Stack.Navigator>
-                        <Stack.Group>
-                            <Stack.Screen name="main" component={TabNavigator} options={screenOptions} />
-                            <Stack.Screen name="about" component={About} options={aboutOptions} />
-                            <Stack.Screen name="collection" component={Collection} options={collectionOptions} />
-                            <Stack.Screen name="flashcards" component={Flashcards} options={flashcardsOptions} /> 
-                            <Stack.Screen name="quiz" component={Quiz} options={quizOptions} /> 
-                            <Stack.Screen name="navigation" component={Navigation} options={navigationOptions} />
-                        </Stack.Group>
-                    </Stack.Navigator>
-                </View>
-            </NavigationContainer>
+        <NavigationContainer>
+            <View onLayout={onLayout} style={styles.container}>
+                <Stack.Navigator>
+                    <Stack.Group>
+                        <Stack.Screen name="main" component={TabNavigator} options={screenOptions} />
+                        <Stack.Screen name="about" component={About} options={aboutOptions} />
+                        <Stack.Screen name="collection" component={Collection} options={collectionOptions} />
+                        <Stack.Screen name="flashcards" component={Flashcards} options={flashcardsOptions} />
+                        <Stack.Screen name="quiz" component={Quiz} options={quizOptions} />
+                        <Stack.Screen name="navigation" component={Navigation} options={navigationOptions} />
+                    </Stack.Group>
+                </Stack.Navigator>
+            </View>
+        </NavigationContainer>
     )
 }
 

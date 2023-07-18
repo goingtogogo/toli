@@ -3,6 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ImageOption } from './ImageOption/ImageOption';
 import { Button } from '../../../../../components/Button/Button';
 import { Question } from '../../Quiz';
+import { useSelector } from 'react-redux';
+import { State } from '../../../../../store/store';
+import { Theming, theming } from '../../../../../utils/theme';
 
 type Props = {
   question: Question;
@@ -11,6 +14,8 @@ type Props = {
 }
 
 export const ImageMultipleChoiceQuestion = ({ question, onCorrect, onWrong }: Props) => {
+  const theme = useSelector((state: State) => theming(state.theme.mode));
+  const styles = styling(theme);
   const [selected, setSelected] = useState<{ correct: false, id: string } | null>(null);
 
   const onButtonPress = () => {
@@ -24,7 +29,7 @@ export const ImageMultipleChoiceQuestion = ({ question, onCorrect, onWrong }: Pr
   };
 
   return (
-    <>
+    <View style={styles.container}>
       <Text style={styles.title}>{question.question}</Text>
 
       <View style={styles.optionsContainer}>
@@ -38,26 +43,38 @@ export const ImageMultipleChoiceQuestion = ({ question, onCorrect, onWrong }: Pr
         />
         ))}
       </View>
-
-      <Button label='Check' onPress={onButtonPress} disabled={!selected} />
-    </>
+      <Button label='Проверить' onPress={onButtonPress} disabled={!selected} className={styles.button} />
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    alignSelf: 'stretch',
+const styling = (theme: Theming) => StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: theme.spacing.l,
   },
-
+  title: {
+    marginTop: theme.spacing.s,
+    color: theme.colors.text,
+    fontFamily: 'bold',
+    fontSize: 18
+  },
   optionsContainer: {
     width: '100%',
-    flex: 1,
-
     flexDirection: 'row',
     flexWrap: 'wrap',
+    flex: 0.8,
     justifyContent: 'space-between',
     alignContent: 'space-between',
+    marginTop: theme.spacing.m,
+  },
+  button: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 32,
+    backgroundColor: theme.colors.accent,
+    borderRadius: 12,
+    paddingHorizontal: 80,
+    ...theme.shadows.basicShadow
   },
 });

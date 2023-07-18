@@ -16,6 +16,7 @@ type Props = {
 export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
   const mode = useSelector((state: State) => state.theme.mode);
   const styles = styling(theming(mode));
+
   const [parts, setParts] = useState(question.parts);
 
   const onButtonPress = () => {
@@ -67,7 +68,7 @@ export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Complete the sentence</Text>
+      <Text style={styles.title}>Составьте предложение</Text>
       <View style={styles.row}>
         {parts.map((part, index) => {
           if (part.isBlank) {
@@ -99,7 +100,7 @@ export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
       </View>
 
       <Button
-        label='Check'
+        label='Проверить'
         onPress={onButtonPress}
         disabled={isReadyToCheck()}
         className={styles.button}
@@ -110,18 +111,20 @@ export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
 
 const styling = (theme: Theming) => StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.background,
+    flex: 1,
+    paddingHorizontal: theme.spacing.l,
   },
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    alignSelf: 'flex-start',
+    marginTop: theme.spacing.m,
+    color: theme.colors.text,
+    fontFamily: 'bold',
+    fontSize: 18
   },
   row: {
     flexDirection: 'row',
     alignSelf: 'flex-start',
-    marginVertical: 10,
-    height: 60,
+    marginTop: theme.spacing.xl,
+    height: 50,
   },
   text: {
     alignSelf: 'flex-end',
@@ -129,11 +132,11 @@ const styling = (theme: Theming) => StyleSheet.create({
   },
   blank: {
     borderBottomWidth: 2,
-    borderColor: 'lightgray',
+    borderColor: theme.colors.accentText,
     width: 100,
   },
   optionsContainer: {
-    flex: 1,
+    height: 200,
     alignItems: 'center',
     alignContent: 'center',
     flexDirection: 'row',

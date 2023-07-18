@@ -1,5 +1,8 @@
 import React from "react";
 import { Image, Text, Pressable, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
+import { State } from "../../../../../../store/store";
+import { Theming, theming } from "../../../../../../utils/theme";
 
 type Props = {
   image: string;
@@ -8,8 +11,11 @@ type Props = {
   onPress: () => void;
 }
 
-export const ImageOption = ({ image, text, isSelected, onPress }: Props) => (
-  <Pressable
+export const ImageOption = ({ image, text, isSelected, onPress }: Props) => {
+  const mode = useSelector((state: State) => state.theme.mode);
+  const styles = styling(theming(mode));
+
+  return (<Pressable
     onPress={onPress}
     style={[styles.optionContainer, isSelected ? styles.selectedContainer : {}]}
   >
@@ -23,37 +29,36 @@ export const ImageOption = ({ image, text, isSelected, onPress }: Props) => (
     <Text style={isSelected ? styles.selectedText : styles.optionText}>
       {text}
     </Text>
-  </Pressable>
-);
+  </Pressable>)
+};
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
   optionContainer: {
     borderWidth: 2,
-    borderBottomWidth: 4,
-    borderColor: "lightgrey",
+    borderColor: theme.colors.text,
     borderRadius: 10,
 
-    width: "48%",
-    height: "48%",
+    width: '48%',
+    height: '48%',
 
     padding: 10,
 
-    alignItems: "center",
+    alignItems: 'center',
   },
   selectedContainer: {
-    backgroundColor: "#DDF4FE",
-    borderColor: "#81D5FE",
+    backgroundColor: theme.colors.text,
+    borderColor: theme.colors.accentText,
   },
   optionImage: {
-    width: "100%",
+    width: '100%',
     flex: 1,
   },
   optionText: {
-    fontWeight: "bold",
-    color: "black",
+    fontFamily: 'bold',
+    color: theme.colors.secondaryText
   },
   selectedText: {
-    fontWeight: "bold",
-    color: "#40BEF7",
+    fontFamily: 'bold',
+    color: theme.colors.background,
   },
 });

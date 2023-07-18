@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button } from '../../../../../components/Button/Button';
 import { Question } from '../../Quiz';
+import { Theming, theming } from '../../../../../utils/theme';
+import { useSelector } from 'react-redux';
+import { State } from '../../../../../store/store';
 
 type Props = {
   question: Question;
@@ -12,8 +15,11 @@ type Props = {
 export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
   const [input, setInput] = useState('');
 
+  const mode = useSelector((state: State) => state.theme.mode);
+  const styles = styling(theming(mode));
+
   const onButtonPress = () => {
-    if (question.answer.toLowerCase().trim() === input.toLowerCase().trim()) {
+    if (question.answer?.toLowerCase().trim() === input.toLowerCase().trim()) {
       onCorrect();
     } else {
       onWrong();
@@ -22,72 +28,102 @@ export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
   };
 
   return (
-    <>
-      <Text style={styles.title}>Translate this sentence</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Переведите это предложение</Text>
 
       <View style={styles.row}>
-        {/* Image */}
-
         <View style={styles.sentenceContainer}>
           <Text style={styles.sentence}>{question.text}</Text>
         </View>
       </View>
 
-      {/* Sentence container */}
-      <TextInput
-        value={input}
-        onChangeText={setInput}
-        placeholder='Type in English'
-        style={styles.textInput}
-        textAlignVertical='top'
-        multiline
-      />
+      <View style={styles.inputContainer}>
+        {!input && <Text style={styles.placeholder}>Напишите на бурятском</Text>}
+        <TextInput
+          value={input}
+          onChangeText={setInput}
+          style={styles.input}
+          textAlignVertical='top'
+          multiline
+          keyboardAppearance={mode || 'default'}
+          autoCorrect={false}
+        />
+      </View>
 
-      <Button label='Check' onPress={onButtonPress} disabled={!input} />
-    </>
+      <Button label='Проверить' onPress={onButtonPress} disabled={!input} className={styles.button} />
+    </View>
   );
 };
 
 
-const styles = StyleSheet.create({
+const styling = (theme: Theming) => StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: theme.spacing.l
+  },
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    alignSelf: 'flex-start',
+    marginTop: theme.spacing.s,
+    color: theme.colors.text,
+    fontFamily: 'bold',
+    fontSize: 18
   },
   row: {
     flexDirection: 'row',
     alignSelf: 'stretch',
-    alignItems: 'center',
 
-    margin: 10,
-    marginBottom: 0,
-  },
-  mascot: {
-    width: '30%',
-    aspectRatio: 3 / 4,
-    marginRight: 10,
+    marginTop: theme.spacing.l,
   },
   sentenceContainer: {
-    borderWidth: 1,
-    borderColor: 'lightgrey',
-    borderRadius: 5,
-
-    padding: 10,
+    borderBottomWidth: 2,
+    borderColor: theme.colors.secondaryText,
+    paddingBottom: theme.spacing.xs,
+    paddingRight: 40
   },
   sentence: {
-    fontSize: 16,
+    fontFamily: 'medium',
+    fontSize: 18,
+    color: theme.colors.secondaryText
   },
-  textInput: {
-    alignSelf: 'stretch',
+  inputContainer: {
+    marginTop: 40,
+    position: 'relative',
+    height: 180,
+    borderWidth: 2,
+    backgroundColor: theme.colors.secondary,
+    borderColor: theme.colors.secondaryText,
+    borderRadius: 12,
+    shadowOffset: {
+      height: 8,
+      width: 0
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    shadowColor: '#040844',
+    elevation: 3,
+  },
+  input: {
     flex: 1,
-
-    backgroundColor: '#ebebeb',
-    borderWidth: 1,
-    borderColor: 'lightgrey',
-    borderRadius: 10,
-
-    padding: 10,
-    fontSize: 16,
+    fontFamily: 'regular',
+    fontSize: 20,
+    color: theme.colors.text,
+    paddingTop: 16,
+    paddingLeft: 16
+  },
+  placeholder: {
+    position: 'absolute',
+    left: 16,
+    top: 16,
+    fontFamily: 'regular',
+    fontSize: 20,
+    color: '#9F9F9F',
+  },
+  button: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 32,
+    backgroundColor: theme.colors.accent,
+    borderRadius: 12,
+    paddingHorizontal: 80,
+    ...theme.shadows.basicShadow
   },
 });

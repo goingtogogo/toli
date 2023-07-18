@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { View, Alert, ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { ImageMultipleChoiceQuestion } from './components/ImageMultipleChoiceQuestion/ImageMultipleChoiceQuestion';
 import { OpenEndedQuestion } from './components/OpenEndedQuestion/OpenEndedQuestion';
 import { FillInTheBlank } from './components/FillInTheBlank/FillInTheBlank';
 
-import questions from './questions';
+import { questions as items } from './questions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Theming, theming } from '../../../utils/theme';
 import { useSelector } from 'react-redux';
@@ -16,18 +16,25 @@ import { Octicons } from '@expo/vector-icons';
 
 type Props = NativeStackScreenProps<StackParamList, 'quiz'>;
 
-type QuestionType = 'FILL_IN_THE_BLANK' | 'IMAGE_MULTIPLE_CHOICE' | 'OPEN_ENDED';
+// type QuestionType = 'FILL_IN_THE_BLANK' | 'IMAGE_MULTIPLE_CHOICE' | 'OPEN_ENDED';
 
 export type Question = {
   id: string;
-  type: QuestionType;
+  type: string;
   question?: string;
-  parts: {
+  answer?: string;
+  parts?: {
     text: string;
     isBlank: boolean;
     selected?: string | null;
   }[]
-  options: string[]
+  options?: {
+    id: string;
+    image: string;
+    text: string;
+    correct?: boolean;
+  }[] | string[]
+  text?: string;
 }
 
 export const Quiz = (props: Props) => {
@@ -36,7 +43,9 @@ export const Quiz = (props: Props) => {
   const theme = useSelector((state: State) => theming(state.theme.mode));
   const styles = styling(theme);
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const questions = useMemo(() => items[key] || [], [key]);
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(
     questions[currentQuestionIndex]
   );
@@ -46,14 +55,16 @@ export const Quiz = (props: Props) => {
 
   useEffect(() => {
     if (currentQuestionIndex >= questions.length) {
-      Alert.alert('You won');
+      navigation.navigate('navigation', {
+        name,
+        key,
+        screen: 'quiz',
+      })
       setCurrentQuestionIndex(0);
     } else {
       setCurrentQuestion(questions[currentQuestionIndex]);
     }
   }, [currentQuestionIndex]);
-
-
 
   useEffect(() => {
     loadData();
@@ -89,14 +100,14 @@ export const Quiz = (props: Props) => {
 
   const onWrong = () => {
     if (lives <= 1) {
-      Alert.alert('Game over', 'Try again', [
+      Alert.alert('Попытки закончились 😔', 'Попробуйте снова', [
         {
-          text: 'Try again',
+          text: 'Пройти сначала',
           onPress: restart,
         },
       ]);
     } else {
-      Alert.alert('Wroooong');
+      Alert.alert('Буруу!');
       setLives(lives - 1);
     }
   };
@@ -162,7 +173,6 @@ const styling = (theme: Theming) => StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: theme.colors.background,
-    paddingHorizontal: theme.spacing.l,
   },
   lives: {
     flexDirection: 'row'

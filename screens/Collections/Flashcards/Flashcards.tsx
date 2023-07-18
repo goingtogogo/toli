@@ -20,7 +20,7 @@ type Props = NativeStackScreenProps<StackParamList, 'flashcards'>;
 let swiper: Swiper<HistoryItem> | null;
 
 export function Flashcards(props: Props) {
-  const flashcards = useSelector((state: State) => state.flashcards.items)
+  const { items: flashcards } = useSelector((state: State) => state.flashcards)
   const mode = useSelector((state: State) => state.theme.mode);
   const theme = theming(mode);
   const styles = styling(theme, mode);
@@ -36,7 +36,12 @@ export function Flashcards(props: Props) {
     navigation.setOptions({ headerTitle: `${swiped} / ${cards.length}` })
 
     if (swiped === cards.length) {
-      navigation.navigate('navigation', { name, key, swipedLeft: leftCount, swipedRight: rightCount })
+      navigation.navigate('navigation', {
+        name,
+        key,
+        screen: 'flashcards',
+        swipedLeft: leftCount, swipedRight: rightCount
+      })
       setSwiped(0)
       setLeft(0)
       setRight(0)
@@ -100,7 +105,7 @@ export function Flashcards(props: Props) {
       <Swiper
         ref={(swiperRef) => swiper = swiperRef}
         cards={cards}
-        renderCard={({text, translatedText}) => Card({text, translatedText, styles})}
+        renderCard={({ text, translatedText }) => Card({ text, translatedText, styles })}
         onSwipedLeft={onSwipedLeft}
         onSwipedRight={onSwipedRight}
         onSwiped={onSwiped}
@@ -174,7 +179,7 @@ const styling = (theme: Theming, mode: Theme) => StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: theme.spacing.s,
     ...theme.shadows.basicShadow,
-    ...mode === 'dark' && {shadowColor: theme.colors.secondaryText},
+    ...mode === 'dark' && { shadowColor: theme.colors.secondaryText },
     backgroundColor: theme.colors.background,
   },
   reversedSide: {

@@ -30,9 +30,17 @@ export const darkPalette = {
     pink: '#eb6b84'
 }
 
+type Color = 'background'
+    | 'primary'
+    | 'secondary'
+    | 'accent'
+    | 'text'
+    | 'accentText'
+    | 'secondaryText'
+
 export type Theming = {
     colors: {
-        [key: string]: string;
+        [key in Color]: string;
     },
     spacing: {
         [key: string]: number;
