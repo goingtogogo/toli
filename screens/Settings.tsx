@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { StyleSheet, View, Alert, Linking } from 'react-native'
+import { StyleSheet, View, Alert, Linking, Platform } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -12,7 +12,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { Theming, theming } from '../utils/theme'
 import { State } from '../store/store'
 
-export type SettingsKey = 'history' | 'saved' | 'about' | 'community' | 'theme'
+export type SettingsKey = 'history' | 'saved' | 'about' | 'community' | 'theme'  | 'rate'
 
 type Props = NativeStackScreenProps<StackParamList, 'settings'>;
 
@@ -45,6 +45,14 @@ export function Settings({ navigation }: Props) {
     const goToTelegram = useCallback(async () => {
         const url = 'https://t.me/apptoli';
         await Linking.openURL(url);
+    }, []);
+
+    const goToStore = useCallback(async() => {
+        const url = {
+            ios: 'https://apps.apple.com/ru/app/толи/id6445924225',
+            android: 'market://details?id=com.goingtogogo.toli'
+        }
+        await Linking.openURL(url[Platform.OS as 'ios' | 'android']);
     }, [])
 
     const changeTheme = useCallback(() => {
@@ -55,11 +63,11 @@ export function Settings({ navigation }: Props) {
     return (
         <View style={styles.container}>
             <SettingsItem
-                name="about"
-                subtitle=""
-                title="О приложении"
-                icon="info"
-                onPress={goAbout}
+                name="rate"
+                subtitle="каждая оценка поможет продвигать приложение🤗"
+                title="Оценить приложение"
+                icon="link-external"
+                onPress={goToStore}
             />
             <SettingsItem
                 name="history"
@@ -88,6 +96,13 @@ export function Settings({ navigation }: Props) {
                 subtitle="сменить оформление"
                 icon={theme === 'light' ? 'moon' : 'sun'}
                 onPress={changeTheme}
+            />
+            <SettingsItem
+                name="about"
+                subtitle=""
+                title="О приложении"
+                icon="info"
+                onPress={goAbout}
             />
         </View>
     )

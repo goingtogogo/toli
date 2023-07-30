@@ -15,21 +15,23 @@ export const ImageOption = ({ image, text, isSelected, onPress }: Props) => {
   const mode = useSelector((state: State) => state.theme.mode);
   const styles = styling(theming(mode));
 
-  return (<Pressable
-    onPress={onPress}
-    style={[styles.optionContainer, isSelected ? styles.selectedContainer : {}]}
-  >
-    <Image
-      source={{
-        uri: image,
-      }}
-      resizeMode="contain"
-      style={styles.optionImage}
-    />
-    <Text style={isSelected ? styles.selectedText : styles.optionText}>
-      {text}
-    </Text>
-  </Pressable>)
+  return (
+    <Pressable
+      onPress={onPress}
+      style={[styles.optionContainer, isSelected ? styles.selectedContainer : {}]}
+    >
+      <Image
+        source={{
+          uri: image,
+        }}
+        resizeMode="contain"
+        style={styles.optionImage}
+      />
+      <Text style={isSelected ? styles.selectedText : styles.optionText}>
+        {text}
+      </Text>
+    </Pressable>
+  )
 };
 
 const styling = (theme: Theming) => StyleSheet.create({

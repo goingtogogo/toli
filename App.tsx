@@ -17,6 +17,7 @@ import { Navigation } from './screens/Collections/Navigation/Navigation'
 import { Octicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Quiz } from './screens/Collections/Quiz/Quiz'
 import { cards } from './store/slice/flashcards/content'
+import { AddWord } from './screens/Saved/AddWord'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -25,6 +26,7 @@ export type StackParamList = {
     main: undefined;
     about: undefined;
     settings: undefined;
+    add: undefined;
     collection: { name: string, key: keyof typeof cards };
     flashcards: { name: string, key: keyof typeof cards };
     quiz: { name: string; key: keyof typeof cards };
@@ -95,6 +97,12 @@ function App() {
         headerBackTitle: ''
     }
 
+    const addOptions = {
+        headerTitle: 'Добавить слово',
+        ...commonStyles,
+        headerBackTitle: ''
+    }
+
     const collectionOptions = ({ route: { params: { name, key } }, navigation }: { route: RouteProp<StackParamList, "collection">, navigation: NativeStackNavigationProp<StackParamList, "navigation"> }) => ({
         headerTitle: name,
         ...commonStyles,
@@ -131,6 +139,7 @@ function App() {
                 <Stack.Navigator>
                     <Stack.Group>
                         <Stack.Screen name="main" component={TabNavigator} options={screenOptions} />
+                        <Stack.Screen name="add" component={AddWord} options={addOptions} />
                         <Stack.Screen name="about" component={About} options={aboutOptions} />
                         <Stack.Screen name="collection" component={Collection} options={collectionOptions} />
                         <Stack.Screen name="flashcards" component={Flashcards} options={flashcardsOptions} />

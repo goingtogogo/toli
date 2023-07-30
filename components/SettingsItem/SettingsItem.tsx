@@ -30,7 +30,7 @@ export const SettingsItem: React.FC<Props> = ({ name, onPress, title, icon, subt
                 <Text style={styles.title} numberOfLines={1}>
                     {title}
                 </Text>
-                <Text style={styles.subtitle} numberOfLines={1}>
+                <Text style={styles.subtitle}>
                     {subtitle}
                 </Text>
             </View>

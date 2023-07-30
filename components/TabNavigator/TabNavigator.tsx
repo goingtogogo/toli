@@ -1,10 +1,11 @@
 import React from 'react'
-import { Octicons } from '@expo/vector-icons';
+import { StyleSheet } from 'react-native';
+import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { Home } from '../../screens/Home/Home'
 import { Settings } from '../../screens/Settings'
-import { Saved } from '../../screens/Saved'
+import { Saved } from '../../screens/Saved/Saved'
 
 import { isAndroid, isSmallDevice, theming } from '../../utils/theme'
 import { Collections } from '../../screens/Collections/Collections';
@@ -75,11 +76,12 @@ export function TabNavigator() {
         tabBarIcon: () => <Octicons name="home" size={24} color={theme.colors.text} />
     }
     
-    const savedOptions = {
+    const savedOptions = ({navigation}: { navigation: any; }) => ({
         tabBarLabel: Screens.Saved,
         ...tabStyles,
-        tabBarIcon: () => <Octicons name="star" size={24} color={theme.colors.text} />
-    }
+        tabBarIcon: () => <Octicons name="star" size={24} color={theme.colors.text} />,
+        headerRight: () => <MaterialCommunityIcons name="pencil-plus" size={32} color="#3478f6" style={styles.pencil} onPress={() => navigation.navigate('add')} />,
+    })
     
     const settingsOptions = {
         tabBarLabel: Screens.Settings,
@@ -102,3 +104,10 @@ export function TabNavigator() {
         </Tab.Navigator>
     )
 }
+
+
+const styles = StyleSheet.create({
+    pencil: {
+        marginRight: 18
+    },
+})
