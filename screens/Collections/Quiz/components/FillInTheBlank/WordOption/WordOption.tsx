@@ -8,7 +8,7 @@ import { State } from '../../../../../../store/store';
 type Props = {
   text: string;
   onPress: () => void;
-  isSelected?: boolean 
+  isSelected?: boolean
 }
 
 export const WordOption = ({ text, onPress, isSelected }: Props) => {
@@ -34,6 +34,7 @@ const styling = (theme: Theming, isSelected?: boolean) => StyleSheet.create({
     paddingHorizontal: theme.spacing.m,
     paddingVertical: theme.spacing.xs,
     marginRight: theme.spacing.xs,
+    marginBottom: theme.spacing.xs,
     backgroundColor: isSelected ? theme.colors.secondary : theme.colors.secondaryText,
     borderRadius: 12,
     ...theme.shadows.basicShadow,

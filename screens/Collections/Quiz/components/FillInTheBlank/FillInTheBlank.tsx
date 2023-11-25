@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from '../../../../../components/Button/Button';
 import { WordOption } from './WordOption/WordOption';
@@ -19,9 +19,14 @@ export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
 
   const [parts, setParts] = useState(question.parts);
 
+  useEffect(() => {
+    setParts(question.parts);
+  }, [question.parts]);
+
   const onButtonPress = () => {
     if (checkIfCorrect()) {
       onCorrect();
+
     } else {
       onWrong();
     }
@@ -39,14 +44,18 @@ export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
       return;
     }
 
-    const newParts = [...parts];
-    for (let i = 0; i < newParts.length; i++) {
-      if (newParts[i].isBlank && !newParts[i].selected) {
-        newParts[i].selected = option;
-        break;
+    let isChanged = false;
+    const newParts = parts.map(part => {
+      if (part.isBlank && !part.selected && !isChanged) {
+        isChanged = true;
+        return { ...part, selected: option };
       }
+      return part;
+    });
+
+    if (isChanged) {
+      setParts(newParts);
     }
-    setParts(newParts);
   };
 
   const removeSelectedAt = (index: number) => {
@@ -83,7 +92,7 @@ export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
               </View>
             );
           } else {
-            return <Text key={part.text} style={styles.text}>{part.text}</Text>;
+            <Text key={part.id} style={styles.text}>{part.text}</Text>;
           }
         })}
       </View>
@@ -123,6 +132,7 @@ const styling = (theme: Theming) => StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignSelf: 'flex-start',
+    flexWrap: 'wrap',
     marginTop: theme.spacing.xl,
     height: 50,
   },
@@ -131,9 +141,10 @@ const styling = (theme: Theming) => StyleSheet.create({
     fontSize: 18,
   },
   blank: {
+    marginBottom: theme.spacing.xs,
     borderBottomWidth: 2,
     borderColor: theme.colors.accentText,
-    width: 100,
+    minWidth: 100,
   },
   optionsContainer: {
     height: 200,

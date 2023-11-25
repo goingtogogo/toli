@@ -19,7 +19,7 @@ export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
   const styles = styling(theming(mode));
 
   const onButtonPress = () => {
-    if (question.answer?.toLowerCase().trim() === input.toLowerCase().trim()) {
+    if (question.answer?.toLowerCase().trim().includes(input.toLowerCase().trim())) {
       onCorrect();
     } else {
       onWrong();

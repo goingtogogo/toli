@@ -12,7 +12,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { Theming, theming } from '../utils/theme'
 import { State } from '../store/store'
 
-export type SettingsKey = 'history' | 'saved' | 'about' | 'community' | 'theme'  | 'rate'
+export type SettingsKey = 'history' | 'saved' | 'about' | 'community' | 'theme' | 'rate'
 
 type Props = NativeStackScreenProps<StackParamList, 'settings'>;
 
@@ -47,7 +47,7 @@ export function Settings({ navigation }: Props) {
         await Linking.openURL(url);
     }, []);
 
-    const goToStore = useCallback(async() => {
+    const goToStore = useCallback(async () => {
         const url = {
             ios: 'https://apps.apple.com/ru/app/толи/id6445924225',
             android: 'market://details?id=com.goingtogogo.toli'
@@ -64,7 +64,7 @@ export function Settings({ navigation }: Props) {
         <View style={styles.container}>
             <SettingsItem
                 name="rate"
-                subtitle="каждая оценка поможет продвигать приложение🤗"
+                subtitle="каждая оценка поможет продвигать приложение"
                 title="Оценить приложение"
                 icon="link-external"
                 onPress={goToStore}

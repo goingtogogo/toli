@@ -30,7 +30,7 @@ export type Question = {
   }[]
   options?: {
     id: string;
-    image: string;
+    image?: string;
     text: string;
     correct?: boolean;
   }[] | string[]
@@ -45,13 +45,12 @@ export const Quiz = (props: Props) => {
 
   const questions = useMemo(() => items[key] || [], [key]);
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(
     questions[currentQuestionIndex]
   );
 
   const [lives, setLives] = useState(5);
-  const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
     if (currentQuestionIndex >= questions.length) {
@@ -66,28 +65,18 @@ export const Quiz = (props: Props) => {
     }
   }, [currentQuestionIndex]);
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
   // todo
   useEffect(() => {
-    navigation.setOptions({ 
+    navigation.setOptions({
       headerTitle: `${currentQuestionIndex} / ${questions.length}`,
       headerRight: () => (
         <View style={styles.lives}>
-        <Octicons name="heart-fill" size={24} color="#E23053" />
-        <Text style={styles.livesText}> {lives}</Text>
-      </View>
+          <Octicons name="heart-fill" size={24} color="#E23053" />
+          <Text style={styles.livesText}> {lives}</Text>
+        </View>
       )
     })
   }, [currentQuestionIndex]);
-
-  useEffect(() => {
-    if (hasLoaded) {
-      saveData();
-    }
-  }, [lives, currentQuestionIndex, hasLoaded]);
 
   const onCorrect = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -111,33 +100,6 @@ export const Quiz = (props: Props) => {
       setLives(lives - 1);
     }
   };
-
-  const saveData = async () => {
-    await AsyncStorage.setItem('lives', lives.toString());
-    await AsyncStorage.setItem(
-      'currentQuestionIndex',
-      currentQuestionIndex.toString()
-    );
-  };
-
-  const loadData = async () => {
-    const loadedLives = await AsyncStorage.getItem('lives');
-    if (loadedLives) {
-      setLives(parseInt(loadedLives));
-    }
-    const currentQuestionIndex = await AsyncStorage.getItem(
-      'currentQuestionIndex'
-    );
-    if (currentQuestionIndex) {
-      setCurrentQuestionIndex(parseInt(currentQuestionIndex));
-    }
-
-    setHasLoaded(true);
-  };
-
-  if (!hasLoaded) {
-    return <ActivityIndicator />;
-  }
 
   return (
     <View style={styles.root}>

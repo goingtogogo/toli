@@ -35,12 +35,12 @@ export const ImageMultipleChoiceQuestion = ({ question, onCorrect, onWrong }: Pr
       <View style={styles.optionsContainer}>
         {question.options.map((option) => (
           <ImageOption
-          key={option.id}
-          image={option.image}
-          text={option.text}
-          isSelected={selected?.id === option.id}
-          onPress={() => setSelected(option)}
-        />
+            key={option.id}
+            image={option.image}
+            text={option.text}
+            isSelected={selected?.id === option.id}
+            onPress={() => setSelected(option)}
+          />
         ))}
       </View>
       <Button label='Проверить' onPress={onButtonPress} disabled={!selected} className={styles.button} />
@@ -63,9 +63,10 @@ const styling = (theme: Theming) => StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    flex: 0.8,
+    flex: 1,
     justifyContent: 'space-between',
-    alignContent: 'space-between',
+    alignContent: 'flex-end',
+    marginBottom: 80,
     marginTop: theme.spacing.m,
   },
   button: {

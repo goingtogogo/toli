@@ -34,7 +34,7 @@ export function Navigation(props: Props) {
   const { cards } = useMemo(() => flashcards[key], [key]);
 
   const headerTitle = useMemo(() => {
-    const {length} = screen === 'flashcards' ? cards : questions[key];
+    const { length } = screen === 'flashcards' ? cards : questions[key];
 
     return `${length} / ${length}`
   }, [key, screen, cards])
@@ -53,7 +53,7 @@ export function Navigation(props: Props) {
       const newCompleted = { ...completedFlashcards, [key]: true };
 
       dispatch(setCompletedFlashcards({ items: newCompleted }));
-  
+
       await AsyncStorage.setItem('completedFlashcards', JSON.stringify(newCompleted))
     }
 
@@ -61,7 +61,7 @@ export function Navigation(props: Props) {
       const newCompleted = { ...completedQuiz, [key]: true };
 
       dispatch(setCompletedQuiz({ items: newCompleted }));
-  
+
       await AsyncStorage.setItem('completedQuiz', JSON.stringify(newCompleted))
     }
 

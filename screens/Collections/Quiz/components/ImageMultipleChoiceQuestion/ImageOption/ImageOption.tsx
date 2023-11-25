@@ -5,10 +5,10 @@ import { State } from "../../../../../../store/store";
 import { Theming, theming } from "../../../../../../utils/theme";
 
 type Props = {
-  image: string;
   text: string;
   isSelected: boolean;
   onPress: () => void;
+  image?: string;
 }
 
 export const ImageOption = ({ image, text, isSelected, onPress }: Props) => {
@@ -20,13 +20,13 @@ export const ImageOption = ({ image, text, isSelected, onPress }: Props) => {
       onPress={onPress}
       style={[styles.optionContainer, isSelected ? styles.selectedContainer : {}]}
     >
-      <Image
+      {image && <Image
         source={{
           uri: image,
         }}
         resizeMode="contain"
         style={styles.optionImage}
-      />
+      />}
       <Text style={isSelected ? styles.selectedText : styles.optionText}>
         {text}
       </Text>
@@ -40,8 +40,8 @@ const styling = (theme: Theming) => StyleSheet.create({
     borderColor: theme.colors.text,
     borderRadius: 10,
 
-    width: '48%',
-    height: '48%',
+    width: '100%',
+    marginBottom: theme.spacing.s,
 
     padding: 10,
 
