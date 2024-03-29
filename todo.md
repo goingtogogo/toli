@@ -9,3 +9,4 @@
 - доделать логику+
 - пофиксить типы!
 - quiz
+- Sentry for catching and managing errors
