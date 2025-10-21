@@ -1,72 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import { Button } from '../../../../../components/Button/Button';
-import { State } from '../../../../../store/store';
-import { Theming, theming } from '../../../../../utils/theme';
-import { Question } from '../../Quiz';
-import { WordOption } from './WordOption/WordOption';
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { useSelector } from 'react-redux'
+
+import { WordOption } from './WordOption/WordOption'
+
+import { Button } from '@/components/Button/Button'
+import { Question } from '@/screens/Collections/Quiz/Quiz'
+import { State } from '@/store/store'
+import { Theming, theming } from '@/utils/theme'
 
 type Props = {
-  question: Question;
-  onCorrect: () => void;
-  onWrong: () => void;
-};
+  question: Question
+  onCorrect: () => void
+  onWrong: () => void
+}
 
 export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
-  const mode = useSelector((state: State) => state.theme.mode);
-  const styles = styling(theming(mode));
+  const mode = useSelector((state: State) => state.theme.mode)
+  const styles = styling(theming(mode))
 
-  const [parts, setParts] = useState(question.parts);
+  const [parts, setParts] = useState(question.parts)
 
   useEffect(() => {
-    setParts(question.parts);
-  }, [question.parts]);
+    setParts(question.parts)
+  }, [question.parts])
 
   const onButtonPress = () => {
     if (checkIfCorrect()) {
-      onCorrect();
+      onCorrect()
     } else {
-      onWrong();
+      onWrong()
     }
-  };
+  }
 
   const checkIfCorrect = () => {
-    return parts.filter((part) => part.isBlank && part.selected !== part.text).length === 0;
-  };
+    return (
+      parts.filter((part) => part.isBlank && part.selected !== part.text)
+        .length === 0
+    )
+  }
 
   const addOptionToSelected = (option: string) => {
     if (isSelected(option)) {
-      return;
+      return
     }
 
-    let isChanged = false;
+    let isChanged = false
     const newParts = parts.map((part) => {
       if (part.isBlank && !part.selected && !isChanged) {
-        isChanged = true;
-        return { ...part, selected: option };
+        isChanged = true
+        return { ...part, selected: option }
       }
-      return part;
-    });
+      return part
+    })
 
     if (isChanged) {
-      setParts(newParts);
+      setParts(newParts)
     }
-  };
+  }
 
   const removeSelectedAt = (index: number) => {
-    const newParts = [...parts];
-    newParts[index].selected = null;
-    setParts(newParts);
-  };
+    const newParts = [...parts]
+    newParts[index].selected = null
+    setParts(newParts)
+  }
 
   const isSelected = (option: string) => {
-    return parts.filter((part) => part.isBlank && part.selected === option).length > 0;
-  };
-
-  const isReadyToCheck = () => {
-    return parts.filter((part) => part.isBlank && !part.selected).length > 0;
-  };
+    return (
+      parts.filter((part) => part.isBlank && part.selected === option).length >
+      0
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -77,14 +81,19 @@ export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
             return (
               <View key={part.text} style={styles.blank}>
                 {part.selected && (
-                  <WordOption text={part.selected} onPress={() => removeSelectedAt(index)} />
+                  <WordOption
+                    text={part.selected}
+                    onPress={() => removeSelectedAt(index)}
+                  />
                 )}
               </View>
-            );
+            )
           } else {
-            <Text key={part.id} style={styles.text}>
-              {part.text}
-            </Text>;
+            return (
+              <Text key={part.text} style={styles.text}>
+                {part.text}
+              </Text>
+            )
           }
         })}
       </View>
@@ -101,14 +110,15 @@ export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
       </View>
 
       <Button
+        view="action"
         label="Проверить"
         onPress={onButtonPress}
-        disabled={isReadyToCheck()}
+        // disabled={isReadyToCheck()}
         className={styles.button}
       />
     </View>
-  );
-};
+  )
+}
 
 const styling = (theme: Theming) =>
   StyleSheet.create({
@@ -155,4 +165,4 @@ const styling = (theme: Theming) =>
       paddingHorizontal: 80,
       ...theme.shadows.basicShadow,
     },
-  });
+  })

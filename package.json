@@ -7,7 +7,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "tsc": "tsc --noEmit",
+    "format": "prettier --write ."
   },
   "husky": {
     "hooks": {
@@ -32,6 +34,9 @@
     "@react-navigation/stack": "^6.3.10",
     "@reduxjs/toolkit": "^1.9.1",
     "axios": "^1.2.3",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-react-native": "^5.0.0",
     "expo": "~47.0.12",
     "expo-build-properties": "~0.4.1",
     "expo-clipboard": "~4.0.1",
@@ -61,6 +66,7 @@
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
+    "babel-plugin-module-resolver": "^5.0.2",
     "eslint": "^8.32.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.1",
