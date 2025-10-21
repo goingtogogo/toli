@@ -1,16 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { StyleSheet, View, Alert, Keyboard } from 'react-native'
+import { StyleSheet, View, Alert, Keyboard, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import uuid from 'react-native-uuid'
 import { addItem } from '../../store/slice/history'
 import { isSmallDevice, Theming, theming } from '../../utils/theme'
-import { Language, translate } from '../../utils/api/translate'
+import { Language, translate, aiTranslate } from '../../utils/api/translate'
 import { capitalizeFirstLetter } from '../../utils/capitalize'
 import { Header } from './Header/Header';
 import { History } from './History/History';
 import { Result } from './Result/Result';
 import { Search } from './Search/Search'
+import { TranslationMode } from '../../components/TranslationModeSwitch/TranslationModeSwitch'
 import { State } from '../../store/store'
+
 
 export function Home() {
     const mode = useSelector((state: State) => state.theme.mode);
@@ -20,6 +22,9 @@ export function Home() {
     const [result, setResult] = useState('')
     const [loading, setIsLoading] = useState(false)
     const [languageFrom, setLanguageFrom] = useState<Language>('russian')
+    const [translationMode, setTranslationMode] = useState<TranslationMode>('normal')
+
+
 
     const dispatch = useDispatch()
 
@@ -43,7 +48,10 @@ export function Home() {
             Keyboard.dismiss()
             setIsLoading(true)
             try {
-                const translation = await translate(formattedValue, languageFrom)
+                const translation = translationMode === 'ai'
+                    ? await aiTranslate(formattedValue, languageFrom)
+                    : await translate(formattedValue, languageFrom);
+
                 setResult(capitalizeFirstLetter(translation))
 
                 const item = {
@@ -57,18 +65,30 @@ export function Home() {
             }
 
             catch (e) {
-                Alert.alert('Что-то пошло не так', 'Попробуйте повторить позже')
+                console.error(e)
+                const errorMessage = translationMode === 'ai'
+                    ? 'Не удалось получить перевод от ИИ. Попробуйте позже.'
+                    : 'Что-то пошло не так. Попробуйте повторить позже';
+                Alert.alert('Ошибка', errorMessage)
             }
             finally {
                 setIsLoading(false)
             }
         }
-    }, [value, languageFrom, dispatch])
+    }, [value, languageFrom, translationMode, dispatch])
 
     return (
         <View style={styles.container}>
-            <Header languageFrom={languageFrom} setLanguageFrom={setLanguageFrom} />
+            <Header
+                languageFrom={languageFrom}
+                setLanguageFrom={setLanguageFrom}
+                translationMode={translationMode}
+                setTranslationMode={setTranslationMode}
+            />
             <Search loading={loading} value={value} setValue={setValue} onSubmit={onSubmit} languageFrom={languageFrom} />
+            {translationMode === 'ai' && (
+                <Text style={styles.draftText}>Перевод может быть неточным</Text>
+            )}
             {result && <Result result={result} />}
             <History />
         </View>
@@ -81,5 +101,13 @@ const styling = (theme: Theming) => StyleSheet.create({
         flex: 1,
         backgroundColor: theme.colors.background,
         paddingBottom: isSmallDevice ? 60 : 90
+    },
+    draftText: {
+        fontSize: 10,
+        fontFamily: 'regular',
+        color: theme.colors.secondaryText,
+        textAlign: 'center',
+        marginTop: 8,
+        marginHorizontal: 36,
     },
 })

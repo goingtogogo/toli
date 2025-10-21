@@ -3,16 +3,19 @@ import { Octicons } from '@expo/vector-icons'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Theming, theming } from '../../../utils/theme'
 import { Language } from '../../../utils/api/translate'
+import { TranslationModeSwitch, TranslationMode } from '../../../components/TranslationModeSwitch/TranslationModeSwitch'
 import { useSelector } from 'react-redux'
 import { State } from '../../../store/store'
 
 type Props = {
     languageFrom: Language;
     setLanguageFrom: (language: Language) => void;
+    translationMode: TranslationMode;
+    setTranslationMode: (mode: TranslationMode) => void;
 }
 
 export const Header: React.FC<Props> = props => {
-    const { languageFrom, setLanguageFrom } = props;
+    const { languageFrom, setLanguageFrom, translationMode, setTranslationMode } = props;
 
     const theme = useSelector((state: State) => theming(state.theme.mode));
     const styles = styling(theme);
@@ -24,18 +27,22 @@ export const Header: React.FC<Props> = props => {
     const handleLanguageChange = useCallback(() => setLanguageFrom(languageFrom === 'russian' ? 'buryat' : 'russian'), [languageFrom])
 
     return (
-        <View style={styles.languageContainer}>
-            <TouchableOpacity style={styles.option}>
-                <Text style={styles.optionText}>{languageFromLabel}</Text>
-            </TouchableOpacity>
+        <View>
+            <TranslationModeSwitch mode={translationMode} onModeChange={setTranslationMode} />
 
-            <TouchableOpacity onPress={handleLanguageChange}>
-                <Octicons name="arrow-switch" size={26} color={theme.colors.text} />
-            </TouchableOpacity>
+            <View style={styles.languageContainer}>
+                <TouchableOpacity style={styles.option}>
+                    <Text style={styles.optionText}>{languageFromLabel}</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity style={styles.option}>
-                <Text style={styles.optionText}>{languageToLabel}</Text>
-            </TouchableOpacity>
+                <TouchableOpacity onPress={handleLanguageChange}>
+                    <Octicons name="arrow-switch" size={22} color={theme.colors.text} />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.option}>
+                    <Text style={styles.optionText}>{languageToLabel}</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -46,11 +53,11 @@ const styling = (theme: Theming) => StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingBottom: theme.spacing.l,
     },
     option: {
         minWidth: 65,
         alignItems: 'center',
-        paddingVertical: theme.spacing.xl,
         marginHorizontal: theme.spacing.xl,
     },
     optionText: {

@@ -93,4 +93,16 @@ export const cards =
       { text: 'Сегодня понедельник', translatedText: 'Мүнөөдэр гарагай хоёр', id: uuid.v4() }
     ],
   },
+  // weather: {
+  //   name: 'Погода',
+  //   icon: require('../../../assets/icons/sun.png'),
+  //   cards: [
+  //     { text: 'Солнечно', translatedText: 'Наратай', id: uuid.v4() },
+  //     { text: 'Дождь', translatedText: 'Бороо', id: uuid.v4() },
+  //     { text: 'Снег', translatedText: 'Саһан', id: uuid.v4() },
+  //     { text: 'Ветер', translatedText: 'һалхин', id: uuid.v4() },
+  //     { text: 'Холодно', translatedText: 'Хүйтэн', id: uuid.v4() },
+  //     { text: 'Жарко', translatedText: 'Халуун', id: uuid.v4() }
+  //   ]
+  // }
 }
