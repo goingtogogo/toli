@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { HistoryItem } from '../history';
-import { cards } from './content';
-import { Question } from '../../../screens/Collections/Quiz/Quiz';
+import { ImageSourcePropType } from 'react-native'
 
+import { cards } from './content'
+
+import { HistoryItem } from '@/store/slice/history'
 
 type Flashcard = {
-  name: string;
-  translation: string;
-  icon: any;
-  cards: HistoryItem[];
-  quiz: Question[];
-  completedFlashcards?: boolean;
-  completedQuiz?: boolean;
+  name: string
+  translation: string
+  icon: ImageSourcePropType
+  cards: HistoryItem[]
+  completedFlashcards?: boolean
+  completedQuiz?: boolean
 }
 
 type Flashcards = {
@@ -19,10 +19,10 @@ type Flashcards = {
 }
 
 export type FlashcardsState = {
-  items: Flashcards,
+  items: Flashcards
   completedFlashcards: {
     [key: string]: boolean
-  };
+  }
   completedQuiz: {
     [key: string]: boolean
   }
@@ -31,24 +31,30 @@ export type FlashcardsState = {
 const initialState: FlashcardsState = {
   items: cards,
   completedFlashcards: {},
-  completedQuiz: {}
+  completedQuiz: {},
 }
 
 const flashcards = createSlice({
   name: 'flashcards',
   initialState,
   reducers: {
-    setCompletedFlashcards: (state, action: PayloadAction<{ items: { [key: string]: boolean } }>) => {
+    setCompletedFlashcards: (
+      state,
+      action: PayloadAction<{ items: { [key: string]: boolean } }>,
+    ) => {
       const { items } = action.payload
 
       state.completedFlashcards = items
     },
-    setCompletedQuiz: (state, action: PayloadAction<{ items: { [key: string]: boolean } }>) => {
+    setCompletedQuiz: (
+      state,
+      action: PayloadAction<{ items: { [key: string]: boolean } }>,
+    ) => {
       const { items } = action.payload
 
       state.completedQuiz = items
     },
-  }
+  },
 })
 
 export const { setCompletedFlashcards, setCompletedQuiz } = flashcards.actions

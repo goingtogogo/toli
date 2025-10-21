@@ -1,66 +1,70 @@
+import OcticonsIcons from '@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/Octicons.json'
 import React, { useCallback } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import OcticonsIcons from '@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/Octicons.json'
-
-import { Theming, theming } from '../../utils/theme'
-import { SettingsKey } from '../../screens/Settings'
-import { ActionButton } from '../ActionButton/ActionButton'
 import { useSelector } from 'react-redux'
-import { State } from '../../store/store'
+
+import { ActionButton } from '@/components/ActionButton/ActionButton'
+import { SettingsKey } from '@/screens/Settings'
+import { State } from '@/store/store'
+import { Theming, theming } from '@/utils/theme'
 
 type Props = {
-    name: SettingsKey;
-    title: string;
-    subtitle: string;
-    icon: keyof typeof OcticonsIcons;
-    onPress: (key: SettingsKey) => void;
+  name: SettingsKey
+  title: string
+  subtitle: string
+  icon: keyof typeof OcticonsIcons
+  onPress: (key: SettingsKey) => void
 }
 
-export const SettingsItem: React.FC<Props> = ({ name, onPress, title, icon, subtitle }) => {
-    const theme = useSelector((state: State) => state.theme.mode);
-    const styles = styling(theming(theme));
-    
-    const handlePress = useCallback(() => {
-        onPress(name)
-    }, [name])
+export const SettingsItem: React.FC<Props> = ({
+  name,
+  onPress,
+  title,
+  icon,
+  subtitle,
+}) => {
+  const theme = useSelector((state: State) => state.theme.mode)
+  const styles = styling(theming(theme))
 
-    return (
-        <TouchableOpacity style={styles.container} onPress={handlePress}>
-            <View style={styles.textContainer}>
-                <Text style={styles.title} numberOfLines={1}>
-                    {title}
-                </Text>
-                <Text style={styles.subtitle}>
-                    {subtitle}
-                </Text>
-            </View>
+  const handlePress = useCallback(() => {
+    onPress(name)
+  }, [name])
 
-            <ActionButton name={icon} onPress={handlePress} />
-        </TouchableOpacity>
-    )
+  return (
+    <TouchableOpacity style={styles.container} onPress={handlePress}>
+      <View style={styles.textContainer}>
+        <Text style={styles.title} numberOfLines={1}>
+          {title}
+        </Text>
+        <Text style={styles.subtitle}>{subtitle}</Text>
+      </View>
+
+      <ActionButton name={icon} onPress={handlePress} />
+    </TouchableOpacity>
+  )
 }
 
-
-const styling = (theme: Theming) => StyleSheet.create({
+const styling = (theme: Theming) =>
+  StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        backgroundColor: theme.colors.background,
-        paddingVertical: theme.spacing.s,
-        paddingHorizontal: theme.spacing.s,
+      flexDirection: 'row',
+      backgroundColor: theme.colors.background,
+      paddingVertical: theme.spacing.s,
+      paddingHorizontal: theme.spacing.s,
     },
     textContainer: {
-        flex: 1,
-        marginRight: theme.spacing.xs,
-        alignSelf: 'center'
+      flex: 1,
+      marginRight: theme.spacing.xs,
+      alignSelf: 'center',
     },
     title: {
-        color: theme.colors.text,
-        fontFamily: 'bold',
-        fontSize: 18
+      color: theme.colors.text,
+      fontFamily: 'bold',
+      fontSize: 18,
     },
     subtitle: {
-        color: theme.colors.secondaryText,
-        fontFamily: 'medium',
-        fontSize: 14,
-    }
-})
+      color: theme.colors.secondaryText,
+      fontFamily: 'medium',
+      fontSize: 14,
+    },
+  })

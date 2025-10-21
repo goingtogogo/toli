@@ -1,32 +1,41 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import { Button } from '../../../../../components/Button/Button';
-import { State } from '../../../../../store/store';
-import { Theming, theming } from '../../../../../utils/theme';
-import { Question } from '../../Quiz';
-import { ImageOption } from './ImageOption/ImageOption';
+import React, { useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { useSelector } from 'react-redux'
+
+import { ImageOption } from './ImageOption/ImageOption'
+
+import { Button } from '@/components/Button/Button'
+import { Question } from '@/screens/Collections/Quiz/Quiz'
+import { State } from '@/store/store'
+import { Theming, theming } from '@/utils/theme'
 
 type Props = {
-  question: Question;
-  onCorrect: () => void;
-  onWrong: () => void;
-};
+  question: Question
+  onCorrect: () => void
+  onWrong: () => void
+}
 
-export const ImageMultipleChoiceQuestion = ({ question, onCorrect, onWrong }: Props) => {
-  const theme = useSelector((state: State) => theming(state.theme.mode));
-  const styles = styling(theme);
-  const [selected, setSelected] = useState<{ correct: false; id: string } | null>(null);
+export const ImageMultipleChoiceQuestion = ({
+  question,
+  onCorrect,
+  onWrong,
+}: Props) => {
+  const theme = useSelector((state: State) => theming(state.theme.mode))
+  const styles = styling(theme)
+  const [selected, setSelected] = useState<{
+    correct: false
+    id: string
+  } | null>(null)
 
   const onButtonPress = () => {
     if (selected?.correct) {
-      onCorrect();
+      onCorrect()
 
-      setSelected(null);
+      setSelected(null)
     } else {
-      onWrong();
+      onWrong()
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -44,14 +53,15 @@ export const ImageMultipleChoiceQuestion = ({ question, onCorrect, onWrong }: Pr
         ))}
       </View>
       <Button
+        view="action"
         label="Проверить"
         onPress={onButtonPress}
-        disabled={!selected}
+        // disabled={!selected}
         className={styles.button}
       />
     </View>
-  );
-};
+  )
+}
 
 const styling = (theme: Theming) =>
   StyleSheet.create({
@@ -84,4 +94,4 @@ const styling = (theme: Theming) =>
       paddingHorizontal: 80,
       ...theme.shadows.basicShadow,
     },
-  });
+  })

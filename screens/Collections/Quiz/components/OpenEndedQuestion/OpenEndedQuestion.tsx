@@ -1,32 +1,35 @@
-import React, { useState } from 'react';
-import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import { Button } from '../../../../../components/Button/Button';
-import { State } from '../../../../../store/store';
-import { Theming, theming } from '../../../../../utils/theme';
-import { Question } from '../../Quiz';
+import React, { useState } from 'react'
+import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native'
+import { useSelector } from 'react-redux'
+
+import { Button } from '@/components/Button/Button'
+import { Question } from '@/screens/Collections/Quiz/Quiz'
+import { State } from '@/store/store'
+import { Theming, theming } from '@/utils/theme'
 
 type Props = {
-  question: Question;
-  onCorrect: () => void;
-  onWrong: () => void;
-};
+  question: Question
+  onCorrect: () => void
+  onWrong: () => void
+}
 
 export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState('')
 
-  const mode = useSelector((state: State) => state.theme.mode);
-  const styles = styling(theming(mode));
+  const mode = useSelector((state: State) => state.theme.mode)
+  const styles = styling(theming(mode))
 
   const onButtonPress = () => {
-    Keyboard.dismiss();
-    if (question.answer?.toLowerCase().trim().includes(input.toLowerCase().trim())) {
-      onCorrect();
+    Keyboard.dismiss()
+    if (
+      question.answer?.toLowerCase().trim().includes(input.toLowerCase().trim())
+    ) {
+      onCorrect()
     } else {
-      onWrong();
+      onWrong()
     }
-    setInput('');
-  };
+    setInput('')
+  }
 
   return (
     <View style={styles.container}>
@@ -39,7 +42,9 @@ export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
       </View>
 
       <View style={styles.inputContainer}>
-        {!input && <Text style={styles.placeholder}>Напишите на бурятском</Text>}
+        {!input && (
+          <Text style={styles.placeholder}>Напишите на бурятском</Text>
+        )}
         <TextInput
           value={input}
           onChangeText={setInput}
@@ -53,14 +58,15 @@ export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
       </View>
 
       <Button
+        view="action"
         label="Проверить"
         onPress={onButtonPress}
-        disabled={!input}
+        // disabled={!input}
         className={styles.button}
       />
     </View>
-  );
-};
+  )
+}
 
 const styling = (theme: Theming) =>
   StyleSheet.create({
@@ -133,4 +139,4 @@ const styling = (theme: Theming) =>
       paddingHorizontal: 80,
       ...theme.shadows.basicShadow,
     },
-  });
+  })
