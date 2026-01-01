@@ -107,56 +107,57 @@ export function Flashcards(props: Props) {
   return (
     <View style={styles.container}>
       <ProgressView progress={progress} />
-      {/* @ts-expect-error todo: needs to be fixed */}
-      <Swiper
-        ref={(swiperRef) => (swiper = swiperRef)}
-        cards={cards}
-        renderCard={({ text, translatedText }) =>
-          // @ts-expect-error todo: needs to be fixed
-          Card({ text, translatedText, styles })
-        }
-        onSwipedLeft={onSwipedLeft}
-        onSwipedRight={onSwipedRight}
-        onSwiped={onSwiped}
-        verticalSwipe={false}
-        cardIndex={0}
-        stackSize={3}
-        stackSeparation={10}
-        overlayLabels={overlayLabels}
-        animateOverlayLabelsOpacity
-        backgroundColor={theme.colors.background}
-        marginTop={theme.spacing.s}
-        cardHorizontalMargin={36}
-        cardStyle={styles.card}
-        infinite={true}
-      >
-        <View>
-          <View style={[styles.leftCount, styles.count]}>
-            <Text style={styles.countText}>{leftCount}</Text>
-          </View>
-          <View style={[styles.rightCount, styles.count]}>
-            <Text style={styles.countText}>{rightCount}</Text>
-          </View>
-          <View style={styles.arrows}>
-            <ActionButton
-              name="arrow-left"
-              onPress={() => {
-                setTimeout(() => swiper?.swipeLeft(), 0)
-              }}
-            />
-            <View style={styles.hint}>
-              <Text style={styles.hintText}>Нажмите на карточку,</Text>
-              <Text style={styles.hintText}>чтоб перевернуть ее</Text>
-            </View>
-            <ActionButton
-              name="arrow-right"
-              onPress={() => {
-                setTimeout(() => swiper?.swipeRight(), 0)
-              }}
-            />
-          </View>
+      <View>
+        <View style={[styles.leftCount, styles.count]}>
+          <Text style={styles.countText}>{leftCount}</Text>
         </View>
-      </Swiper>
+        <View style={[styles.rightCount, styles.count]}>
+          <Text style={styles.countText}>{rightCount}</Text>
+        </View>
+        <View style={styles.arrows}>
+          <ActionButton
+            name="arrow-left"
+            onPress={() => {
+              setTimeout(() => swiper?.swipeLeft(), 0)
+            }}
+          />
+          <View style={styles.hint}>
+            <Text style={styles.hintText}>Нажмите на карточку,</Text>
+            <Text style={styles.hintText}>чтоб перевернуть ее</Text>
+          </View>
+          <ActionButton
+            name="arrow-right"
+            onPress={() => {
+              setTimeout(() => swiper?.swipeRight(), 0)
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.swiperContainer}>
+        <Swiper
+          ref={(swiperRef) => (swiper = swiperRef)}
+          cards={cards}
+          renderCard={({ text, translatedText }) =>
+            // @ts-expect-error somehow it expects flex: 1 in all objects, todo: fix this
+            Card({ text, translatedText, styles })
+          }
+          onSwipedLeft={onSwipedLeft}
+          onSwipedRight={onSwipedRight}
+          onSwiped={onSwiped}
+          cardIndex={0}
+          verticalSwipe={false}
+          showSecondCard={true}
+          stackSize={3}
+          stackScale={3}
+          stackSeparation={10}
+          overlayLabels={overlayLabels}
+          backgroundColor={theme.colors.background}
+          animateOverlayLabelsOpacity
+          cardHorizontalMargin={36}
+          cardStyle={styles.card}
+          infinite={true}
+        ></Swiper>
+      </View>
     </View>
   )
 }
@@ -168,7 +169,9 @@ const Card = ({
 }: {
   text: string
   translatedText: string
-  styles: { [key: string]: StyleProp<ViewStyle> }
+  styles: {
+    [key: string]: StyleProp<ViewStyle>
+  }
 }) => {
   return (
     <FlipCard
@@ -191,8 +194,13 @@ const Card = ({
 const styling = (theme: Theming, mode: Theme) =>
   StyleSheet.create({
     container: {
+      position: 'relative',
       flex: 1,
       backgroundColor: theme.colors.background,
+      zIndex: 9999,
+    },
+    swiperContainer: {
+      zIndex: 9999,
     },
     card: {
       maxHeight: 400,
@@ -230,8 +238,10 @@ const styling = (theme: Theming, mode: Theme) =>
       top: theme.spacing.xs,
       justifyContent: 'center',
       width: 40,
+      height: 40,
       padding: theme.spacing.xs,
       opacity: 0.8,
+      zIndex: 1000,
     },
     leftCount: {
       left: 0,
@@ -257,6 +267,7 @@ const styling = (theme: Theming, mode: Theme) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignSelf: 'center',
+      zIndex: 1000,
     },
     hint: {
       paddingHorizontal: 4,
