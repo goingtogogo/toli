@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { AnyAction, Dispatch } from '@reduxjs/toolkit'
+import { usePostHog } from 'posthog-react-native'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -36,6 +37,7 @@ type ButtonProps = {
 }
 
 export function Collections() {
+  const posthog = usePostHog()
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
@@ -50,6 +52,8 @@ export function Collections() {
   }, [dispatch, t])
 
   const handleEmailPress = () => {
+    posthog.capture('email_click', { source: 'collections_footer' })
+
     const subject = t('collections.emailSubject')
     Linking.openURL(
       `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`,
@@ -81,6 +85,7 @@ type ProfileScreenNavigationProp = CompositeNavigationProp<
 >
 
 const CollectionButton = ({ collectionKey }: ButtonProps) => {
+  const posthog = usePostHog()
   const { t } = useTranslation()
   const navigation = useNavigation<ProfileScreenNavigationProp>()
   const {
@@ -96,11 +101,10 @@ const CollectionButton = ({ collectionKey }: ButtonProps) => {
     [flashcards, collectionKey],
   )
 
-  const handlePress = useCallback(
-    () =>
-      navigation.navigate('collection', { name: t(name), key: collectionKey }),
-    [name, collectionKey],
-  )
+  const handlePress = useCallback(() => {
+    posthog.capture('collection_card_click', { collection: t(name) })
+    navigation.navigate('collection', { name: t(name), key: collectionKey })
+  }, [name, collectionKey, posthog, t])
 
   return (
     <TouchableOpacity style={styles.collection} onPress={handlePress}>

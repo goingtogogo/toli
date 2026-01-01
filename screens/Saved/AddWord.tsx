@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { usePostHog } from 'posthog-react-native'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -16,6 +17,7 @@ import { isSmallDevice, Theming, theming } from '@/utils/theme'
 type Props = NativeStackScreenProps<StackParamList, 'add'>
 
 export function AddWord({ navigation }: Props) {
+  const posthog = usePostHog()
   const { t } = useTranslation()
   const mode = useSelector((state: State) => state.theme.mode)
   const styles = styling(theming(mode))
@@ -47,8 +49,11 @@ export function AddWord({ navigation }: Props) {
     await AsyncStorage.setItem('saved', JSON.stringify(newSavedItems))
 
     dispatch(setSaved({ items: newSavedItems }))
+
+    posthog.capture('word_added_manually')
+
     goBack()
-  }, [dispatch, savedItems, word, translation])
+  }, [dispatch, savedItems, word, translation, posthog, goBack])
 
   return (
     <View style={styles.container}>

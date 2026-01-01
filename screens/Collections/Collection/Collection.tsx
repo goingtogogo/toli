@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import React, { useCallback, useMemo } from 'react'
+import { usePostHog } from 'posthog-react-native'
+import React, { useCallback, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, SafeAreaView, FlatList, Alert } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -13,6 +14,7 @@ import { Theming, theming } from '@/utils/theme'
 type Props = NativeStackScreenProps<StackParamList, 'collection'>
 
 export function Collection(props: Props) {
+  const posthog = usePostHog()
   const { t, i18n } = useTranslation()
   const {
     route: {
@@ -28,6 +30,13 @@ export function Collection(props: Props) {
 
   const { cards } = useMemo(() => flashcards[key], [key])
 
+  useEffect(() => {
+    posthog.capture('collection_open', {
+      collection: name,
+      totalCards: cards.length,
+    })
+  }, [posthog, name, cards.length])
+
   const handlePress = useCallback(() => {
     Alert.alert(
       t('collections.learn'),
@@ -35,16 +44,28 @@ export function Collection(props: Props) {
       [
         {
           text: t('collections.flashcardsButton'),
-          onPress: () => navigation.navigate('flashcards', { name, key }),
+          onPress: () => {
+            posthog.capture('flashcards_start', {
+              collection: name,
+              totalCards: cards.length,
+            })
+            navigation.navigate('flashcards', { name, key })
+          },
         },
         {
           text: t('collections.takeTestButton'),
-          onPress: () => navigation.navigate('quiz', { name, key }),
+          onPress: () => {
+            posthog.capture('quiz_start', {
+              collection: name,
+              totalQuestions: cards.length,
+            })
+            navigation.navigate('quiz', { name, key })
+          },
         },
       ],
       { cancelable: true },
     )
-  }, [name, key, t])
+  }, [name, key, t, posthog, cards.length])
 
   return (
     <SafeAreaView style={styles.container}>

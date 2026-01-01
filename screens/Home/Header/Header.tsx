@@ -1,4 +1,5 @@
 import { Octicons } from '@expo/vector-icons'
+import { usePostHog } from 'posthog-react-native'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -20,6 +21,7 @@ type Props = {
 }
 
 export const Header: React.FC<Props> = (props) => {
+  const posthog = usePostHog()
   const { t } = useTranslation()
   const { languageFrom, setLanguageFrom, translationMode, setTranslationMode } =
     props
@@ -35,16 +37,29 @@ export const Header: React.FC<Props> = (props) => {
     [languageFrom, t],
   )
 
-  const handleLanguageChange = useCallback(
-    () => setLanguageFrom(languageFrom === 'russian' ? 'buryat' : 'russian'),
-    [languageFrom],
+  const handleLanguageChange = useCallback(() => {
+    const newLanguage = languageFrom === 'russian' ? 'buryat' : 'russian'
+    posthog.capture('translation_language_switched', {
+      from: languageFrom,
+    })
+    setLanguageFrom(newLanguage)
+  }, [languageFrom, posthog, setLanguageFrom])
+
+  const handleTranslationModeChange = useCallback(
+    (mode: TranslationMode) => {
+      posthog.capture('translation_mode_changed', {
+        mode,
+      })
+      setTranslationMode(mode)
+    },
+    [posthog, translationMode, setTranslationMode],
   )
 
   return (
     <View>
       <TranslationModeSwitch
         mode={translationMode}
-        onModeChange={setTranslationMode}
+        onModeChange={handleTranslationModeChange}
       />
 
       <View style={styles.languageContainer}>

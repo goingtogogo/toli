@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Толи",
+    "newArchEnabled": true,
     "slug": "toli",
     "version": "1.4.2",
     "orientation": "portrait",
@@ -19,7 +20,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.goingtogogo.toli",
-      "buildNumber": "10"
+      "buildNumber": "10",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -47,14 +51,11 @@
           "android": {
             "minSdkVersion": 33,
             "targetSdkVersion": 33,
-            "compileSdkVersion": 33,
-            "newArchEnabled": true
-          },
-          "ios": {
-            "newArchEnabled": true
+            "compileSdkVersion": 33
           }
         }
-      ]
+      ],
+      "expo-localization"
     ]
   }
 }
