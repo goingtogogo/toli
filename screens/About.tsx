@@ -1,12 +1,6 @@
-import React, { useCallback } from 'react'
 import * as Clipboard from 'expo-clipboard'
-import {
-  Alert,
-  Linking,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native'
+import React, { useCallback } from 'react'
+import { Alert, Linking, StyleSheet, Text } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 

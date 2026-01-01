@@ -1,6 +1,6 @@
 export const DEEPSEEK_CONFIG = {
   API_URL: 'https://api.deepseek.com/v1/chat/completions',
-  API_KEY: process.env.DEEP_SEEK_API_KEY,
+  API_KEY: process.env.EXPO_PUBLIC_DEEP_SEEK_API_KEY,
   MODEL: 'deepseek-chat',
   MAX_TOKENS: 200,
   TEMPERATURE: 0.1,

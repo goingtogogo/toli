@@ -7,6 +7,7 @@ import {
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, View, Alert } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-gesture-handler'
 import { Provider, useSelector } from 'react-redux'
 
@@ -172,41 +173,51 @@ function App() {
   }
 
   return (
-    <NavigationContainer>
-      <View onLayout={onLayout} style={styles.container}>
-        <Stack.Navigator>
-          <Stack.Group>
-            <Stack.Screen
-              name="main"
-              component={TabNavigator}
-              options={screenOptions}
-            />
-            <Stack.Screen name="add" component={AddWord} options={addOptions} />
-            <Stack.Screen
-              name="about"
-              component={About}
-              options={aboutOptions}
-            />
-            <Stack.Screen
-              name="collection"
-              component={Collection}
-              options={collectionOptions}
-            />
-            <Stack.Screen
-              name="flashcards"
-              component={Flashcards}
-              options={flashcardsOptions}
-            />
-            <Stack.Screen name="quiz" component={Quiz} options={quizOptions} />
-            <Stack.Screen
-              name="navigation"
-              component={Navigation}
-              options={navigationOptions}
-            />
-          </Stack.Group>
-        </Stack.Navigator>
-      </View>
-    </NavigationContainer>
+    <GestureHandlerRootView>
+      <NavigationContainer>
+        <View onLayout={onLayout} style={styles.container}>
+          <Stack.Navigator>
+            <Stack.Group>
+              <Stack.Screen
+                name="main"
+                component={TabNavigator}
+                options={screenOptions}
+              />
+              <Stack.Screen
+                name="add"
+                component={AddWord}
+                options={addOptions}
+              />
+              <Stack.Screen
+                name="about"
+                component={About}
+                options={aboutOptions}
+              />
+              <Stack.Screen
+                name="collection"
+                component={Collection}
+                options={collectionOptions}
+              />
+              <Stack.Screen
+                name="flashcards"
+                component={Flashcards}
+                options={flashcardsOptions}
+              />
+              <Stack.Screen
+                name="quiz"
+                component={Quiz}
+                options={quizOptions}
+              />
+              <Stack.Screen
+                name="navigation"
+                component={Navigation}
+                options={navigationOptions}
+              />
+            </Stack.Group>
+          </Stack.Navigator>
+        </View>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   )
 }
 

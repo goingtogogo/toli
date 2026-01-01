@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import * as Clipboard from 'expo-clipboard'
 import React, { useCallback } from 'react'
 import { StyleSheet, View, Alert, Linking, Platform } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import * as Clipboard from 'expo-clipboard'
 
 import { StackParamList } from '@/App'
 import { SettingsItem } from '@/components/SettingsItem/SettingsItem'
