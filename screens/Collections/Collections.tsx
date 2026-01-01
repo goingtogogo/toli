@@ -16,6 +16,8 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ScrollView,
+  Linking,
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -25,6 +27,8 @@ import {
   setCompletedQuiz,
 } from '@/store/slice/flashcards'
 import { State } from '@/store/store'
+import { CONTACT_EMAIL } from '@/utils/constants'
+import { isSmallDevice } from '@/utils/theme'
 import { Theming, theming } from '@/utils/theme'
 
 type ButtonProps = {
@@ -45,12 +49,29 @@ export function Collections() {
     dispatch(loadData(t))
   }, [dispatch, t])
 
+  const handleEmailPress = () => {
+    const subject = t('collections.emailSubject')
+    Linking.openURL(
+      `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`,
+    )
+  }
+
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.scrollView}
+      contentContainerStyle={styles.container}
+    >
       {Object.keys(flashcards).map((key) => (
         <CollectionButton key={key} collectionKey={key} />
       ))}
-    </View>
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>{t('collections.footer')}</Text>
+        <Text style={styles.emailLink} onPress={handleEmailPress}>
+          {CONTACT_EMAIL}
+        </Text>
+      </View>
+    </ScrollView>
   )
 }
 
@@ -108,15 +129,18 @@ const CollectionButton = ({ collectionKey }: ButtonProps) => {
 
 const styling = (theme: Theming) =>
   StyleSheet.create({
-    container: {
+    scrollView: {
       flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    container: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       flexWrap: 'wrap',
       alignItems: 'flex-start',
-      backgroundColor: theme.colors.background,
       paddingHorizontal: theme.spacing.l,
       paddingTop: theme.spacing.s,
+      paddingBottom: isSmallDevice ? 60 : 90,
     },
     collection: {
       position: 'relative',
@@ -157,6 +181,23 @@ const styling = (theme: Theming) =>
     },
     quiz: {
       left: 48,
+    },
+    footer: {
+      width: '100%',
+      marginTop: theme.spacing.xl,
+      paddingVertical: theme.spacing.l,
+      alignItems: 'center',
+    },
+    footerText: {
+      fontFamily: 'regular',
+      fontSize: 14,
+      color: theme.colors.secondaryText,
+      textAlign: 'center',
+      lineHeight: 20,
+    },
+    emailLink: {
+      color: theme.colors.accent,
+      textDecorationLine: 'underline',
     },
   })
 

@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import { useSelector } from 'react-redux'
 
+import { BuryatLetters } from '@/components/BuryatLetters/BuryatLetters'
 import { State } from '@/store/store'
 import { Language } from '@/utils/api/translate'
 import { Theming, theming } from '@/utils/theme'
@@ -79,17 +80,10 @@ export const Search: React.FC<Props> = (props) => {
       </View>
 
       {languageFrom === 'buryat' && (
-        <View style={styles.lettersContainer}>
-          <TouchableOpacity onPress={() => handleLetterClick('ү')}>
-            <Text style={styles.letter}>ү</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleLetterClick('һ')}>
-            <Text style={styles.letter}>һ</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleLetterClick('ө')}>
-            <Text style={styles.letter}>ө</Text>
-          </TouchableOpacity>
-        </View>
+        <BuryatLetters
+          onLetterPress={handleLetterClick}
+          containerStyle={styles.lettersContainer}
+        />
       )}
     </View>
   )
@@ -151,18 +145,6 @@ const styling = (theme: Theming) =>
       position: 'absolute',
       bottom: theme.spacing.s,
       flex: 1,
-      flexDirection: 'row',
       alignSelf: 'center',
-    },
-    letter: {
-      paddingHorizontal: theme.spacing.m,
-      paddingVertical: 2,
-      marginHorizontal: 4,
-      fontSize: 24,
-      fontFamily: 'regular',
-      color: theme.colors.secondaryText,
-      borderWidth: 2,
-      borderRadius: 12,
-      borderColor: '#d6d6d6',
     },
   })

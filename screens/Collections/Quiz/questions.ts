@@ -894,4 +894,752 @@ export const questions: {
       ],
     },
   ],
+  weather: [
+    {
+      id: 'q0',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Наратай"?',
+        en: 'How do you translate "Наратай"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Солнечно', en: 'Sunny' },
+          correct: true,
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Дождь', en: 'Rain' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Ветер', en: 'Wind' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Снег', en: 'Snow' },
+        },
+      ],
+    },
+    {
+      id: 'q1',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Дождь', en: 'Rain' },
+      answer: 'Бороо',
+    },
+    {
+      id: 'q2',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Саһан"?',
+        en: 'How do you translate "Саһан"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Холодно', en: 'Cold' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Снег', en: 'Snow' },
+          correct: true,
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Жарко', en: 'Hot' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Ветер', en: 'Wind' },
+        },
+      ],
+    },
+    {
+      id: 'q3',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Ветер', en: 'Wind' },
+      answer: 'һалхин',
+    },
+    {
+      id: 'q4',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Хүйтэн"?',
+        en: 'How do you translate "Хүйтэн"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Жарко', en: 'Hot' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Солнечно', en: 'Sunny' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Холодно', en: 'Cold' },
+          correct: true,
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Дождь', en: 'Rain' },
+        },
+      ],
+    },
+    {
+      id: 'q5',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Жарко', en: 'Hot' },
+      answer: 'Халуун',
+    },
+    {
+      id: 'q6',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Бороо"?',
+        en: 'How do you translate "Бороо"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Дождь', en: 'Rain' },
+          correct: true,
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Снег', en: 'Snow' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Ветер', en: 'Wind' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Холодно', en: 'Cold' },
+        },
+      ],
+    },
+    {
+      id: 'q7',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Снег', en: 'Snow' },
+      answer: 'Саһан',
+    },
+    {
+      id: 'q8',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Халуун"?',
+        en: 'How do you translate "Халуун"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Холодно', en: 'Cold' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Ветер', en: 'Wind' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Жарко', en: 'Hot' },
+          correct: true,
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Солнечно', en: 'Sunny' },
+        },
+      ],
+    },
+    {
+      id: 'q9',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Солнечно', en: 'Sunny' },
+      answer: 'Наратай',
+    },
+  ],
+  numbers: [
+    {
+      id: 'q0',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Нэгэн"?',
+        en: 'How do you translate "Нэгэн"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Один', en: 'One' },
+          correct: true,
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Два', en: 'Two' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Три', en: 'Three' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Четыре', en: 'Four' },
+        },
+      ],
+    },
+    {
+      id: 'q1',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Пять', en: 'Five' },
+      answer: 'Табан',
+    },
+    {
+      id: 'q2',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Гурбан"?',
+        en: 'How do you translate "Гурбан"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Два', en: 'Two' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Три', en: 'Three' },
+          correct: true,
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Четыре', en: 'Four' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Пять', en: 'Five' },
+        },
+      ],
+    },
+    {
+      id: 'q3',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Семь', en: 'Seven' },
+      answer: 'Долоон',
+    },
+    {
+      id: 'q4',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Зургаан"?',
+        en: 'How do you translate "Зургаан"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Пять', en: 'Five' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Шесть', en: 'Six' },
+          correct: true,
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Семь', en: 'Seven' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Восемь', en: 'Eight' },
+        },
+      ],
+    },
+    {
+      id: 'q5',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Десять', en: 'Ten' },
+      answer: 'Арбан',
+    },
+    {
+      id: 'q6',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Найман"?',
+        en: 'How do you translate "Найман"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Шесть', en: 'Six' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Семь', en: 'Seven' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Восемь', en: 'Eight' },
+          correct: true,
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Девять', en: 'Nine' },
+        },
+      ],
+    },
+    {
+      id: 'q7',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Четыре', en: 'Four' },
+      answer: 'Дүрбэн',
+    },
+    {
+      id: 'q8',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Юһэ"?',
+        en: 'How do you translate "Юһэ"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Семь', en: 'Seven' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Восемь', en: 'Eight' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Девять', en: 'Nine' },
+          correct: true,
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Десять', en: 'Ten' },
+        },
+      ],
+    },
+    {
+      id: 'q9',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Два', en: 'Two' },
+      answer: 'Хоёр',
+    },
+  ],
+  numbers2: [
+    {
+      id: 'q0',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Хорин"?',
+        en: 'How do you translate "Хорин"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Десять', en: 'Ten' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Двадцать', en: 'Twenty' },
+          correct: true,
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Тридцать', en: 'Thirty' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Сорок', en: 'Forty' },
+        },
+      ],
+    },
+    {
+      id: 'q1',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Пятьдесят', en: 'Fifty' },
+      answer: 'Табин',
+    },
+    {
+      id: 'q2',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Гушан"?',
+        en: 'How do you translate "Гушан"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Двадцать', en: 'Twenty' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Тридцать', en: 'Thirty' },
+          correct: true,
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Сорок', en: 'Forty' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Пятьдесят', en: 'Fifty' },
+        },
+      ],
+    },
+    {
+      id: 'q3',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Семьдесят', en: 'Seventy' },
+      answer: 'Далан',
+    },
+    {
+      id: 'q4',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Жаран"?',
+        en: 'How do you translate "Жаран"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Сорок', en: 'Forty' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Пятьдесят', en: 'Fifty' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Шестьдесят', en: 'Sixty' },
+          correct: true,
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Семьдесят', en: 'Seventy' },
+        },
+      ],
+    },
+    {
+      id: 'q5',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Сто', en: 'Hundred' },
+      answer: 'Зуун',
+    },
+    {
+      id: 'q6',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Наян"?',
+        en: 'How do you translate "Наян"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Шестьдесят', en: 'Sixty' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Семьдесят', en: 'Seventy' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Восемьдесят', en: 'Eighty' },
+          correct: true,
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Девяносто', en: 'Ninety' },
+        },
+      ],
+    },
+    {
+      id: 'q7',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Сорок', en: 'Forty' },
+      answer: 'Дүшэн',
+    },
+    {
+      id: 'q8',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Ерэн"?',
+        en: 'How do you translate "Ерэн"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Семьдесят', en: 'Seventy' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Восемьдесят', en: 'Eighty' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Девяносто', en: 'Ninety' },
+          correct: true,
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Сто', en: 'Hundred' },
+        },
+      ],
+    },
+    {
+      id: 'q9',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Десять', en: 'Ten' },
+      answer: 'Арбан',
+    },
+  ],
+  colors: [
+    {
+      id: 'q0',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Хара"?',
+        en: 'How do you translate "Хара"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Черный', en: 'Black' },
+          correct: true,
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Белый', en: 'White' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Серый', en: 'Gray' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Коричневый', en: 'Brown' },
+        },
+      ],
+    },
+    {
+      id: 'q1',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Белый', en: 'White' },
+      answer: 'Сагаан',
+    },
+    {
+      id: 'q2',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Улаан"?',
+        en: 'How do you translate "Улаан"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Оранжевый', en: 'Orange' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Красный', en: 'Red' },
+          correct: true,
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Розовый', en: 'Pink' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Коричневый', en: 'Brown' },
+        },
+      ],
+    },
+    {
+      id: 'q3',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Зеленый', en: 'Green' },
+      answer: 'Ногоон',
+    },
+    {
+      id: 'q4',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Хүхэ"?',
+        en: 'How do you translate "Хүхэ"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Голубой', en: 'Light Blue' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Зеленый', en: 'Green' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Синий', en: 'Blue' },
+          correct: true,
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Серый', en: 'Gray' },
+        },
+      ],
+    },
+    {
+      id: 'q5',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Розовый', en: 'Pink' },
+      answer: 'Ягаан',
+    },
+    {
+      id: 'q6',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Улаан Шара"?',
+        en: 'How do you translate "Улаан Шара"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Красный', en: 'Red' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Желтый', en: 'Yellow' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Оранжевый', en: 'Orange' },
+          correct: true,
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Розовый', en: 'Pink' },
+        },
+      ],
+    },
+    {
+      id: 'q7',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Серый', en: 'Gray' },
+      answer: 'Боро',
+    },
+    {
+      id: 'q8',
+      type: 'IMAGE_MULTIPLE_CHOICE',
+      question: {
+        ru: 'Как переводится "Сэнхир"?',
+        en: 'How do you translate "Сэнхир"?',
+      },
+      options: [
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Синий', en: 'Blue' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Голубой', en: 'Light Blue' },
+          correct: true,
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Серый', en: 'Gray' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Белый', en: 'White' },
+        },
+      ],
+    },
+    {
+      id: 'q9',
+      type: 'OPEN_ENDED',
+      text: { ru: 'Коричневый', en: 'Brown' },
+      answer: 'Хүрин',
+    },
+  ],
 }
