@@ -1,6 +1,7 @@
 import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 import { useSelector } from 'react-redux'
 
@@ -20,6 +21,7 @@ export enum Screens {
 }
 
 export function TabNavigator() {
+  const { t } = useTranslation()
   const mode = useSelector((state: State) => state.theme.mode)
   const theme = theming(mode)
 
@@ -70,7 +72,8 @@ export function TabNavigator() {
   const Tab = createBottomTabNavigator()
 
   const homeOptions = {
-    tabBarLabel: Screens.Home,
+    headerTitle: t('tabs.home'),
+    tabBarLabel: t('tabs.home'),
     ...tabStyles,
     tabBarIcon: () => (
       <Octicons name="home" size={24} color={theme.colors.text} />
@@ -78,7 +81,8 @@ export function TabNavigator() {
   }
 
   const savedOptions = ({ navigation }: { navigation }) => ({
-    tabBarLabel: Screens.Saved,
+    headerTitle: t('tabs.saved'),
+    tabBarLabel: t('tabs.saved'),
     ...tabStyles,
     tabBarIcon: () => (
       <Octicons name="star" size={24} color={theme.colors.text} />
@@ -95,7 +99,8 @@ export function TabNavigator() {
   })
 
   const settingsOptions = {
-    tabBarLabel: Screens.Settings,
+    headerTitle: t('tabs.settings'),
+    tabBarLabel: t('tabs.settings'),
     ...tabStyles,
     tabBarIcon: () => (
       <Octicons name="gear" size={24} color={theme.colors.text} />
@@ -103,7 +108,8 @@ export function TabNavigator() {
   }
 
   const collectionOptions = {
-    tabBarLabel: Screens.Collections,
+    headerTitle: t('tabs.collections'),
+    tabBarLabel: t('tabs.collections'),
     ...tabStyles,
     tabBarIcon: () => (
       <Octicons name="repo" size={24} color={theme.colors.text} />

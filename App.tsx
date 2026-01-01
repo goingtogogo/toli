@@ -6,10 +6,12 @@ import {
 } from '@react-navigation/native-stack'
 import * as SplashScreen from 'expo-splash-screen'
 import React, { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Alert } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-gesture-handler'
 import { Provider, useSelector } from 'react-redux'
+import './utils/i18n/i18n'
 
 import { TabNavigator } from '@/components/TabNavigator/TabNavigator'
 import { About } from '@/screens/About'
@@ -45,6 +47,7 @@ export type StackParamList = {
 const Stack = createNativeStackNavigator<StackParamList>()
 
 function App() {
+  const { t } = useTranslation()
   const [appIsLoaded, setAppIsLoaded] = useState(false)
   const mode = useSelector((state: State) => state.theme.mode)
   const theme = theming(mode)
@@ -54,7 +57,7 @@ function App() {
       try {
         await loadFonts()
       } catch (e) {
-        Alert.alert('Что-то пошло не так', 'Попробуйте повторить позже')
+        Alert.alert(t('errors.somethingWentWrong'), t('errors.tryAgainLater'))
       } finally {
         setAppIsLoaded(true)
       }
@@ -70,7 +73,7 @@ function App() {
   }, [appIsLoaded])
 
   const screenOptions = {
-    headerTitle: 'Переводчик',
+    headerTitle: t('headers.translator'),
     headerShown: false,
   }
 
@@ -92,13 +95,13 @@ function App() {
   )
 
   const aboutOptions = {
-    headerTitle: 'О приложении',
+    headerTitle: t('headers.about'),
     ...commonStyles,
     headerBackTitle: '',
   }
 
   const addOptions = {
-    headerTitle: 'Добавить слово',
+    headerTitle: t('headers.addWord'),
     ...commonStyles,
     headerBackTitle: '',
   }

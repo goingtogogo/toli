@@ -1,5 +1,6 @@
 import * as Clipboard from 'expo-clipboard'
 import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert, Linking, StyleSheet, Text } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
@@ -8,56 +9,44 @@ import { State } from '@/store/store'
 import { Theming, theming } from '@/utils/theme'
 
 export function About() {
+  const { t } = useTranslation()
   const mode = useSelector((state: State) => state.theme.mode)
   const styles = styling(theming(mode))
 
   const handleEmailPress = useCallback(async () => {
     const email = 'toli.language.app@gmail.com'
-    const subject = 'Вопрос о приложении Toli'
+    const subject = t('about.emailSubject')
 
     const url = `mailto:${email}?subject=${encodeURIComponent(subject)}}`
     Linking.openURL(url).catch(async (err) => {
-      console.warn('Не удалось открыть почтовое приложение:', err)
+      console.warn(t('errors.emailError'), err)
       await Clipboard.setStringAsync(email)
-      Alert.alert('Email скопирован в буфер обмена')
+      Alert.alert(t('errors.emailCopied'))
     })
-  }, [])
+  }, [t])
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.accent}>Привет! Сайн!</Text>
-      <Text style={styles.text}>
-        Спасибо, что выбрали наше мобильное приложение для изучения бурятского
-        языка.
-      </Text>
+      <Text style={styles.accent}>{t('about.greeting')}</Text>
+      <Text style={styles.text}>{t('about.thanks')}</Text>
       <Text style={styles.text} selectable>
-        Также хотим выразить благодарность сайту{' '}
+        {t('about.gratitude')}{' '}
         <Text style={styles.accent}>https://burlang.ru/ </Text>
-        за&nbsp;возможность использования их&nbsp;API, который стал основой
-        нашего приложения.
+        {t('about.gratitudeContinued')}
       </Text>
       <Text style={styles.text} selectable>
-        Мы&nbsp;всегда рады обратной связи от&nbsp;пользователей, так как это
-        поможет сделать приложение лучше. Если у&nbsp;вас есть какие-либо
-        замечания или предложения по&nbsp;улучшению, пишите нам на&nbsp;почту:{' '}
+        {t('about.feedback')}{' '}
         <Text style={styles.accent} onPress={handleEmailPress}>
           toli.language.app@gmail.com
         </Text>
       </Text>
       <Text style={styles.text} selectable>
-        Также хотим отметить, что мы&nbsp;планируем по&nbsp;возможности
-        продолжать развивать наше приложение. Если вы&nbsp;думаете, что
-        могли&nbsp;бы помочь нам с&nbsp;наполнением приложения&nbsp;&mdash;
-        уроками, контентом и&nbsp;т.д., то&nbsp;мы&nbsp;также готовы
-        к&nbsp;сотрудничеству (писать сюда&nbsp;&mdash;{' '}
+        {t('about.collaboration')}{' '}
         <Text style={styles.accent} onPress={handleEmailPress}>
           toli.language.app@gmail.com)
         </Text>
       </Text>
-      <Text style={styles.text}>
-        Мы&nbsp;надеемся, что наше приложение будет полезным для вас
-        в&nbsp;процессе изучения бурятского языка!😊
-      </Text>
+      <Text style={styles.text}>{t('about.closing')}</Text>
     </ScrollView>
   )
 }

@@ -9,17 +9,32 @@ export const questions: {
     {
       id: 'q0',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Амгалан үдэр"?',
+      question: {
+        ru: 'Как переводится "Амгалан үдэр"?',
+        en: 'How do you translate "Амгалан үдэр"?',
+      },
       options: [
         {
           id: 'option1',
           image: 'image_url1',
-          text: 'Добрый день!',
+          text: { ru: 'Добрый день!', en: 'Good afternoon!' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url2', text: 'Добрый вечер!' },
-        { id: 'option3', image: 'image_url3', text: 'Как поживаете?' },
-        { id: 'option4', image: 'image_url4', text: 'Все ли у вас хорошо?' },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Добрый вечер!', en: 'Good evening!' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Как поживаете?', en: 'How are you?' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Все ли у вас хорошо?', en: 'Are you all right?' },
+        },
       ],
     },
     {
@@ -40,7 +55,7 @@ export const questions: {
     {
       id: 'q2',
       type: 'OPEN_ENDED',
-      text: 'Здравствуйте!',
+      text: { ru: 'Здравствуйте!', en: 'Hello!' },
       answer: 'Сайн байна!',
     },
     {
@@ -99,27 +114,44 @@ export const questions: {
     {
       id: 'q6',
       type: 'OPEN_ENDED',
-      text: 'Знакомство',
+      text: { ru: 'Знакомство', en: 'Introduction' },
       answer: 'Танилсалга',
     },
     {
       id: 'q7',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Һайн, һайн даа! Һайнта даа!"?',
+      question: {
+        ru: 'Как переводится "Һайн, һайн даа! Һайнта даа!"?',
+        en: 'How do you translate "Һайн, һайн даа! Һайнта даа!"?',
+      },
       options: [
         {
           id: 'option1',
           image: 'image_url1',
-          text: 'Хорошо, в порядке, спасибо',
+          text: {
+            ru: 'Хорошо, в порядке, спасибо',
+            en: 'Okay, alright, thank you',
+          },
           correct: true,
         },
         {
           id: 'option2',
           image: 'image_url2',
-          text: 'Давайте встретимся в фойе',
+          text: {
+            ru: 'Давайте встретимся в фойе',
+            en: "Let's meet in the foyer",
+          },
         },
-        { id: 'option3', image: 'image_url3', text: 'Передавай привет Баиру' },
-        { id: 'option4', image: 'image_url4', text: 'Передам' },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Передавай привет Баиру', en: 'Say hello to Bair' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Передам', en: 'Will do' },
+        },
       ],
     },
     {
@@ -161,149 +193,226 @@ export const questions: {
     {
       id: 'q1',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Кошка',
+      question: { ru: 'Кошка', en: 'Cat' },
       options: [
-        { id: 'option1', image: 'image_url_dog', text: 'Нохой' },
+        {
+          id: 'option1',
+          image: 'image_url_dog',
+          text: { ru: 'Нохой', en: 'Нохой' },
+        },
         {
           id: 'option2',
           image: 'image_url_cat',
-          text: 'Миисгэй',
+          text: { ru: 'Миисгэй', en: 'Миисгэй' },
           correct: true,
         },
-        { id: 'option3', image: 'image_url_bear', text: 'Баабгай' },
+        {
+          id: 'option3',
+          image: 'image_url_bear',
+          text: { ru: 'Баабгай', en: 'Баабгай' },
+        },
       ],
     },
     {
       id: 'q2',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Собака',
+      question: { ru: 'Собака', en: 'Dog' },
       options: [
-        { id: 'option1', image: 'image_url_fox', text: 'Үнэгэн' },
-        { id: 'option2', image: 'image_url_wolf', text: 'Шоной' },
-        { id: 'option3', image: 'image_url_dog', text: 'Нохой', correct: true },
+        {
+          id: 'option1',
+          image: 'image_url_fox',
+          text: { ru: 'Үнэгэн', en: 'Үнэгэн' },
+        },
+        {
+          id: 'option2',
+          image: 'image_url_wolf',
+          text: { ru: 'Шоной', en: 'Шоной' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url_dog',
+          text: { ru: 'Нохой', en: 'Нохой' },
+          correct: true,
+        },
       ],
     },
     {
       id: 'q3',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Лев',
+      question: { ru: 'Лев', en: 'Lion' },
       options: [
         {
           id: 'option1',
           image: 'image_url_lion',
-          text: 'Арсалан',
+          text: { ru: 'Арсалан', en: 'Арсалан' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url_fox', text: 'Үнэгэн' },
-        { id: 'option3', image: 'image_url_rabbit', text: 'Шандаган' },
+        {
+          id: 'option2',
+          image: 'image_url_fox',
+          text: { ru: 'Үнэгэн', en: 'Үнэгэн' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url_rabbit',
+          text: { ru: 'Шандаган', en: 'Шандаган' },
+        },
       ],
     },
     {
       id: 'q10',
       type: 'OPEN_ENDED',
-      text: 'Медведь',
+      text: { ru: 'Медведь', en: 'Bear' },
       answer: 'Баабгай',
     },
     {
       id: 'q11',
       type: 'OPEN_ENDED',
-      text: 'Волк',
+      text: { ru: 'Волк', en: 'Wolf' },
       answer: 'Шоной',
     },
     {
       id: 'q12',
       type: 'OPEN_ENDED',
-      text: 'Заяц',
+      text: { ru: 'Заяц', en: 'Rabbit' },
       answer: 'Шандаган',
     },
     {
       id: 'q4',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Курица',
+      question: { ru: 'Курица', en: 'Chicken' },
       options: [
         {
           id: 'option1',
           image: 'image_url_chicken',
-          text: 'Тахяа',
+          text: { ru: 'Тахяа', en: 'Тахяа' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url_duck', text: 'Өгсөг' },
-        { id: 'option3', image: 'image_url_goose', text: 'Хун' },
+        {
+          id: 'option2',
+          image: 'image_url_duck',
+          text: { ru: 'Өгсөг', en: 'Өгсөг' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url_goose',
+          text: { ru: 'Хун', en: 'Хун' },
+        },
       ],
     },
     {
       id: 'q5',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Медведь',
+      question: { ru: 'Медведь', en: 'Bear' },
       options: [
         {
           id: 'option1',
           image: 'image_url_bear',
-          text: 'Баабгай',
+          text: { ru: 'Баабгай', en: 'Баабгай' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url_wolf', text: 'Шоной' },
-        { id: 'option3', image: 'image_url_fox', text: 'Үнэгэн' },
+        {
+          id: 'option2',
+          image: 'image_url_wolf',
+          text: { ru: 'Шоной', en: 'Шоной' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url_fox',
+          text: { ru: 'Үнэгэн', en: 'Үнэгэн' },
+        },
       ],
     },
     {
       id: 'q6',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Волк',
+      question: { ru: 'Волк', en: 'Wolf' },
       options: [
-        { id: 'option1', image: 'image_url_dog', text: 'Нохой' },
+        {
+          id: 'option1',
+          image: 'image_url_dog',
+          text: { ru: 'Нохой', en: 'Нохой' },
+        },
         {
           id: 'option2',
           image: 'image_url_wolf',
-          text: 'Шоной',
+          text: { ru: 'Шоной', en: 'Шоной' },
           correct: true,
         },
-        { id: 'option3', image: 'image_url_fox', text: 'Үнэгэн' },
+        {
+          id: 'option3',
+          image: 'image_url_fox',
+          text: { ru: 'Үнэгэн', en: 'Үнэгэн' },
+        },
       ],
     },
     {
       id: 'q7',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Лисица',
+      question: { ru: 'Лисица', en: 'Fox' },
       options: [
-        { id: 'option1', image: 'image_url_cat', text: 'Миисгэй' },
+        {
+          id: 'option1',
+          image: 'image_url_cat',
+          text: { ru: 'Миисгэй', en: 'Миисгэй' },
+        },
         {
           id: 'option2',
           image: 'image_url_fox',
-          text: 'Үнэгэн',
+          text: { ru: 'Үнэгэн', en: 'Үнэгэн' },
           correct: true,
         },
-        { id: 'option3', image: 'image_url_hedgehog', text: 'Заряа' },
+        {
+          id: 'option3',
+          image: 'image_url_hedgehog',
+          text: { ru: 'Заряа', en: 'Заряа' },
+        },
       ],
     },
     {
       id: 'q8',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Заяц',
+      question: { ru: 'Заяц', en: 'Rabbit' },
       options: [
         {
           id: 'option1',
           image: 'image_url_rabbit',
-          text: 'Шандаган',
+          text: { ru: 'Шандаган', en: 'Шандаган' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url_squirrel', text: 'Сүхэ' },
-        { id: 'option3', image: 'image_url_marmot', text: 'Тарбаган' },
+        {
+          id: 'option2',
+          image: 'image_url_squirrel',
+          text: { ru: 'Сүхэ', en: 'Сүхэ' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url_marmot',
+          text: { ru: 'Тарбаган', en: 'Тарбаган' },
+        },
       ],
     },
     {
       id: 'q9',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Ёж',
+      question: { ru: 'Ёж', en: 'Hedgehog' },
       options: [
         {
           id: 'option1',
           image: 'image_url_hedgehog',
-          text: 'Заряа',
+          text: { ru: 'Заряа', en: 'Заряа' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url_fox', text: 'Үнэгэн' },
-        { id: 'option3', image: 'image_url_dog', text: 'Нохой' },
+        {
+          id: 'option2',
+          image: 'image_url_fox',
+          text: { ru: 'Үнэгэн', en: 'Үнэгэн' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url_dog',
+          text: { ru: 'Нохой', en: 'Нохой' },
+        },
       ],
     },
   ],
@@ -378,26 +487,36 @@ export const questions: {
     {
       id: 'q7',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Мой папа работает"?',
+      question: {
+        ru: 'Как переводится "Мой папа работает"?',
+        en: 'How do you translate "My dad works"?',
+      },
       options: [
         {
           id: 'option1',
           image: 'image_url1',
-          text: 'Минии аба хүдэлдэг',
+          text: { ru: 'Минии аба хүдэлдэг', en: 'Минии аба хүдэлдэг' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url2', text: 'Манай бүлэ ехэ' },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Манай бүлэ ехэ', en: 'Манай бүлэ ехэ' },
+        },
         {
           id: 'option3',
           image: 'image_url3',
-          text: 'Минии эжы Эржэна гэжэ нэрэтэй',
+          text: {
+            ru: 'Минии эжы Эржэна гэжэ нэрэтэй',
+            en: 'Минии эжы Эржэна гэжэ нэрэтэй',
+          },
         },
       ],
     },
     {
       id: 'q8',
       type: 'OPEN_ENDED',
-      text: 'Мою маму зовут Эржэна.',
+      text: { ru: 'Мою маму зовут Эржэна.', en: "My mom's name is Erzhena." },
       answer: 'Минии эжы Эржэна гэжэ нэрэтэй.',
     },
   ],
@@ -423,45 +542,78 @@ export const questions: {
     {
       id: 'q7',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Я не согласен"?',
+      question: {
+        ru: 'Как переводится "Я не согласен"?',
+        en: 'How do you translate "I disagree"?',
+      },
       options: [
         {
           id: 'option1',
           image: 'image_url1',
-          text: 'Би зүбшөөнэгүйб',
+          text: { ru: 'Би зүбшөөнэгүйб', en: 'Би зүбшөөнэгүйб' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url2', text: 'Би аргагүйб' },
-        { id: 'option3', image: 'image_url3', text: 'Би арсанаб!' },
-        { id: 'option4', image: 'image_url4', text: 'Болигты!' },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Би аргагүйб', en: 'Би аргагүйб' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Би арсанаб!', en: 'Би арсанаб!' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Болигты!', en: 'Болигты!' },
+        },
       ],
     },
     {
       id: 'q8',
       type: 'OPEN_ENDED',
-      text: 'Можно так',
+      text: { ru: 'Можно так', en: 'That is okay' },
       answer: 'Тиигэжэ болохо',
     },
     {
       id: 'q6',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Да, да, вы правы"?',
+      question: {
+        ru: 'Как переводится "Да, да, вы правы"?',
+        en: 'How do you translate "Yes, yes, you are right"?',
+      },
       options: [
-        { id: 'option2', image: 'image_url2', text: 'Би зүбшөөнэгүйб' },
-        { id: 'option3', image: 'image_url3', text: 'Би аргагүйб' },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Би зүбшөөнэгүйб', en: 'Би зүбшөөнэгүйб' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Би аргагүйб', en: 'Би аргагүйб' },
+        },
         {
           id: 'option1',
           image: 'image_url1',
-          text: 'Тиимэ, тиимэ, зүб хэлэнэт',
+          text: {
+            ru: 'Тиимэ, тиимэ, зүб хэлэнэт',
+            en: 'Тиимэ, тиимэ, зүб хэлэнэт',
+          },
           correct: true,
         },
-        { id: 'option4', image: 'image_url4', text: 'Та буруу ойлгоот' },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Та буруу ойлгоот', en: 'Та буруу ойлгоот' },
+        },
       ],
     },
     {
       id: 'q9',
       type: 'OPEN_ENDED',
-      text: 'Перестаньте!',
+      text: { ru: 'Перестаньте!', en: 'Stop it!' },
       answer: 'Болигты!',
     },
     {
@@ -487,20 +639,34 @@ export const questions: {
     {
       id: 'q5',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Вы неправильно поняли"?',
+      question: {
+        ru: 'Как переводится "Вы неправильно поняли"?',
+        en: 'How do you translate "You misunderstood"?',
+      },
       options: [
         {
           id: 'option1',
           image: 'image_url1',
-          text: 'Та буруу ойлгоот',
+          text: { ru: 'Та буруу ойлгоот', en: 'Та буруу ойлгоот' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url2', text: 'Би аргагүйб' },
-        { id: 'option3', image: 'image_url3', text: 'Би зүбшөөнэб' },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Би аргагүйб', en: 'Би аргагүйб' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Би зүбшөөнэб', en: 'Би зүбшөөнэб' },
+        },
         {
           id: 'option4',
           image: 'image_url4',
-          text: 'Тиимэ, тиимэ, зүб хэлэнэт',
+          text: {
+            ru: 'Тиимэ, тиимэ, зүб хэлэнэт',
+            en: 'Тиимэ, тиимэ, зүб хэлэнэт',
+          },
         },
       ],
     },
@@ -509,18 +675,38 @@ export const questions: {
     {
       id: 'q0',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Үглөөдэр"?',
+      question: {
+        ru: 'Как переводится "Үглөөдэр"?',
+        en: 'How do you translate "Үглөөдэр"?',
+      },
       options: [
-        { id: 'option1', image: 'image_url1', text: 'Завтра', correct: true },
-        { id: 'option2', image: 'image_url2', text: 'Вчера' },
-        { id: 'option3', image: 'image_url3', text: 'Сегодня' },
-        { id: 'option4', image: 'image_url4', text: 'Скоро, на днях' },
+        {
+          id: 'option1',
+          image: 'image_url1',
+          text: { ru: 'Завтра', en: 'Tomorrow' },
+          correct: true,
+        },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Вчера', en: 'Yesterday' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Сегодня', en: 'Today' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Скоро, на днях', en: 'Soon, these days' },
+        },
       ],
     },
     {
       id: 'q2',
       type: 'OPEN_ENDED',
-      text: 'Поздно вечером',
+      text: { ru: 'Поздно вечером', en: 'Late in the evening' },
       answer: 'Удаша орой',
     },
     {
@@ -536,17 +722,32 @@ export const questions: {
     {
       id: 'q4',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Сентябриин нэгэн"?',
+      question: {
+        ru: 'Как переводится "Сентябриин нэгэн"?',
+        en: 'How do you translate "Сентябриин нэгэн"?',
+      },
       options: [
         {
           id: 'option1',
           image: 'image_url1',
-          text: 'Первое сентября',
+          text: { ru: 'Первое сентября', en: 'September first' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url2', text: 'Десять часов' },
-        { id: 'option3', image: 'image_url3', text: 'Десять с половиной' },
-        { id: 'option4', image: 'image_url4', text: 'Сегодня понедельник' },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Десять часов', en: "Ten o'clock" },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Десять с половиной', en: 'Ten and a half' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Сегодня понедельник', en: 'Today is Monday' },
+        },
       ],
     },
     {
@@ -562,75 +763,134 @@ export const questions: {
     {
       id: 'q6',
       type: 'OPEN_ENDED',
-      text: 'Десять часов',
+      text: { ru: 'Десять часов', en: "Ten o'clock" },
       answer: 'Арбан саг',
     },
     {
       id: 'q8',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Һаядаа"?',
+      question: {
+        ru: 'Как переводится "Һаядаа"?',
+        en: 'How do you translate "Һаядаа"?',
+      },
       options: [
         {
           id: 'option1',
           image: 'image_url1',
-          text: 'Скоро, на днях',
+          text: { ru: 'Скоро, на днях', en: 'Soon, these days' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url2', text: 'Сегодня' },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Сегодня', en: 'Today' },
+        },
         {
           id: 'option3',
           image: 'image_url3',
-          text: 'Какой сегодня день недели?',
+          text: {
+            ru: 'Какой сегодня день недели?',
+            en: 'What day is it today?',
+          },
         },
-        { id: 'option4', image: 'image_url4', text: 'Который час?' },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Который час?', en: 'What time is it?' },
+        },
       ],
     },
     {
       id: 'q12',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Үдэшэ орой"?',
+      question: {
+        ru: 'Как переводится "Үдэшэ орой"?',
+        en: 'How do you translate "Үдэшэ орой"?',
+      },
       options: [
         {
           id: 'option1',
           image: 'image_url1',
-          text: 'Поздно вечером',
+          text: { ru: 'Поздно вечером', en: 'Late in the evening' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url2', text: 'Завтра' },
-        { id: 'option3', image: 'image_url3', text: 'Сегодня' },
-        { id: 'option4', image: 'image_url4', text: 'Скоро, на днях' },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Завтра', en: 'Tomorrow' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Сегодня', en: 'Today' },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Скоро, на днях', en: 'Soon, these days' },
+        },
       ],
     },
     {
       id: 'q13',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Арбан саг"?',
+      question: {
+        ru: 'Как переводится "Арбан саг"?',
+        en: 'How do you translate "Арбан саг"?',
+      },
       options: [
-        { id: 'option4', image: 'image_url4', text: 'Первое сентября' },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Первое сентября', en: 'September first' },
+        },
         {
           id: 'option1',
           image: 'image_url1',
-          text: 'Десять часов',
+          text: { ru: 'Десять часов', en: "Ten o'clock" },
           correct: true,
         },
-        { id: 'option2', image: 'image_url2', text: 'Десять с половиной' },
-        { id: 'option3', image: 'image_url3', text: 'Сегодня понедельник' },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Десять с половиной', en: 'Ten and a half' },
+        },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Сегодня понедельник', en: 'Today is Monday' },
+        },
       ],
     },
     {
       id: 'q14',
       type: 'IMAGE_MULTIPLE_CHOICE',
-      question: 'Как переводится "Мүнөөдэр гарагай хоёр"?',
+      question: {
+        ru: 'Как переводится "Мүнөөдэр гарагай хоёр"?',
+        en: 'How do you translate "Мүнөөдэр гарагай хоёр"?',
+      },
       options: [
-        { id: 'option3', image: 'image_url3', text: 'Который час?' },
+        {
+          id: 'option3',
+          image: 'image_url3',
+          text: { ru: 'Который час?', en: 'What time is it?' },
+        },
         {
           id: 'option1',
           image: 'image_url1',
-          text: 'Сегодня понедельник',
+          text: { ru: 'Сегодня понедельник', en: 'Today is Monday' },
           correct: true,
         },
-        { id: 'option2', image: 'image_url2', text: 'Какое сегодня число?' },
-        { id: 'option4', image: 'image_url4', text: 'Сегодня' },
+        {
+          id: 'option2',
+          image: 'image_url2',
+          text: { ru: 'Какое сегодня число?', en: "What is today's date?" },
+        },
+        {
+          id: 'option4',
+          image: 'image_url4',
+          text: { ru: 'Сегодня', en: 'Today' },
+        },
       ],
     },
   ],

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Alert, Keyboard, Text } from 'react-native'
 import uuid from 'react-native-uuid'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +17,7 @@ import { capitalizeFirstLetter } from '@/utils/capitalize'
 import { isSmallDevice, Theming, theming } from '@/utils/theme'
 
 export function Home() {
+  const { t } = useTranslation()
   const mode = useSelector((state: State) => state.theme.mode)
   const styles = styling(theming(mode))
 
@@ -68,9 +70,9 @@ export function Home() {
           console.error(e)
           const errorMessage =
             translationMode === 'ai'
-              ? 'Не удалось получить перевод от ИИ. Попробуйте позже.'
-              : 'Что-то пошло не так. Попробуйте повторить позже'
-          Alert.alert('Ошибка', errorMessage)
+              ? t('errors.aiTranslationError')
+              : t('errors.translationError')
+          Alert.alert(t('errors.errorTitle'), errorMessage)
         } finally {
           setIsLoading(false)
         }
@@ -95,7 +97,9 @@ export function Home() {
         languageFrom={languageFrom}
       />
       {translationMode === 'ai' && (
-        <Text style={styles.draftText}>Перевод может быть неточным</Text>
+        <Text style={styles.draftText}>
+          {t('home.translationMayBeInaccurate')}
+        </Text>
       )}
       {result && <Result result={result} />}
       <History />

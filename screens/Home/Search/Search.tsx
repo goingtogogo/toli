@@ -1,5 +1,6 @@
 import { Octicons } from '@expo/vector-icons'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   ActivityIndicator,
   StyleSheet,
@@ -23,6 +24,7 @@ type Props = {
 }
 
 export const Search: React.FC<Props> = (props) => {
+  const { t } = useTranslation()
   const { value, setValue, onSubmit, loading, languageFrom } = props
 
   const mode = useSelector((state: State) => state.theme.mode)
@@ -42,7 +44,9 @@ export const Search: React.FC<Props> = (props) => {
             style={styles.searchIcon}
           />
         )}
-        {!value && <Text style={styles.placeholder}>Введите слово</Text>}
+        {!value && (
+          <Text style={styles.placeholder}>{t('home.enterWord')}</Text>
+        )}
         <TextInput
           multiline={true}
           blurOnSubmit={true}

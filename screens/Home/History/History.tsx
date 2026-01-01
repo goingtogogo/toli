@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AnyAction, Dispatch } from '@reduxjs/toolkit'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   StyleSheet,
   Text,
@@ -21,27 +22,29 @@ import { Theme } from '@/store/slice/theme'
 import { State } from '@/store/store'
 import { isAndroid, isSmallDevice, Theming, theming } from '@/utils/theme'
 
-const loadData = () => async (dispatch: Dispatch<AnyAction>) => {
-  try {
-    const history = await AsyncStorage.getItem('history')
+const loadData =
+  (t: (key: string) => string) => async (dispatch: Dispatch<AnyAction>) => {
+    try {
+      const history = await AsyncStorage.getItem('history')
 
-    if (history) {
-      const formattedHistory = JSON.parse(history)
-      dispatch(setItems({ items: formattedHistory }))
+      if (history) {
+        const formattedHistory = JSON.parse(history)
+        dispatch(setItems({ items: formattedHistory }))
+      }
+
+      const saved = await AsyncStorage.getItem('saved')
+
+      if (saved) {
+        const formattedSaved = JSON.parse(saved)
+        dispatch(setSaved({ items: formattedSaved }))
+      }
+    } catch (e) {
+      Alert.alert(t('errors.historyLoadError'), t('errors.tryAgainLater'))
     }
-
-    const saved = await AsyncStorage.getItem('saved')
-
-    if (saved) {
-      const formattedSaved = JSON.parse(saved)
-      dispatch(setSaved({ items: formattedSaved }))
-    }
-  } catch (e) {
-    Alert.alert('Не удалось загрузить историю', 'Попробуйте повторить позже')
   }
-}
 
 export const History: React.FC = () => {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const history = useSelector((state: State) => state.history.items)
 
@@ -52,8 +55,8 @@ export const History: React.FC = () => {
 
   useEffect(() => {
     // @ts-expect-error todo: needs to be fixed
-    dispatch(loadData())
-  }, [dispatch])
+    dispatch(loadData(t))
+  }, [dispatch, t])
 
   return (
     <View style={styles.historyContainer}>
@@ -63,7 +66,7 @@ export const History: React.FC = () => {
           onPress={() => setIsHistoryVisible(!isHistoryVisible)}
         >
           <Text style={styles.showHistoryLabel}>
-            {isHistoryVisible ? 'Скрыть историю' : 'Показать историю'}
+            {isHistoryVisible ? t('home.hideHistory') : t('home.showHistory')}
           </Text>
         </TouchableOpacity>
       )}

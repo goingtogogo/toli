@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
@@ -14,6 +15,7 @@ type Props = {
 }
 
 export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
+  const { i18n, t } = useTranslation()
   const [input, setInput] = useState('')
 
   const mode = useSelector((state: State) => state.theme.mode)
@@ -31,19 +33,23 @@ export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
     setInput('')
   }
 
+  const questionText =
+    question.text?.[i18n.language as keyof typeof question.text] ||
+    question.text.en
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Переведите это предложение</Text>
+      <Text style={styles.title}>{t('quiz.translateSentence')}</Text>
 
       <View style={styles.row}>
         <View style={styles.sentenceContainer}>
-          <Text style={styles.sentence}>{question.text}</Text>
+          <Text style={styles.sentence}>{questionText}</Text>
         </View>
       </View>
 
       <View style={styles.inputContainer}>
         {!input && (
-          <Text style={styles.placeholder}>Напишите на бурятском</Text>
+          <Text style={styles.placeholder}>{t('quiz.writeBuryat')}</Text>
         )}
         <TextInput
           value={input}
@@ -59,7 +65,7 @@ export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
 
       <Button
         view="action"
-        label="Проверить"
+        label={t('quiz.check')}
         onPress={onButtonPress}
         // disabled={!input}
         className={styles.button}

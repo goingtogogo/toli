@@ -1,15 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ImageSourcePropType } from 'react-native'
 
 import { cards } from './content'
 
-import { HistoryItem } from '@/store/slice/history'
-
-type Flashcard = {
-  name: string
-  translation: string
-  icon: ImageSourcePropType
-  cards: HistoryItem[]
+type Flashcard = (typeof cards)[keyof typeof cards] & {
   completedFlashcards?: boolean
   completedQuiz?: boolean
 }

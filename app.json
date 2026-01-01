@@ -47,7 +47,11 @@
           "android": {
             "minSdkVersion": 33,
             "targetSdkVersion": 33,
-            "compileSdkVersion": 33
+            "compileSdkVersion": 33,
+            "newArchEnabled": true
+          },
+          "ios": {
+            "newArchEnabled": true
           }
         }
       ]

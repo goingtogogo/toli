@@ -1,5 +1,6 @@
 import { Octicons } from '@expo/vector-icons'
 import React, { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
@@ -19,6 +20,7 @@ type Props = {
 }
 
 export const Header: React.FC<Props> = (props) => {
+  const { t } = useTranslation()
   const { languageFrom, setLanguageFrom, translationMode, setTranslationMode } =
     props
 
@@ -28,9 +30,9 @@ export const Header: React.FC<Props> = (props) => {
   const [languageFromLabel, languageToLabel] = useMemo(
     () =>
       languageFrom === 'russian'
-        ? ['Русский', 'Буряад']
-        : ['Буряад', 'Русский'],
-    [languageFrom],
+        ? [t('common.russian'), t('common.buryat')]
+        : [t('common.buryat'), t('common.russian')],
+    [languageFrom, t],
   )
 
   const handleLanguageChange = useCallback(

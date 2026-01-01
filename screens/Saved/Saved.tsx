@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
@@ -7,6 +8,7 @@ import { State } from '@/store/store'
 import { isSmallDevice, Theming, theming } from '@/utils/theme'
 
 export function Saved() {
+  const { t } = useTranslation()
   const saved = useSelector((state: State) => state.saved.items)
 
   const mode = useSelector((state: State) => state.theme.mode)
@@ -15,7 +17,7 @@ export function Saved() {
   if (saved.length === 0) {
     return (
       <View style={styles.noItemsContainer}>
-        <Text style={styles.emptyText}>Вы пока еще ничего не сохранили</Text>
+        <Text style={styles.emptyText}>{t('saved.emptyText')}</Text>
       </View>
     )
   }
