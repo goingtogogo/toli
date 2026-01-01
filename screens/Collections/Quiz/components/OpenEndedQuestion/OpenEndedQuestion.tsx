@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
+import { BuryatLetters } from '@/components/BuryatLetters/BuryatLetters'
 import { Button } from '@/components/Button/Button'
 import { Question } from '@/screens/Collections/Quiz/Quiz'
 import { State } from '@/store/store'
@@ -33,6 +34,8 @@ export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
     setInput('')
   }
 
+  const handleLetterClick = (letter: string) => setInput(input + letter)
+
   const questionText =
     question.text?.[i18n.language as keyof typeof question.text] ||
     question.text.en
@@ -62,6 +65,11 @@ export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
           autoCorrect={false}
         />
       </View>
+
+      <BuryatLetters
+        onLetterPress={handleLetterClick}
+        containerStyle={styles.lettersContainer}
+      />
 
       <Button
         view="action"
@@ -135,6 +143,9 @@ const styling = (theme: Theming) =>
       fontFamily: 'regular',
       fontSize: 20,
       color: '#9F9F9F',
+    },
+    lettersContainer: {
+      marginTop: theme.spacing.m,
     },
     button: {
       position: 'absolute',

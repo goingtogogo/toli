@@ -12,6 +12,7 @@ import { clearHistory } from '@/store/slice/history'
 import { clearSaved } from '@/store/slice/saved'
 import { setTheme } from '@/store/slice/theme'
 import { State } from '@/store/store'
+import { CONTACT_EMAIL } from '@/utils/constants'
 import i18n from '@/utils/i18n/i18n'
 import { Theming, theming } from '@/utils/theme'
 
@@ -53,13 +54,14 @@ export function Settings({ navigation }: Props) {
   const goAbout = useCallback(() => navigation.push('about'), [])
 
   const handleEmailPress = useCallback(async () => {
-    const email = 'toli.language.app@gmail.com'
     const subject = t('about.emailSubject')
 
-    const url = `mailto:${email}?subject=${encodeURIComponent(subject)}}`
+    const url = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+      subject,
+    )}}`
     Linking.openURL(url).catch(async (err) => {
       console.warn(t('errors.emailError'), err)
-      await Clipboard.setStringAsync(email)
+      await Clipboard.setStringAsync(CONTACT_EMAIL)
       Alert.alert(t('errors.emailCopied'))
     })
   }, [t])

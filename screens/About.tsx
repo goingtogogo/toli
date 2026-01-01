@@ -6,6 +6,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
 
 import { State } from '@/store/store'
+import { CONTACT_EMAIL } from '@/utils/constants'
 import { Theming, theming } from '@/utils/theme'
 
 export function About() {
@@ -14,13 +15,14 @@ export function About() {
   const styles = styling(theming(mode))
 
   const handleEmailPress = useCallback(async () => {
-    const email = 'toli.language.app@gmail.com'
     const subject = t('about.emailSubject')
 
-    const url = `mailto:${email}?subject=${encodeURIComponent(subject)}}`
+    const url = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+      subject,
+    )}}`
     Linking.openURL(url).catch(async (err) => {
       console.warn(t('errors.emailError'), err)
-      await Clipboard.setStringAsync(email)
+      await Clipboard.setStringAsync(CONTACT_EMAIL)
       Alert.alert(t('errors.emailCopied'))
     })
   }, [t])
@@ -37,13 +39,13 @@ export function About() {
       <Text style={styles.text} selectable>
         {t('about.feedback')}{' '}
         <Text style={styles.accent} onPress={handleEmailPress}>
-          toli.language.app@gmail.com
+          {CONTACT_EMAIL}
         </Text>
       </Text>
       <Text style={styles.text} selectable>
         {t('about.collaboration')}{' '}
         <Text style={styles.accent} onPress={handleEmailPress}>
-          toli.language.app@gmail.com)
+          {CONTACT_EMAIL})
         </Text>
       </Text>
       <Text style={styles.text}>{t('about.closing')}</Text>

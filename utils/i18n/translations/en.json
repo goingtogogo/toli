@@ -96,7 +96,13 @@
     "animals": "Animals",
     "family": "Family",
     "conversation": "Conversation",
-    "time": "Time"
+    "time": "Time",
+    "footer": "Found an error\nor want to help develop this section?\nWrite to us at",
+    "emailSubject": "Collections - Suggestion",
+    "weather": "Weather",
+    "numbers": "Numbers",
+    "numbers2": "Numbers (2)",
+    "colors": "Colors"
   },
   "errors": {
     "somethingWentWrong": "Something went wrong",
