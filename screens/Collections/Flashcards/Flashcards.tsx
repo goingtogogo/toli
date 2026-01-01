@@ -1,23 +1,26 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, StyleProp, ViewStyle } from 'react-native'
 import Swiper from 'react-native-deck-swiper'
 import FlipCard from 'react-native-flip-card'
 import { useSelector } from 'react-redux'
 
+import type { Card } from '@/store/slice/flashcards/content'
+
 import { StackParamList } from '@/App'
 import { ActionButton } from '@/components/ActionButton/ActionButton'
 import { ProgressView } from '@/components/ProgressView/ProgressView'
-import { HistoryItem } from '@/store/slice/history'
 import { Theme } from '@/store/slice/theme'
 import { State } from '@/store/store'
 import { Theming, theming } from '@/utils/theme'
 
 type Props = NativeStackScreenProps<StackParamList, 'flashcards'>
 
-let swiper: Swiper<HistoryItem> | null
+let swiper: Swiper<Card> | null
 
 export function Flashcards(props: Props) {
+  const { t, i18n } = useTranslation()
   const { items: flashcards } = useSelector((state: State) => state.flashcards)
   const mode = useSelector((state: State) => state.theme.mode)
   const theme = theming(mode)
@@ -69,7 +72,7 @@ export function Flashcards(props: Props) {
 
   const overlayLabels = {
     left: {
-      title: 'Еще изучаю',
+      title: t('flashcards.stillLearning'),
       style: {
         label: {
           fontSize: 20,
@@ -86,7 +89,7 @@ export function Flashcards(props: Props) {
       },
     },
     right: {
-      title: 'Знаю',
+      title: t('flashcards.know'),
       style: {
         label: {
           fontSize: 20,
@@ -122,8 +125,8 @@ export function Flashcards(props: Props) {
             }}
           />
           <View style={styles.hint}>
-            <Text style={styles.hintText}>Нажмите на карточку,</Text>
-            <Text style={styles.hintText}>чтоб перевернуть ее</Text>
+            <Text style={styles.hintText}>{t('flashcards.hint1')}</Text>
+            <Text style={styles.hintText}>{t('flashcards.hint2')}</Text>
           </View>
           <ActionButton
             name="arrow-right"
@@ -137,9 +140,9 @@ export function Flashcards(props: Props) {
         <Swiper
           ref={(swiperRef) => (swiper = swiperRef)}
           cards={cards}
-          renderCard={({ text, translatedText }) =>
+          renderCard={(card) =>
             // @ts-expect-error somehow it expects flex: 1 in all objects, todo: fix this
-            Card({ text, translatedText, styles })
+            Card({ card, styles, language: i18n.language })
           }
           onSwipedLeft={onSwipedLeft}
           onSwipedRight={onSwipedRight}
@@ -163,16 +166,18 @@ export function Flashcards(props: Props) {
 }
 
 const Card = ({
-  text,
-  translatedText,
+  card,
   styles,
+  language,
 }: {
-  text: string
-  translatedText: string
+  card: Card
   styles: {
     [key: string]: StyleProp<ViewStyle>
   }
+  language: string
 }) => {
+  const displayText = card[language as keyof typeof card] || card.en
+
   return (
     <FlipCard
       style={styles.flipCard}
@@ -182,10 +187,10 @@ const Card = ({
       clickable={true}
     >
       <View>
-        <Text style={styles.text}>{text}</Text>
+        <Text style={styles.text}>{displayText}</Text>
       </View>
       <View style={styles.reversedSide}>
-        <Text style={styles.text}>{translatedText}</Text>
+        <Text style={styles.text}>{card.buryat}</Text>
       </View>
     </FlipCard>
   )
@@ -273,6 +278,7 @@ const styling = (theme: Theming, mode: Theme) =>
       paddingHorizontal: 4,
     },
     hintText: {
+      textAlign: 'center',
       fontFamily: 'medium',
       fontSize: 12,
       color: theme.colors.secondaryText,

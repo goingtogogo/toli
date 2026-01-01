@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
@@ -20,6 +21,7 @@ export const ImageMultipleChoiceQuestion = ({
   onCorrect,
   onWrong,
 }: Props) => {
+  const { i18n, t } = useTranslation()
   const theme = useSelector((state: State) => theming(state.theme.mode))
   const styles = styling(theme)
   const [selected, setSelected] = useState<{
@@ -37,24 +39,34 @@ export const ImageMultipleChoiceQuestion = ({
     }
   }
 
+  const questionText =
+    question.question[i18n.language as keyof typeof question.question] ||
+    question.question.en
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{question.question}</Text>
+      <Text style={styles.title}>{questionText}</Text>
 
       <View style={styles.optionsContainer}>
-        {question.options.map((option) => (
-          <ImageOption
-            key={option.id}
-            image={option.image}
-            text={option.text}
-            isSelected={selected?.id === option.id}
-            onPress={() => setSelected(option)}
-          />
-        ))}
+        {question.options.map((option) => {
+          const optionText =
+            option.text[i18n.language as keyof typeof option.text] ||
+            option.text.en
+
+          return (
+            <ImageOption
+              key={option.id}
+              image={option.image}
+              text={optionText}
+              isSelected={selected?.id === option.id}
+              onPress={() => setSelected(option)}
+            />
+          )
+        })}
       </View>
       <Button
         view="action"
-        label="Проверить"
+        label={t('collections.flashcardsButton')}
         onPress={onButtonPress}
         // disabled={!selected}
         className={styles.button}

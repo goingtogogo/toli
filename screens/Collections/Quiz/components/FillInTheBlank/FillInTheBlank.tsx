@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
@@ -16,6 +17,7 @@ type Props = {
 }
 
 export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
+  const { t } = useTranslation()
   const mode = useSelector((state: State) => state.theme.mode)
   const styles = styling(theming(mode))
 
@@ -74,7 +76,7 @@ export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Составьте предложение</Text>
+      <Text style={styles.title}>{t('quiz.makeASentence')}</Text>
       <View style={styles.row}>
         {parts.map((part, index) => {
           if (part.isBlank) {
@@ -111,7 +113,7 @@ export const FillInTheBlank = ({ question, onCorrect, onWrong }: Props) => {
 
       <Button
         view="action"
-        label="Проверить"
+        label={t('quiz.check')}
         onPress={onButtonPress}
         // disabled={isReadyToCheck()}
         className={styles.button}

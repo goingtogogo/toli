@@ -1,6 +1,7 @@
 import { Octicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useState, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, Alert, StyleSheet, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 
@@ -21,7 +22,7 @@ type Props = NativeStackScreenProps<StackParamList, 'quiz'>
 export type Question = {
   id: string
   type: string
-  question?: string
+  question?: { ru: string; en: string }
   answer?: string
   parts?: {
     text: string
@@ -32,14 +33,15 @@ export type Question = {
     | {
         id: string
         image?: string
-        text: string
+        text: { ru: string; en: string }
         correct?: boolean
       }[]
     | string[]
-  text?: string
+  text?: { ru: string; en: string }
 }
 
 export const Quiz = (props: Props) => {
+  const { t } = useTranslation()
   const {
     route: {
       params: { key, name },
@@ -96,14 +98,14 @@ export const Quiz = (props: Props) => {
 
   const onWrong = () => {
     if (lives <= 1) {
-      Alert.alert('Попытки закончились 😔', 'Попробуйте снова', [
+      Alert.alert(t('quiz.attemptsOver'), t('quiz.tryAgain'), [
         {
-          text: 'Пройти сначала',
+          text: t('quiz.restartQuiz'),
           onPress: restart,
         },
       ])
     } else {
-      Alert.alert('Буруу!')
+      Alert.alert(t('quiz.wrong'))
       setLives(lives - 1)
     }
   }

@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, SafeAreaView, FlatList, Alert } from 'react-native'
 import { useSelector } from 'react-redux'
 
@@ -12,6 +13,7 @@ import { Theming, theming } from '@/utils/theme'
 type Props = NativeStackScreenProps<StackParamList, 'collection'>
 
 export function Collection(props: Props) {
+  const { t, i18n } = useTranslation()
   const {
     route: {
       params: { key, name },
@@ -28,32 +30,40 @@ export function Collection(props: Props) {
 
   const handlePress = useCallback(() => {
     Alert.alert(
-      'Учить',
-      'Выбрать карточки для заучивания или пройти тест',
+      t('collections.learn'),
+      t('collections.learnDescription'),
       [
         {
-          text: 'Карточки',
+          text: t('collections.flashcardsButton'),
           onPress: () => navigation.navigate('flashcards', { name, key }),
         },
         {
-          text: 'Пройти тест',
+          text: t('collections.takeTestButton'),
           onPress: () => navigation.navigate('quiz', { name, key }),
         },
       ],
       { cancelable: true },
     )
-  }, [name, key])
+  }, [name, key, t])
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={cards}
-        renderItem={({ item }) => <TranslationResult item={item} />}
+        renderItem={({ item }) => (
+          <TranslationResult
+            item={{
+              text: i18n.language === 'ru' ? item.ru : item.en,
+              translatedText: item.buryat,
+              id: item.id,
+            }}
+          />
+        )}
       />
       <Button
         className={styles.button}
         onPress={handlePress}
-        label="Выучить"
+        label={t('collections.learnButton')}
         view="action"
       />
     </SafeAreaView>

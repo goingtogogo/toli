@@ -1,0 +1,115 @@
+{
+  "common": {
+    "russian": "Russian",
+    "buryat": "Buryat",
+    "cancel": "Cancel",
+    "save": "Save",
+    "repeat": "Repeat",
+    "goBack": "Go Back"
+  },
+  "tabs": {
+    "home": "Toli",
+    "saved": "Favorites",
+    "settings": "Settings",
+    "collections": "Collections"
+  },
+  "headers": {
+    "translator": "Translator",
+    "about": "About",
+    "addWord": "Add Word"
+  },
+  "home": {
+    "translationMayBeInaccurate": "Translation may be inaccurate",
+    "hideHistory": "Hide History",
+    "showHistory": "Show History",
+    "enterWord": "Start typing"
+  },
+  "translationMode": {
+    "normal": "Normal",
+    "ai": "AI Translation"
+  },
+  "saved": {
+    "emptyText": "You haven't saved anything yet"
+  },
+  "addWord": {
+    "wordPlaceholder": "Word",
+    "translationPlaceholder": "Translation"
+  },
+  "settings": {
+    "rateApp": "Rate App",
+    "rateAppSubtitle": "every rating helps promote the app",
+    "clearHistory": "Clear History",
+    "clearHistorySubtitle": "will delete all history entries",
+    "clearSaved": "Clear Favorites",
+    "clearSavedSubtitle": "will delete all saved entries",
+    "community": "Community",
+    "communitySubtitle": "contact us",
+    "darkTheme": "Dark Theme",
+    "lightTheme": "Light Theme",
+    "themeSubtitle": "change appearance",
+    "language": "Language",
+    "languageSubtitle": "change language to russian",
+    "about": "About"
+  },
+  "about": {
+    "greeting": "Hello! Sain!",
+    "thanks": "Thank you for choosing our mobile app for learning the Buryat language.",
+    "gratitude": "We would also like to express our gratitude to the website",
+    "gratitudeContinued": "for the opportunity to use their API, which became the foundation of our application.",
+    "feedback": "We always welcome feedback from users, as it helps make the app better. If you have any comments or suggestions for improvement, please write to us at:",
+    "collaboration": "We would also like to note that we plan to continue developing our app as much as possible. If you think you could help us with content for the app — lessons, materials, etc., we are also open to collaboration (write here —",
+    "closing": "We hope that our app will be useful for you in the process of learning the Buryat language!😊",
+    "emailSubject": "Question about Toli App"
+  },
+  "flashcards": {
+    "stillLearning": "Still Learning",
+    "know": "Know",
+    "hint1": "Tap on the card",
+    "hint2": "to flip it"
+  },
+  "quiz": {
+    "attemptsOver": "Out of attempts 😔",
+    "tryAgain": "Try again",
+    "restartQuiz": "Start Over",
+    "wrong": "Wrong!",
+    "translateSentence": "Translate this sentence",
+    "writeBuryat": "Write in Buryat",
+    "check": "Check",
+    "makeASentence": "Make a sentence"
+  },
+  "navigation": {
+    "congratulations": "Great job!",
+    "quizCompleted": "You completed the quiz 🤩",
+    "flashcardsCompleted": "You reviewed all the cards 🤩 Keep it up!",
+    "markAsLearned": "Mark as Learned",
+    "know": "Know:",
+    "stillLearning": "Still Learning:"
+  },
+  "collections": {
+    "failedToLoad": "Failed to load completed cards",
+    "learn": "Learn",
+    "learnDescription": "Choose flashcards for memorization or take a quiz",
+    "flashcardsButton": "Flashcards",
+    "takeTestButton": "Take Quiz",
+    "learnButton": "Learn",
+    "greeting": "Greeting",
+    "animals": "Animals",
+    "family": "Family",
+    "conversation": "Conversation",
+    "time": "Time"
+  },
+  "errors": {
+    "somethingWentWrong": "Something went wrong",
+    "tryAgainLater": "Please try again later",
+    "translationError": "Something went wrong. Please try again later",
+    "aiTranslationError": "Failed to get AI translation. Please try later.",
+    "errorTitle": "Error",
+    "historyLoadError": "Failed to load history",
+    "emailError": "Failed to open email app:",
+    "emailCopied": "Email copied to clipboard"
+  },
+  "alerts": {
+    "historyCleared": "History cleared",
+    "savedCleared": "Favorites cleared"
+  }
+}

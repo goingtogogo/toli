@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import * as Clipboard from 'expo-clipboard'
 import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Alert, Linking, Platform } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -11,6 +12,7 @@ import { clearHistory } from '@/store/slice/history'
 import { clearSaved } from '@/store/slice/saved'
 import { setTheme } from '@/store/slice/theme'
 import { State } from '@/store/store'
+import i18n from '@/utils/i18n/i18n'
 import { Theming, theming } from '@/utils/theme'
 
 export type SettingsKey =
@@ -20,10 +22,12 @@ export type SettingsKey =
   | 'community'
   | 'theme'
   | 'rate'
+  | 'language'
 
 type Props = NativeStackScreenProps<StackParamList, 'settings'>
 
 export function Settings({ navigation }: Props) {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const theme = useSelector((state: State) => state.theme.mode)
   const styles = styling(theming(theme))
@@ -34,13 +38,13 @@ export function Settings({ navigation }: Props) {
         await AsyncStorage.setItem(key, JSON.stringify([]))
         if (key === 'history') {
           dispatch(clearHistory())
-          Alert.alert('История очищена')
+          Alert.alert(t('alerts.historyCleared'))
         } else {
           dispatch(clearSaved())
-          Alert.alert('«Избранное» очищено')
+          Alert.alert(t('alerts.savedCleared'))
         }
       } catch (e) {
-        Alert.alert('Что-то пошло не так', 'Попробуйте повторить позже')
+        Alert.alert(t('errors.somethingWentWrong'), t('errors.tryAgainLater'))
       }
     },
     [dispatch],
@@ -48,21 +52,17 @@ export function Settings({ navigation }: Props) {
 
   const goAbout = useCallback(() => navigation.push('about'), [])
 
-  // const goToTelegram = useCallback(async () => {
-  //   const url = 'https://t.me/apptoli'
-  //   await Linking.openURL(url)
-  // }, [])
   const handleEmailPress = useCallback(async () => {
     const email = 'toli.language.app@gmail.com'
-    const subject = 'Вопрос о приложении Toli'
+    const subject = t('about.emailSubject')
 
     const url = `mailto:${email}?subject=${encodeURIComponent(subject)}}`
     Linking.openURL(url).catch(async (err) => {
-      console.warn('Не удалось открыть почтовое приложение:', err)
+      console.warn(t('errors.emailError'), err)
       await Clipboard.setStringAsync(email)
-      Alert.alert('Email скопирован в буфер обмена')
+      Alert.alert(t('errors.emailCopied'))
     })
-  }, [])
+  }, [t])
 
   const goToStore = useCallback(async () => {
     const url = {
@@ -76,47 +76,62 @@ export function Settings({ navigation }: Props) {
     dispatch(setTheme())
   }, [dispatch, theme])
 
+  const changeLanguage = useCallback(async () => {
+    const newLang = i18n.language === 'ru' ? 'en' : 'ru'
+    await i18n.changeLanguage(newLang)
+    await AsyncStorage.setItem('preferredLanguage', newLang)
+  }, [])
+
   return (
     <View style={styles.container}>
       <SettingsItem
         name="rate"
-        subtitle="каждая оценка поможет продвигать приложение"
-        title="Оценить приложение"
+        subtitle={t('settings.rateAppSubtitle')}
+        title={t('settings.rateApp')}
         icon="link-external"
         onPress={goToStore}
       />
       <SettingsItem
         name="history"
-        title="Очистить Историю"
-        subtitle="удалит все записи из истории"
+        title={t('settings.clearHistory')}
+        subtitle={t('settings.clearHistorySubtitle')}
         icon="trash"
         onPress={deleteItems}
       />
       <SettingsItem
         name="saved"
-        title="Очистить Избранное"
-        subtitle="удалит все записи из избранного"
+        title={t('settings.clearSaved')}
+        subtitle={t('settings.clearSavedSubtitle')}
         icon="trash"
         onPress={deleteItems}
       />
       <SettingsItem
         name="community"
-        title="Сообщество"
-        subtitle="Написать нам"
+        title={t('settings.community')}
+        subtitle={t('settings.communitySubtitle')}
         icon="paper-airplane"
         onPress={handleEmailPress}
       />
       <SettingsItem
         name="theme"
-        title={theme === 'light' ? 'Тёмная тема' : 'Светлая тема'}
-        subtitle="сменить оформление"
+        title={
+          theme === 'light' ? t('settings.darkTheme') : t('settings.lightTheme')
+        }
+        subtitle={t('settings.themeSubtitle')}
         icon={theme === 'light' ? 'moon' : 'sun'}
         onPress={changeTheme}
       />
       <SettingsItem
+        name="language"
+        title={t('settings.language')}
+        subtitle={t('settings.languageSubtitle')}
+        icon="globe"
+        onPress={changeLanguage}
+      />
+      <SettingsItem
         name="about"
         subtitle=""
-        title="О приложении"
+        title={t('settings.about')}
         icon="info"
         onPress={goAbout}
       />

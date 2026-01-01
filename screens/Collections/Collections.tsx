@@ -8,6 +8,7 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack'
 import { AnyAction, Dispatch } from '@reduxjs/toolkit'
 import React, { useCallback, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   StyleSheet,
   View,
@@ -31,6 +32,7 @@ type ButtonProps = {
 }
 
 export function Collections() {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
 
   const flashcards = useSelector((state: State) => state.flashcards.items)
@@ -40,8 +42,8 @@ export function Collections() {
 
   useEffect(() => {
     // @ts-expect-error todo: needs to be fixed
-    dispatch(loadData())
-  }, [dispatch])
+    dispatch(loadData(t))
+  }, [dispatch, t])
 
   return (
     <View style={styles.container}>
@@ -58,6 +60,7 @@ type ProfileScreenNavigationProp = CompositeNavigationProp<
 >
 
 const CollectionButton = ({ collectionKey }: ButtonProps) => {
+  const { t } = useTranslation()
   const navigation = useNavigation<ProfileScreenNavigationProp>()
   const {
     items: flashcards,
@@ -69,18 +72,18 @@ const CollectionButton = ({ collectionKey }: ButtonProps) => {
 
   const { name, translation, icon } = useMemo(
     () => flashcards[collectionKey],
-    [],
+    [flashcards, collectionKey],
   )
 
   const handlePress = useCallback(
-    // @ts-expect-error todo: needs to be fixed
-    () => navigation.navigate('collection', { name, key: collectionKey }),
+    () =>
+      navigation.navigate('collection', { name: t(name), key: collectionKey }),
     [name, collectionKey],
   )
 
   return (
     <TouchableOpacity style={styles.collection} onPress={handlePress}>
-      <Text style={styles.collectionLabel}>{name}</Text>
+      <Text style={styles.collectionLabel}>{t(name)}</Text>
       <Text style={styles.collectionTranslation}>{translation}</Text>
       {icon && <Image style={styles.icon} source={icon} />}
       {completedFlashcards[collectionKey] && (
@@ -157,26 +160,24 @@ const styling = (theme: Theming) =>
     },
   })
 
-const loadData = () => async (dispatch: Dispatch<AnyAction>) => {
-  try {
-    const completedFlashcards = await AsyncStorage.getItem(
-      'completedFlashcards',
-    )
-    const completedQuiz = await AsyncStorage.getItem('completedQuiz')
+const loadData =
+  (t: (key: string) => string) => async (dispatch: Dispatch<AnyAction>) => {
+    try {
+      const completedFlashcards = await AsyncStorage.getItem(
+        'completedFlashcards',
+      )
+      const completedQuiz = await AsyncStorage.getItem('completedQuiz')
 
-    if (completedFlashcards) {
-      const formattedCompleted = JSON.parse(completedFlashcards)
-      dispatch(setCompletedFlashcards({ items: formattedCompleted }))
-    }
+      if (completedFlashcards) {
+        const formattedCompleted = JSON.parse(completedFlashcards)
+        dispatch(setCompletedFlashcards({ items: formattedCompleted }))
+      }
 
-    if (completedQuiz) {
-      const formattedCompleted = JSON.parse(completedQuiz)
-      dispatch(setCompletedQuiz({ items: formattedCompleted }))
+      if (completedQuiz) {
+        const formattedCompleted = JSON.parse(completedQuiz)
+        dispatch(setCompletedQuiz({ items: formattedCompleted }))
+      }
+    } catch (e) {
+      Alert.alert(t('collections.failedToLoad'), t('errors.tryAgainLater'))
     }
-  } catch (e) {
-    Alert.alert(
-      'Не удалось загрузить выполненные карточки',
-      'Попробуйте повторить позже',
-    )
   }
-}

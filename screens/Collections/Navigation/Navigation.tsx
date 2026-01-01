@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React, { useCallback, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -18,12 +19,8 @@ import { Theming, theming } from '@/utils/theme'
 
 type Props = NativeStackScreenProps<StackParamList, 'navigation'>
 
-const subtitle = {
-  quiz: 'Вы прошли тест 🤩',
-  flashcards: 'Вы повторили все карточки 🤩 Продолжайте в том же духе!',
-}
-
 export function Navigation(props: Props) {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const {
     items: flashcards,
@@ -82,23 +79,30 @@ export function Navigation(props: Props) {
     navigation.popToTop()
   }, [key, completedFlashcards, completedQuiz, screen, dispatch])
 
+  const subtitle =
+    screen === 'quiz'
+      ? t('navigation.quizCompleted')
+      : t('navigation.flashcardsCompleted')
+
   return (
     <View style={styles.container}>
       <ProgressView progress={1} />
       <View style={styles.result}>
-        <Text style={styles.title}>Бэрхэ!</Text>
-        <Text style={styles.subtitle}>{subtitle[screen]}</Text>
+        <Text style={styles.title}>{t('navigation.congratulations')}</Text>
+        <Text style={styles.subtitle}>{subtitle}</Text>
         <View>
           {screen === 'flashcards' && (
             <View style={styles.numbers}>
               <View style={styles.number}>
-                <Text style={styles.secondaryText}>Знаю:</Text>
+                <Text style={styles.secondaryText}>{t('navigation.know')}</Text>
                 <View style={[styles.learnt, styles.count]}>
                   <Text style={styles.countText}>{swipedRight}</Text>
                 </View>
               </View>
               <View style={styles.number}>
-                <Text style={styles.secondaryText}>Еще изучаю:</Text>
+                <Text style={styles.secondaryText}>
+                  {t('navigation.stillLearning')}
+                </Text>
                 <View style={[styles.stillLearning, styles.count]}>
                   <Text style={styles.countText}>{swipedLeft}</Text>
                 </View>
@@ -107,21 +111,21 @@ export function Navigation(props: Props) {
           )}
           <Button
             onPress={onComplete}
-            label="Отметить как выученное"
+            label={t('navigation.markAsLearned')}
             icon="issue-closed"
             view="action"
             className={styles.button}
           />
           <Button
             onPress={repeat}
-            label="Повторить"
+            label={t('common.repeat')}
             icon="sync"
             view="default"
             className={styles.button}
           />
           <Button
             onPress={goBack}
-            label="Вернуться назад"
+            label={t('common.goBack')}
             view="ghost"
             className={styles.button}
           />

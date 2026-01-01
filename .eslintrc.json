@@ -30,23 +30,15 @@
     "import"
   ],
   "rules": {
-    "indent": ["error", 2],
+    "indent": "off",
     "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
-    "semi": ["error", "never"],
-    "comma-dangle": ["error", "always-multiline"],
+    "quotes": "off",
+    "semi": "off",
+    "comma-dangle": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true,
-        "trailingComma": "all",
-        "semi": false,
-        "tabWidth": 2
-      }
-    ],
+    "prettier/prettier": "error",
     "import/order": [
       "error",
       {

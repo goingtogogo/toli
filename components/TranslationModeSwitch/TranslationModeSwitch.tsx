@@ -1,5 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
@@ -17,6 +18,7 @@ export const TranslationModeSwitch: React.FC<Props> = ({
   mode,
   onModeChange,
 }) => {
+  const { t } = useTranslation()
   const theme = useSelector((state: State) => theming(state.theme.mode))
   const styles = styling(theme)
 
@@ -29,7 +31,7 @@ export const TranslationModeSwitch: React.FC<Props> = ({
         <Text
           style={[styles.optionText, mode === 'normal' && styles.activeText]}
         >
-          Обычный
+          {t('translationMode.normal')}
         </Text>
       </TouchableOpacity>
 
@@ -44,7 +46,7 @@ export const TranslationModeSwitch: React.FC<Props> = ({
           style={styles.icon}
         />
         <Text style={[styles.optionText, mode === 'ai' && styles.activeText]}>
-          ИИ перевод
+          {t('translationMode.ai')}
         </Text>
       </TouchableOpacity>
     </View>
