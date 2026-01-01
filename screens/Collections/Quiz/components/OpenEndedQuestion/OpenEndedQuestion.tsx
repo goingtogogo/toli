@@ -1,6 +1,13 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native'
+import {
+  Keyboard,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native'
 import { useSelector } from 'react-redux'
 
 import { BuryatLetters } from '@/components/BuryatLetters/BuryatLetters'
@@ -41,44 +48,48 @@ export const OpenEndedQuestion = ({ question, onCorrect, onWrong }: Props) => {
     question.text.en
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('quiz.translateSentence')}</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.title}>{t('quiz.translateSentence')}</Text>
 
-      <View style={styles.row}>
-        <View style={styles.sentenceContainer}>
-          <Text style={styles.sentence}>{questionText}</Text>
+        <View style={styles.row}>
+          <View style={styles.sentenceContainer}>
+            <Text style={styles.sentence}>{questionText}</Text>
+          </View>
         </View>
-      </View>
 
-      <View style={styles.inputContainer}>
-        {!input && (
-          <Text style={styles.placeholder}>{t('quiz.writeBuryat')}</Text>
-        )}
-        <TextInput
-          value={input}
-          onChangeText={setInput}
-          style={styles.input}
-          textAlignVertical="top"
-          multiline
-          keyboardAppearance={mode || 'default'}
-          onSubmitEditing={onButtonPress}
-          autoCorrect={false}
+        <View style={styles.inputContainer}>
+          {!input && (
+            <Text style={styles.placeholder}>{t('quiz.writeBuryat')}</Text>
+          )}
+          <TextInput
+            value={input}
+            onChangeText={setInput}
+            style={styles.input}
+            multiline
+            textAlignVertical="top"
+            blurOnSubmit
+            keyboardAppearance={mode || 'default'}
+            onSubmitEditing={onButtonPress}
+            autoCorrect={false}
+            returnKeyType="done"
+          />
+        </View>
+
+        <BuryatLetters
+          onLetterPress={handleLetterClick}
+          containerStyle={styles.lettersContainer}
+        />
+
+        <Button
+          view="action"
+          label={t('quiz.check')}
+          onPress={onButtonPress}
+          // disabled={!input}
+          className={styles.button}
         />
       </View>
-
-      <BuryatLetters
-        onLetterPress={handleLetterClick}
-        containerStyle={styles.lettersContainer}
-      />
-
-      <Button
-        view="action"
-        label={t('quiz.check')}
-        onPress={onButtonPress}
-        // disabled={!input}
-        className={styles.button}
-      />
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -133,8 +144,8 @@ const styling = (theme: Theming) =>
       fontFamily: 'regular',
       fontSize: 20,
       color: theme.colors.text,
-      paddingTop: 16,
-      paddingLeft: 16,
+      paddingLeft: theme.spacing.m,
+      paddingTop: theme.spacing.m,
     },
     placeholder: {
       position: 'absolute',
