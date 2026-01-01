@@ -5,6 +5,7 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack'
 import * as SplashScreen from 'expo-splash-screen'
+import { PostHogProvider } from 'posthog-react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Alert } from 'react-native'
@@ -45,6 +46,11 @@ export type StackParamList = {
 }
 
 const Stack = createNativeStackNavigator<StackParamList>()
+
+const POSTHOG_OPTIONS = {
+  host: 'https://eu.i.posthog.com',
+  captureTouches: true,
+}
 
 function App() {
   const { t } = useTranslation()
@@ -178,47 +184,52 @@ function App() {
   return (
     <GestureHandlerRootView>
       <NavigationContainer>
-        <View onLayout={onLayout} style={styles.container}>
-          <Stack.Navigator>
-            <Stack.Group>
-              <Stack.Screen
-                name="main"
-                component={TabNavigator}
-                options={screenOptions}
-              />
-              <Stack.Screen
-                name="add"
-                component={AddWord}
-                options={addOptions}
-              />
-              <Stack.Screen
-                name="about"
-                component={About}
-                options={aboutOptions}
-              />
-              <Stack.Screen
-                name="collection"
-                component={Collection}
-                options={collectionOptions}
-              />
-              <Stack.Screen
-                name="flashcards"
-                component={Flashcards}
-                options={flashcardsOptions}
-              />
-              <Stack.Screen
-                name="quiz"
-                component={Quiz}
-                options={quizOptions}
-              />
-              <Stack.Screen
-                name="navigation"
-                component={Navigation}
-                options={navigationOptions}
-              />
-            </Stack.Group>
-          </Stack.Navigator>
-        </View>
+        <PostHogProvider
+          apiKey={process.env.EXPO_PUBLIC_POSTHOG_API_KEY}
+          options={POSTHOG_OPTIONS}
+        >
+          <View onLayout={onLayout} style={styles.container}>
+            <Stack.Navigator>
+              <Stack.Group>
+                <Stack.Screen
+                  name="main"
+                  component={TabNavigator}
+                  options={screenOptions}
+                />
+                <Stack.Screen
+                  name="add"
+                  component={AddWord}
+                  options={addOptions}
+                />
+                <Stack.Screen
+                  name="about"
+                  component={About}
+                  options={aboutOptions}
+                />
+                <Stack.Screen
+                  name="collection"
+                  component={Collection}
+                  options={collectionOptions}
+                />
+                <Stack.Screen
+                  name="flashcards"
+                  component={Flashcards}
+                  options={flashcardsOptions}
+                />
+                <Stack.Screen
+                  name="quiz"
+                  component={Quiz}
+                  options={quizOptions}
+                />
+                <Stack.Screen
+                  name="navigation"
+                  component={Navigation}
+                  options={navigationOptions}
+                />
+              </Stack.Group>
+            </Stack.Navigator>
+          </View>
+        </PostHogProvider>
       </NavigationContainer>
     </GestureHandlerRootView>
   )

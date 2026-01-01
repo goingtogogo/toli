@@ -1,3 +1,4 @@
+import { usePostHog } from 'posthog-react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Alert, Keyboard, Text } from 'react-native'
@@ -17,6 +18,7 @@ import { capitalizeFirstLetter } from '@/utils/capitalize'
 import { isSmallDevice, Theming, theming } from '@/utils/theme'
 
 export function Home() {
+  const posthog = usePostHog()
   const { t } = useTranslation()
   const mode = useSelector((state: State) => state.theme.mode)
   const styles = styling(theming(mode))
@@ -66,6 +68,10 @@ export function Home() {
           }
 
           dispatch(addItem({ item }))
+
+          posthog.capture('translation', {
+            textLength: value.length,
+          })
         } catch (e) {
           console.error(e)
           const errorMessage =
@@ -73,6 +79,10 @@ export function Home() {
               ? t('errors.aiTranslationError')
               : t('errors.translationError')
           Alert.alert(t('errors.errorTitle'), errorMessage)
+
+          posthog.capture('error_occurred', {
+            error: errorMessage,
+          })
         } finally {
           setIsLoading(false)
         }

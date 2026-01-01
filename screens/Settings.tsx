@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import * as Clipboard from 'expo-clipboard'
+import { usePostHog } from 'posthog-react-native'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Alert, Linking, Platform } from 'react-native'
@@ -28,6 +29,7 @@ export type SettingsKey =
 type Props = NativeStackScreenProps<StackParamList, 'settings'>
 
 export function Settings({ navigation }: Props) {
+  const posthog = usePostHog()
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const theme = useSelector((state: State) => state.theme.mode)
@@ -54,6 +56,8 @@ export function Settings({ navigation }: Props) {
   const goAbout = useCallback(() => navigation.push('about'), [])
 
   const handleEmailPress = useCallback(async () => {
+    posthog.capture('email_click', { source: 'settings' })
+
     const subject = t('about.emailSubject')
 
     const url = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
@@ -64,7 +68,7 @@ export function Settings({ navigation }: Props) {
       await Clipboard.setStringAsync(CONTACT_EMAIL)
       Alert.alert(t('errors.emailCopied'))
     })
-  }, [t])
+  }, [t, posthog])
 
   const goToStore = useCallback(async () => {
     const url = {
@@ -75,14 +79,17 @@ export function Settings({ navigation }: Props) {
   }, [])
 
   const changeTheme = useCallback(() => {
+    const newTheme = theme === 'light' ? 'dark' : 'light'
     dispatch(setTheme())
-  }, [dispatch, theme])
+    posthog.capture('theme_changed', { theme: newTheme })
+  }, [dispatch, theme, posthog])
 
   const changeLanguage = useCallback(async () => {
     const newLang = i18n.language === 'ru' ? 'en' : 'ru'
     await i18n.changeLanguage(newLang)
     await AsyncStorage.setItem('preferredLanguage', newLang)
-  }, [])
+    posthog.capture('language_changed', { language: newLang })
+  }, [posthog])
 
   return (
     <View style={styles.container}>

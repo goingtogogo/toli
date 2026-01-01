@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { usePostHog } from 'posthog-react-native'
 import React, { useMemo } from 'react'
 import { useCallback } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
@@ -15,6 +16,7 @@ type Props = {
 }
 
 export const TranslationResult: React.FC<Props> = ({ item }) => {
+  const posthog = usePostHog()
   const dispatch = useDispatch()
 
   const mode = useSelector((state: State) => state.theme.mode)
@@ -31,7 +33,12 @@ export const TranslationResult: React.FC<Props> = ({ item }) => {
     await AsyncStorage.setItem('saved', JSON.stringify(newSavedItems))
 
     dispatch(setSaved({ items: newSavedItems }))
-  }, [dispatch, savedItems, item])
+
+    posthog.capture(isSaved ? 'word_unsaved' : 'word_saved', {
+      wordLength: item.text?.length || 0,
+      translationLength: item.translatedText?.length || 0,
+    })
+  }, [dispatch, savedItems, item, isSaved, posthog])
 
   return (
     <View style={styles.container}>
