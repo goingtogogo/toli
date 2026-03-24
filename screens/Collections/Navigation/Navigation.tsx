@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { usePostHog } from 'posthog-react-native'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
@@ -21,6 +22,7 @@ type Props = NativeStackScreenProps<StackParamList, 'navigation'>
 
 export function Navigation(props: Props) {
   const { t } = useTranslation()
+  const posthog = usePostHog()
   const dispatch = useDispatch()
   const {
     items: flashcards,
@@ -66,6 +68,13 @@ export function Navigation(props: Props) {
         'completedFlashcards',
         JSON.stringify(newCompleted),
       )
+
+      posthog.capture('flashcards_finish', {
+        collection: name,
+        totalCards: cards.length,
+        swipedRight,
+        swipedLeft,
+      })
     }
 
     if (screen === 'quiz') {
@@ -74,10 +83,26 @@ export function Navigation(props: Props) {
       dispatch(setCompletedQuiz({ items: newCompleted }))
 
       await AsyncStorage.setItem('completedQuiz', JSON.stringify(newCompleted))
+
+      posthog.capture('quiz_finish', {
+        collection: name,
+        totalQuestions: questions[key]?.length,
+      })
     }
 
     navigation.popToTop()
-  }, [key, completedFlashcards, completedQuiz, screen, dispatch])
+  }, [
+    key,
+    name,
+    cards.length,
+    swipedRight,
+    swipedLeft,
+    completedFlashcards,
+    completedQuiz,
+    screen,
+    dispatch,
+    posthog,
+  ])
 
   const subtitle =
     screen === 'quiz'

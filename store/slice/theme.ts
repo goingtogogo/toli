@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { Appearance } from 'react-native'
 
-export type Theme = 'light' | 'dark' | null | undefined
+export type Theme = 'light' | 'dark'
 
 export type ThemeState = {
   mode: Theme

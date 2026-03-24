@@ -27,7 +27,7 @@ import {
   setCompletedFlashcards,
   setCompletedQuiz,
 } from '@/store/slice/flashcards'
-import { State } from '@/store/store'
+import store, { State } from '@/store/store'
 import { CONTACT_EMAIL } from '@/utils/constants'
 import { isSmallDevice } from '@/utils/theme'
 import { Theming, theming } from '@/utils/theme'
@@ -39,7 +39,7 @@ type ButtonProps = {
 export function Collections() {
   const posthog = usePostHog()
   const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<typeof store.dispatch>()
 
   const flashcards = useSelector((state: State) => state.flashcards.items)
 
@@ -47,7 +47,6 @@ export function Collections() {
   const styles = styling(theming(mode))
 
   useEffect(() => {
-    // @ts-expect-error todo: needs to be fixed
     dispatch(loadData(t))
   }, [dispatch, t])
 
