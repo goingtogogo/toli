@@ -26,15 +26,11 @@ export const BuryatLetters: React.FC<Props> = ({
 
   return (
     <View style={[styles.lettersContainer, containerStyle]}>
-      <TouchableOpacity onPress={() => onLetterPress('ү')}>
-        <Text style={styles.letter}>ү</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => onLetterPress('һ')}>
-        <Text style={styles.letter}>һ</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => onLetterPress('ө')}>
-        <Text style={styles.letter}>ө</Text>
-      </TouchableOpacity>
+      {['ү', 'һ', 'ө'].map((letter) => (
+        <TouchableOpacity key={letter} onPress={() => onLetterPress(letter)}>
+          <Text style={styles.letter}>{letter}</Text>
+        </TouchableOpacity>
+      ))}
     </View>
   )
 }

@@ -1,6 +1,6 @@
 import * as Clipboard from 'expo-clipboard'
 import React, { useCallback } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import { ActionButton } from '@/components/ActionButton/ActionButton'
@@ -22,10 +22,10 @@ export const Result: React.FC<Props> = (props) => {
   }, [result])
 
   return (
-    <View style={styles.resultContainer}>
+    <ScrollView style={styles.resultContainer}>
       <Text style={styles.resultText}>{props.result}</Text>
       <ActionButton onPress={copyToClipboard} name="copy" size={18} />
-    </View>
+    </ScrollView>
   )
 }
 

@@ -25,8 +25,9 @@
     "enterWord": "Start typing"
   },
   "translationMode": {
-    "normal": "Normal",
-    "ai": "AI Translation"
+    "api": "Normal",
+    "ai": "AI Translation",
+    "yandex": "Yandex"
   },
   "saved": {
     "emptyText": "You haven't saved anything yet"
@@ -108,7 +109,6 @@
     "somethingWentWrong": "Something went wrong",
     "tryAgainLater": "Please try again later",
     "translationError": "Something went wrong. Please try again later",
-    "aiTranslationError": "Failed to get AI translation. Please try later.",
     "errorTitle": "Error",
     "historyLoadError": "Failed to load history",
     "emailError": "Failed to open email app:",

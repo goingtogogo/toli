@@ -5,9 +5,17 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import { State } from '@/store/store'
+import { TranslationMode } from '@/utils/api/translate'
 import { Theming, theming } from '@/utils/theme'
 
-export type TranslationMode = 'normal' | 'ai'
+const MODES: {
+  id: TranslationMode
+  icon?: keyof typeof MaterialIcons.glyphMap
+}[] = [
+    { id: 'api' },
+    { id: 'ai', icon: 'auto-fix-high' },
+    //  { id: 'yandex' }
+  ]
 
 type Props = {
   mode: TranslationMode
@@ -24,31 +32,27 @@ export const TranslationModeSwitch: React.FC<Props> = ({
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={[styles.option, mode === 'normal' && styles.activeOption]}
-        onPress={() => onModeChange('normal')}
-      >
-        <Text
-          style={[styles.optionText, mode === 'normal' && styles.activeText]}
+      {MODES.map((tMode) => (
+        <TouchableOpacity
+          key={tMode.id}
+          style={[styles.option, tMode.id === mode && styles.activeOption]}
+          onPress={() => onModeChange(tMode.id)}
         >
-          {t('translationMode.normal')}
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[styles.option, mode === 'ai' && styles.activeOption]}
-        onPress={() => onModeChange('ai')}
-      >
-        <MaterialIcons
-          name="auto-fix-high"
-          size={14}
-          color={mode === 'ai' ? theme.colors.secondary : theme.colors.text}
-          style={styles.icon}
-        />
-        <Text style={[styles.optionText, mode === 'ai' && styles.activeText]}>
-          {t('translationMode.ai')}
-        </Text>
-      </TouchableOpacity>
+          {'icon' in tMode && (
+            <MaterialIcons
+              name={tMode.icon}
+              size={14}
+              color={tMode.id === mode ? theme.colors.secondary : theme.colors.text}
+              style={styles.icon}
+            />
+          )}
+          <Text
+            style={[styles.optionText, tMode.id === mode && styles.activeText]}
+          >
+            {t(`translationMode.${tMode.id}`)}
+          </Text>
+        </TouchableOpacity>
+      ))}
     </View>
   )
 }
@@ -69,7 +73,7 @@ const styling = (theme: Theming) =>
       alignItems: 'center',
       justifyContent: 'center',
       paddingVertical: 8,
-      paddingHorizontal: 12,
+      paddingHorizontal: 10,
       borderRadius: 10,
     },
     activeOption: {

@@ -10,10 +10,9 @@ import { History } from './History/History'
 import { Result } from './Result/Result'
 import { Search } from './Search/Search'
 
-import { TranslationMode } from '@/components/TranslationModeSwitch/TranslationModeSwitch'
 import { addItem } from '@/store/slice/history'
 import { State } from '@/store/store'
-import { Language, translate, aiTranslate } from '@/utils/api/translate'
+import { Language, TranslationMode, translate } from '@/utils/api/translate'
 import { capitalizeFirstLetter } from '@/utils/capitalize'
 import { isSmallDevice, Theming, theming } from '@/utils/theme'
 
@@ -27,8 +26,7 @@ export function Home() {
   const [result, setResult] = useState('')
   const [loading, setIsLoading] = useState(false)
   const [languageFrom, setLanguageFrom] = useState<Language>('russian')
-  const [translationMode, setTranslationMode] =
-    useState<TranslationMode>('normal')
+  const [translationMode, setTranslationMode] = useState<TranslationMode>('api')
 
   const dispatch = useDispatch()
 
@@ -53,10 +51,11 @@ export function Home() {
         Keyboard.dismiss()
         setIsLoading(true)
         try {
-          const translation =
-            translationMode === 'ai'
-              ? await aiTranslate(formattedValue, languageFrom)
-              : await translate(formattedValue, languageFrom)
+          const translation = await translate(
+            formattedValue,
+            languageFrom,
+            translationMode,
+          )
 
           setResult(capitalizeFirstLetter(translation))
 
@@ -74,14 +73,11 @@ export function Home() {
           })
         } catch (e) {
           console.error(e)
-          const errorMessage =
-            translationMode === 'ai'
-              ? t('errors.aiTranslationError')
-              : t('errors.translationError')
-          Alert.alert(t('errors.errorTitle'), errorMessage)
+          Alert.alert(t('errors.errorTitle'), t('errors.translationError'))
 
           posthog.capture('error_occurred', {
-            error: errorMessage,
+            error: t('errors.translationError'),
+            errorMessage: e.message,
           })
         } finally {
           setIsLoading(false)

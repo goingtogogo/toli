@@ -5,12 +5,9 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
-import {
-  TranslationModeSwitch,
-  TranslationMode,
-} from '@/components/TranslationModeSwitch/TranslationModeSwitch'
+import { TranslationModeSwitch } from '@/components/TranslationModeSwitch/TranslationModeSwitch'
 import { State } from '@/store/store'
-import { Language } from '@/utils/api/translate'
+import { Language, TranslationMode } from '@/utils/api/translate'
 import { Theming, theming } from '@/utils/theme'
 
 type Props = {
