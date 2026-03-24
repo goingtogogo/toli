@@ -22,10 +22,10 @@ export const Result: React.FC<Props> = (props) => {
   }, [result])
 
   return (
-    <ScrollView style={styles.resultContainer}>
+    <View style={styles.resultContainer}>
       <Text style={styles.resultText}>{props.result}</Text>
       <ActionButton onPress={copyToClipboard} name="copy" size={18} />
-    </ScrollView>
+    </View>
   )
 }
 

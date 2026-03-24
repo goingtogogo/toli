@@ -26,8 +26,9 @@
   },
   "translationMode": {
     "api": "Обычный",
-    "ai": "ИИ перевод",
-    "yandex": "Яндекс"
+    "ai": "ИИ",
+    "yandex": "Яндекс",
+    "google": "Google"
   },
   "saved": {
     "emptyText": "Вы пока еще ничего не сохранили"

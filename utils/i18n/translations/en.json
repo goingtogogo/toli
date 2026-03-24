@@ -26,8 +26,9 @@
   },
   "translationMode": {
     "api": "Normal",
-    "ai": "AI Translation",
-    "yandex": "Yandex"
+    "ai": "AI",
+    "yandex": "Yandex",
+    "google": "Google"
   },
   "saved": {
     "emptyText": "You haven't saved anything yet"
