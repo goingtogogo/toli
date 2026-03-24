@@ -14,7 +14,7 @@ const MODES: {
 }[] = [
     { id: 'api' },
     { id: 'ai', icon: 'auto-fix-high' },
-    //  { id: 'yandex' }
+    { id: 'google' },
   ]
 
 type Props = {
